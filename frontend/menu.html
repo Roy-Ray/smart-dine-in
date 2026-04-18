@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Dine-In Menu</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container nav">
+        <h1 class="logo">Smart Dine-In</h1>
+
+        <!-- Optional navigation -->
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MENU SECTION -->
+    <section class="container">
+      <h2 style="text-align: center; margin: 20px 0">Explore Full Menu</h2>
+
+      <!-- SEARCH -->
+      <input
+        id="searchBar"
+        placeholder="Search food..."
+        style="
+          width: 100%;
+          padding: 12px;
+          margin-bottom: 15px;
+          border-radius: 8px;
+          border: 1px solid #ccc;
+        "
+      />
+
+      <!-- FILTERS -->
+      <div
+        style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap"
+      >
+        <select id="sortPrice">
+          <option value="">Sort by Price</option>
+          <option value="low">Low to High</option>
+          <option value="high">High to Low</option>
+        </select>
+
+        <select id="categoryFilter">
+          <option value="">All Categories</option>
+          <option value="coffee">Coffee</option>
+          <option value="dessert">Dessert</option>
+          <option value="meal">Meal</option>
+        </select>
+      </div>
+
+      <!-- MENU ITEMS -->
+      <div class="menu-grid" id="menuContainer"></div>
+    </section>
+
+    <!-- BACK BUTTON -->
+    <div style="text-align: center; margin: 30px">
+      <a href="/" class="btn">← Back to Home</a>
+    </div>
+
+    <script src="/menu.js"></script>
+  </body>
+</html>

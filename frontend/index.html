@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Dine-In Café</title>
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- GOOGLE FONT -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container nav">
+        <h1 class="logo">Smart Dine-In</h1>
+
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#favourites">Favourites</a></li>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <button id="menu-btn" class="menu-btn">☰</button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero" class="hero reveal">
+      <div class="overlay"></div>
+      <div class="hero-content">
+        <h2>Cafés, Fresh Coffee & Foods</h2>
+        <p>
+          Experience the warmth of flowers and the aroma of coffee in every sip.
+        </p>
+        <a href="#menu" class="btn">See Our Menu</a>
+      </div>
+    </section>
+
+    <!-- SIGNATURE ITEMS -->
+    <section id="favourites" class="signature-section reveal">
+      <div class="container">
+        <h2>Our Signature Items</h2>
+
+        <div class="signature-grid">
+          <div class="signature-item reveal-left">
+            <img src="/image/dish1.jpg" alt="Rose Latte" />
+            <div class="signature-text">
+              <h3>Rose Latte</h3>
+              <p>
+                Feel the fresh aroma & taste of our house-blend rose coffee.
+              </p>
+            </div>
+          </div>
+
+          <div class="signature-item reveal-right">
+            <img src="/image/dish2.jpg" alt="English Breakfast" />
+            <div class="signature-text">
+              <h3>English Breakfast</h3>
+              <p>A wholesome morning platter — healthy & tasty.</p>
+            </div>
+          </div>
+
+          <div class="signature-item reveal-left">
+            <img src="/image/floralcake.jpg" alt="Floral Cupcake" />
+            <div class="signature-text">
+              <h3>Floral Cupcake</h3>
+              <p>A beautiful rose-topped dessert loved by everyone.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story" class="story reveal">
+      <div class="container story-grid">
+        <div class="story-text">
+          <h2>Our Story</h2>
+          <p>
+            Smart Dine-In was born from a passion for art, aroma, and ambience.
+          </p>
+        </div>
+        <div class="story-img">
+          <img src="/image/about1.jpg" alt="Cafe Interior" />
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials" class="testimonials container reveal">
+      <h2>What Our Customers Say</h2>
+      <div class="testi-grid">
+        <div class="testi">
+          <p>"Absolutely loved the floral coffee concept!"</p>
+          <span>— Aisha Paul</span>
+        </div>
+        <div class="testi">
+          <p>"Desserts and ambience made my day!"</p>
+          <span>— Rahul Deb</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="gallery container reveal">
+      <h2>Our Menu Highlights</h2>
+
+      <div class="menu-grid">
+        <div class="menu-item">
+          <img src="/image/dish1.jpg" />
+          <h3>Rose Latte</h3>
+          <p>₹120</p>
+        </div>
+
+        <div class="menu-item">
+          <img src="/image/floralcake.jpg" />
+          <h3>Floral Cupcake</h3>
+          <p>₹150</p>
+        </div>
+
+        <div class="menu-item">
+          <img src="/image/dish3.jpg" />
+          <h3>Butter Croissant</h3>
+          <p>₹130</p>
+        </div>
+
+        <div class="menu-item">
+          <img src="/image/hero.jpg" />
+          <h3>Garden Salad</h3>
+          <p>₹160</p>
+        </div>
+
+        <div class="menu-item">
+          <img src="/image/berry.jpg" />
+          <h3>Berry Smoothie</h3>
+          <p>₹170</p>
+        </div>
+
+        <div class="menu-item">
+          <img src="/image/dish2.jpg" />
+          <h3>English Breakfast</h3>
+          <p>₹200</p>
+        </div>
+      </div>
+
+      <!-- SEE ALL -->
+      <div style="text-align: center; margin-top: 25px">
+        <a href="/menu.html" class="btn">See All</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="reveal">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <p>Email: trisharay2004@gmail.com | Phone: +91-6299070028</p>
+
+        <section class="newsletter-section reveal">
+          <h3>Subscribe</h3>
+          <form class="newsletter">
+            <input type="email" placeholder="Enter email" required />
+            <button class="btn">Subscribe</button>
+          </form>
+        </section>
+
+        <p>© 2025 Smart Dine-In</p>
+      </div>
+    </footer>
+
+    <button id="toTop" class="btn">↑</button>
+
+    <script src="main.js"></script>
+  </body>
+</html>
