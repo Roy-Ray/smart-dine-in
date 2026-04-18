@@ -1,9 +1,12 @@
+// backend/server.js
 const express = require("express");
-const mysql = require("mysql2");
 const cors = require("cors");
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+// Import the database connection from db.js
+const db = require("./db"); 
 
 const app = express();
 app.use(cors());
@@ -11,19 +14,7 @@ app.use(express.json());
 
 const JWT_SECRET = "your_super_secret_key"; // Keep this secure in a real app
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "trisha@2004",
-  database: "smart_cafe",
-});
-
-db.connect((err) => {
-  if (err) throw err;
-  console.log("✅ MySQL Connected");
-});
-
-// Middleware to verify logged-in users
+// ================= MIDDLEWARE =================
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (!token) return res.status(403).json({ error: "No token provided. Please log in." });
@@ -37,7 +28,6 @@ const verifyToken = (req, res, next) => {
 };
 
 // ================= AUTH API =================
-
 app.post("/api/register", async (req, res) => {
   const { name, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -63,7 +53,6 @@ app.post("/api/login", (req, res) => {
 });
 
 // ================= MENU & ORDERS API =================
-
 app.get("/api/menu", (req, res) => {
   db.query("SELECT * FROM menu", (err, result) => {
     if (err) return res.status(500).json({ error: "DB error" });
@@ -103,7 +92,6 @@ app.get("/api/my-dashboard", verifyToken, (req, res) => {
 });
 
 // ================= ADMIN API =================
-
 // Get all orders for Admin
 app.get("/api/admin/orders", verifyToken, (req, res) => {
   if (req.userRole !== 'admin') return res.status(403).json({ error: "Admin only" });
