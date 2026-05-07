@@ -10,14 +10,14 @@ function displayItems(items) {
   const container = document.getElementById("menuContainer");
   container.innerHTML = "";
 
-  // Notice the button here now calls proceedToPayment instead of orderNow
-  items.slice(0, 5).forEach((item) => {
+  items.forEach((item) => {
     container.innerHTML += `
       <div class="menu-item">
+        <img src="${item.image}" alt="${item.name}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:0.8rem;" />
         <h3>${item.name}</h3>
-        <p>${item.description || ''}</p>
-        <p>₹${item.price}</p>
-        <button onclick="proceedToPayment(${item.id}, ${item.price})" class="btn">Order Now</button>
+        <p style="color:#666; font-size:0.9rem;">${item.description || ""}</p>
+        <p style="font-weight:bold; color:#9b6dff; margin:10px 0;">₹${item.price}</p>
+        <button onclick="proceedToPayment(${item.id}, ${item.price})" class="btn" style="width:100%;">Order Now</button>
       </div>
     `;
   });
@@ -53,7 +53,7 @@ document.getElementById("categoryFilter")?.addEventListener("change", (e) => {
 // PROCEED TO PAYMENT (Checks Auth First)
 function proceedToPayment(itemId, itemPrice) {
   const token = localStorage.getItem("token");
-  
+
   if (!token) {
     alert("Please log in to place an order.");
     window.location.href = "/login.html"; // Redirect to login
