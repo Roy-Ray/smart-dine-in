@@ -463,6 +463,59 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 
 // correct image folder path
 app.use("/image", express.static(path.join(__dirname, "../image")));
+// ==========================================
+// NEW: MENU & OFFERS MANAGEMENT
+// ==========================================
+
+// Initialize Offers Table with default data
+db.query("CREATE TABLE IF NOT EXISTS offers (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255))", (err) => {
+  if (!err) {
+    db.query("SELECT COUNT(*) as count FROM offers", (err, results) => {
+      if (!err && results[0].count === 0) {
+        db.query("INSERT INTO offers (message) VALUES ('Get 10% off on billing above ₹1299!'), ('First order? Get 20% off!')");
+      }
+    });
+  }
+});
+
+// Admin API: Add new menu item
+app.post("/api/admin/menu", verifyAdminToken, (req, res) => {
+  const { name, price, description, image } = req.body;
+  if (!name || !price) {
+    return res.status(400).json({ error: "Name and price are required" });
+  }
+  
+  const sql = "INSERT INTO menu_items (name, price, description, image) VALUES (?, ?, ?, ?)";
+  db.query(sql, [name, price, description || '', image || '/image/default.jpg'], (err, result) => {
+    if (err) return res.status(500).json({ error: "Failed to add product" });
+    res.json({ message: "Product added successfully", id: result.insertId });
+  });
+});
+
+// Public API: Get offers for the homepage banner
+app.get("/api/offers", (req, res) => {
+  db.query("SELECT * FROM offers", (err, results) => {
+    if (err) return res.status(500).json({ error: "Database error" });
+    res.json(results);
+  });
+});
+
+// Admin API: Update offers (replaces all existing)
+app.post("/api/admin/offers", verifyAdminToken, (req, res) => {
+  const { offers } = req.body; 
+  if (!offers || !Array.isArray(offers)) return res.status(400).json({ error: "Invalid data" });
+
+  db.query("TRUNCATE TABLE offers", (err) => {
+    if (err) return res.status(500).json({ error: "Failed to clear offers" });
+    if (offers.length === 0) return res.json({ message: "Offers updated" });
+
+    const values = offers.map(o => [o]);
+    db.query("INSERT INTO offers (message) VALUES ?", [values], (err) => {
+      if (err) return res.status(500).json({ error: "Failed to save offers" });
+      res.json({ message: "Offers updated successfully" });
+    });
+  });
+});
 
 app.listen(5000, () =>
   console.log("🚀 Server running on http://localhost:5000"),

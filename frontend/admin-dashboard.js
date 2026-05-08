@@ -443,3 +443,141 @@ function adminLogout() {
   localStorage.removeItem("adminName");
   window.location.href = "/admin-login.html";
 }
+// ==========================================
+// MENU MANAGEMENT & OFFERS MANAGEMENT
+// ==========================================
+
+let currentOffers = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+  const addProductForm = document.getElementById("addProductForm");
+  if (addProductForm) {
+    addProductForm.addEventListener("submit", handleAddProduct);
+  }
+  loadOffers(); // Fetch initial offers on load
+});
+
+async function handleAddProduct(e) {
+  e.preventDefault();
+  const name = document.getElementById("newProductName").value;
+  const price = document.getElementById("newProductPrice").value;
+  const description = document.getElementById("newProductDesc").value;
+  const image = document.getElementById("newProductImage").value;
+  
+  const adminToken = localStorage.getItem("adminToken");
+  const msgDiv = document.getElementById("productMsg");
+  
+  try {
+    const response = await fetch("/api/admin/menu", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${adminToken}`
+      },
+      body: JSON.stringify({ name, price, description, image })
+    });
+    
+    if (response.ok) {
+      msgDiv.style.color = "green";
+      msgDiv.textContent = "Product added successfully!";
+      document.getElementById("addProductForm").reset();
+      setTimeout(() => msgDiv.textContent = "", 3000);
+    } else {
+      const data = await response.json();
+      msgDiv.style.color = "red";
+      msgDiv.textContent = data.error || "Failed to add product";
+    }
+  } catch (error) {
+    msgDiv.style.color = "red";
+    msgDiv.textContent = "Error adding product.";
+  }
+}
+
+async function loadOffers() {
+  try {
+    const response = await fetch("/api/offers");
+    if (response.ok) {
+      const data = await response.json();
+      currentOffers = data.map(o => o.message);
+      renderOffersList();
+    }
+  } catch (error) {
+    console.error("Failed to load offers", error);
+  }
+}
+
+function renderOffersList() {
+  const list = document.getElementById("offersList");
+  if (!list) return;
+  
+  list.innerHTML = "";
+  currentOffers.forEach((offer, index) => {
+    const div = document.createElement("div");
+    div.style.display = "flex";
+    div.style.justifyContent = "space-between";
+    div.style.alignItems = "center";
+    div.style.background = "#f8f9fa";
+    div.style.padding = "0.8rem";
+    div.style.border = "1px solid #ddd";
+    div.style.borderRadius = "4px";
+    
+    const text = document.createElement("span");
+    text.textContent = offer;
+    text.style.fontWeight = "500";
+    
+    const btn = document.createElement("button");
+    btn.innerHTML = '<i class="fas fa-trash"></i>';
+    btn.style.color = "#e74c3c";
+    btn.style.background = "none";
+    btn.style.border = "none";
+    btn.style.cursor = "pointer";
+    btn.style.fontSize = "1.2rem";
+    btn.onclick = () => {
+      currentOffers.splice(index, 1);
+      renderOffersList();
+    };
+    
+    div.appendChild(text);
+    div.appendChild(btn);
+    list.appendChild(div);
+  });
+}
+
+function addOfferLine() {
+  const input = document.getElementById("newOfferText");
+  const text = input.value.trim();
+  if (text) {
+    currentOffers.push(text);
+    input.value = "";
+    renderOffersList();
+  }
+}
+
+async function saveOffers() {
+  const adminToken = localStorage.getItem("adminToken");
+  const msgDiv = document.getElementById("offersMsg");
+  msgDiv.style.color = "#27ae60";
+  msgDiv.textContent = "Saving...";
+  
+  try {
+    const response = await fetch("/api/admin/offers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${adminToken}`
+      },
+      body: JSON.stringify({ offers: currentOffers })
+    });
+    
+    if (response.ok) {
+      msgDiv.textContent = "Offers successfully saved to the live website!";
+      setTimeout(() => msgDiv.textContent = "", 3000);
+    } else {
+      msgDiv.style.color = "red";
+      msgDiv.textContent = "Failed to save offers";
+    }
+  } catch (error) {
+    msgDiv.style.color = "red";
+    msgDiv.textContent = "Error saving offers.";
+  }
+}

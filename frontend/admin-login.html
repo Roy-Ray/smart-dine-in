@@ -5,43 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Login - Smart Dine-In</title>
 
-    <!-- Google Font -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <link rel="stylesheet" href="/styles.css" />
     <style>
+      /* Completely Redesigned Premium Admin UI */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body, html {
+        height: 100%;
+        font-family: 'Poppins', sans-serif;
+      }
+
       .admin-container {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Premium subtle background */
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         padding: 1rem;
       }
 
       .admin-box {
-        background: white;
-        padding: 3rem 2rem;
-        border-radius: 16px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        max-width: 400px;
+        background: #ffffff;
+        padding: 3.5rem 3rem;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+        max-width: 440px;
         width: 100%;
-        animation: slideUp 0.5s ease-out;
+        animation: slideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
       }
 
       @keyframes slideUp {
         from {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(40px);
         }
         to {
           opacity: 1;
@@ -49,28 +60,37 @@
         }
       }
 
+      /* Top Icon Area */
+      .icon-wrapper {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 1.8rem;
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
       .admin-box h1 {
         text-align: center;
-        margin-bottom: 0.5rem;
-        color: #1b1b1b;
-        font-size: 1.8rem;
+        color: #1a202c;
+        font-size: 1.7rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
       }
 
       .admin-box .subtitle {
         text-align: center;
-        color: #666;
-        margin-bottom: 2rem;
-        font-size: 0.9rem;
+        color: #718096;
+        margin-bottom: 2.5rem;
+        font-size: 0.95rem;
       }
 
-      .admin-box i {
-        display: block;
-        text-align: center;
-        font-size: 3rem;
-        color: #667eea;
-        margin-bottom: 1rem;
-      }
-
+      /* Modern Form Inputs */
       .form-group {
         margin-bottom: 1.5rem;
       }
@@ -78,108 +98,165 @@
       .form-group label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #1b1b1b;
+        color: #4a5568;
         font-weight: 500;
+        font-size: 0.9rem;
+      }
+
+      .form-group label i {
+        margin-right: 5px;
+        color: #a0aec0;
+      }
+
+      .input-wrapper {
+        position: relative;
       }
 
       .form-group input,
       .form-group select {
         width: 100%;
-        padding: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-family: "Poppins", sans-serif;
+        padding: 0.9rem 1.2rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        background: #f7fafc;
+        font-family: inherit;
         font-size: 0.95rem;
-        transition: all 0.3s;
+        color: #2d3748;
+        transition: all 0.3s ease;
       }
 
       .form-group input:focus,
       .form-group select:focus {
         outline: none;
         border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        background: #ffffff;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
       }
 
+      .form-group input::placeholder {
+        color: #a0aec0;
+      }
+
+      /* Errors & Loading */
       .error-msg {
-        background: #ffebee;
-        border: 1px solid #ff6b6b;
-        color: #c92a2a;
-        padding: 0.8rem;
+        background: #fff5f5;
+        border-left: 4px solid #fc8181;
+        color: #c53030;
+        padding: 0.8rem 1rem;
         border-radius: 8px;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
         display: none;
+        animation: fadeIn 0.3s ease;
       }
 
       .error-msg.show {
         display: block;
       }
 
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Button */
       .btn-admin {
         width: 100%;
-        padding: 0.9rem;
+        padding: 1rem;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
         font-weight: 600;
-        font-size: 0.95rem;
+        font-size: 1rem;
         cursor: pointer;
-        transition: all 0.3s;
-        margin-top: 1rem;
+        transition: all 0.3s ease;
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
       }
 
       .btn-admin:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
       }
 
       .btn-admin:disabled {
-        opacity: 0.6;
+        opacity: 0.7;
         cursor: not-allowed;
+        transform: none;
       }
 
+      /* Links & Footer */
       .back-link {
         text-align: center;
-        margin-top: 1.5rem;
+        margin-top: 1.8rem;
       }
 
       .back-link a {
-        color: #667eea;
+        color: #a0aec0;
         text-decoration: none;
         font-weight: 500;
-        transition: all 0.3s;
+        font-size: 0.9rem;
+        transition: color 0.3s;
       }
 
       .back-link a:hover {
-        color: #764ba2;
+        color: #667eea;
       }
 
+      /* Redesigned Demo Credentials Box */
+      .demo-box {
+        background: #ebf4ff;
+        border: 1px solid #c3dafe;
+        padding: 1rem 1.2rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: #4a5568;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .demo-box i {
+        color: #667eea;
+        font-size: 1.2rem;
+        margin-top: 2px;
+      }
+
+      .demo-info p {
+        margin-bottom: 0.3rem;
+        line-height: 1.4;
+      }
+      .demo-info p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Loader */
       .loading {
         display: none;
         text-align: center;
+        margin-bottom: 1rem;
       }
-
       .loading.show {
         display: block;
       }
-
       .spinner-small {
         border: 3px solid rgba(102, 126, 234, 0.1);
         border-top: 3px solid #667eea;
         border-radius: 50%;
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         animation: spin 1s linear infinite;
         margin: 0 auto 0.5rem;
       }
-
       @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
     </style>
   </head>
@@ -187,68 +264,76 @@
   <body>
     <div class="admin-container">
       <div class="admin-box">
-        <i class="fas fa-lock"></i>
-        <h1>Admin Panel</h1>
-        <p class="subtitle">Smart Dine-In Management</p>
+        
+        <div class="icon-wrapper">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        
+        <h1>Staff Portal</h1>
+        <p class="subtitle">Secure Login for Smart Dine-In</p>
 
         <form onsubmit="handleAdminLogin(event)">
           <div class="error-msg" id="errorMsg"></div>
 
           <div class="form-group">
-            <label>
-              <i class="fas fa-envelope"></i> Email
-            </label>
-            <input
-              type="email"
-              id="adminEmail"
-              placeholder="admin@smartdine.com"
-              required
-            />
+            <label><i class="fas fa-envelope"></i> Email Address</label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="adminEmail"
+                placeholder="admin@smartdine.com"
+                required
+              />
+            </div>
           </div>
 
           <div class="form-group">
-            <label>
-              <i class="fas fa-key"></i> Password
-            </label>
-            <input
-              type="password"
-              id="adminPassword"
-              placeholder="Enter password"
-              required
-            />
+            <label><i class="fas fa-key"></i> Password</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="adminPassword"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
           </div>
 
           <div class="form-group">
-            <label>
-              <i class="fas fa-user-tie"></i> Role
-            </label>
-            <select id="adminRole" required>
-              <option value="">Select your role</option>
-              <option value="admin">Admin (Full Access)</option>
-              <option value="manager">Manager (Order Management)</option>
-              <option value="staff">Staff (View Only)</option>
-            </select>
+            <label><i class="fas fa-user-tag"></i> Access Role</label>
+            <div class="input-wrapper">
+              <select id="adminRole" required>
+                <option value="" disabled selected>Select assigned role</option>
+                <option value="admin">Admin (Full Access)</option>
+                <option value="manager">Manager (Order Management)</option>
+                <option value="staff">Staff (View Only)</option>
+              </select>
+            </div>
           </div>
 
           <div class="loading" id="loading">
             <div class="spinner-small"></div>
-            <p>Verifying credentials...</p>
+            <p style="color: #718096; font-size: 0.85rem;">Authenticating...</p>
           </div>
 
           <button type="submit" class="btn-admin" id="loginBtn">
-            <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+            Sign In <i class="fas fa-arrow-right" style="font-size: 0.8rem; margin-top: 2px;"></i>
           </button>
         </form>
 
         <div class="back-link">
-          <a href="/">← Back to Home</a>
+          <a href="/"><i class="fas fa-arrow-left" style="margin-right: 5px;"></i> Return to Website</a>
         </div>
 
-        <div style="background: #f0f0f0; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.85rem; color: #666; text-align: center;">
-          <p style="margin: 0; font-weight: 600; margin-bottom: 0.5rem;">Demo Credentials:</p>
-          <p style="margin: 0; margin-bottom: 0.3rem;"><strong>Email:</strong> admin@smartdine.com</p>
-          <p style="margin: 0;"><strong>Password:</strong> Admin@123</p>
+        <div class="demo-box">
+          <i class="fas fa-info-circle"></i>
+          <div class="demo-info">
+            <p style="font-weight: 600; color: #2d3748;">System Access Credentials:</p>
+            <p><strong>Email:</strong> admin@smartdine.com</p>
+            <p><strong>Pass:</strong> Admin@123</p>
+          </div>
         </div>
+
       </div>
     </div>
 

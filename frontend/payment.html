@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Dine-In - Billing & Checkout</title>
 
-    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Font Awesome for Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -646,7 +644,6 @@
   </head>
 
   <body>
-    <!-- HEADER -->
     <header>
       <div class="container nav">
         <h1 class="logo">Smart Dine-In</h1>
@@ -660,11 +657,9 @@
       </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <div class="container">
       <h2 style="text-align: center; margin: 2rem 0">Billing & Checkout</h2>
 
-      <!-- ORDER TYPE SELECTION -->
       <div class="order-type-section">
         <h3>
           <i class="fas fa-store"></i> Select Order Type
@@ -683,7 +678,6 @@
         </div>
       </div>
 
-      <!-- TABLE SELECTION (for Dine-In) -->
       <div class="table-selection active" id="tableSelection">
         <h4>
           <i class="fas fa-chair"></i> Select Table Number
@@ -692,7 +686,6 @@
       </div>
 
       <div class="payment-container">
-        <!-- LEFT SECTION: CART -->
         <div class="cart-section">
           <div class="cart-header">
             <h2>
@@ -708,9 +701,7 @@
           </button>
         </div>
 
-        <!-- RIGHT SECTION: BILLING SUMMARY & PAYMENT -->
         <div>
-          <!-- BILLING SUMMARY -->
           <div class="billing-summary">
             <h3>
               <i class="fas fa-receipt"></i> Billing Summary
@@ -741,7 +732,6 @@
               <span id="totalAmount">₹0.00</span>
             </div>
 
-            <!-- PROMO CODE -->
             <div class="promo-section">
               <input
                 type="text"
@@ -752,7 +742,6 @@
               <button onclick="applyPromo()">Apply</button>
             </div>
 
-            <!-- PAYMENT METHODS -->
             <div class="payment-methods">
               <h4>
                 <i class="fas fa-credit-card"></i> Select Payment Method
@@ -760,7 +749,6 @@
 
               <div class="error-msg" id="errorMsg"></div>
 
-              <!-- UPI -->
               <label class="method-option">
                 <input
                   type="radio"
@@ -786,7 +774,6 @@
                 </small>
               </div>
 
-              <!-- QR CODE -->
               <label class="method-option">
                 <input
                   type="radio"
@@ -818,7 +805,6 @@
                 />
               </div>
 
-              <!-- CARD -->
               <label class="method-option">
                 <input
                   type="radio"
@@ -860,7 +846,6 @@
                 />
               </div>
 
-              <!-- NET BANKING -->
               <label class="method-option">
                 <input
                   type="radio"
@@ -891,7 +876,6 @@
                 </small>
               </div>
 
-              <!-- CASH ON DELIVERY -->
               <label class="method-option">
                 <input
                   type="radio"
@@ -935,7 +919,6 @@
       </div>
     </div>
 
-    <!-- SUCCESS MODAL -->
     <div id="successModal" class="modal">
       <div class="modal-content">
         <div class="modal-icon success">
@@ -958,13 +941,17 @@
             <strong>Estimated Time:</strong> 20-30 minutes
           </p>
         </div>
-        <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 1rem">
-          Back to Home
-        </button>
+        <div style="display: flex; gap: 10px; margin-top: 1.5rem">
+          <button class="btn-primary" onclick="trackOrder()" style="margin-top: 0;">
+            <i class="fas fa-map-location-dot"></i> Track Order
+          </button>
+          <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 0; background: #666;">
+            Home
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- PENDING MODAL (for Cash on Delivery) -->
     <div id="pendingModal" class="modal">
       <div class="modal-content">
         <div class="modal-icon pending">
@@ -983,9 +970,14 @@
             <strong>Status:</strong> Awaiting Payment on Delivery
           </p>
         </div>
-        <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 1rem">
-          Close
-        </button>
+        <div style="display: flex; gap: 10px; margin-top: 1.5rem">
+          <button class="btn-primary" onclick="trackOrder()" style="margin-top: 0;">
+            <i class="fas fa-map-location-dot"></i> Track Order
+          </button>
+          <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 0; background: #666;">
+            Home
+          </button>
+        </div>
       </div>
     </div>
 

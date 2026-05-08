@@ -5,486 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Smart Dine-In</title>
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="/styles.css" />
     <style>
-      body {
-        background: #f5f5f5;
-      }
-
-      .admin-dashboard {
-        display: flex;
-        min-height: 100vh;
-      }
-
+      body { background: #f5f5f5; }
+      .admin-dashboard { display: flex; min-height: 100vh; }
+      
       /* Sidebar */
-      .admin-sidebar {
-        width: 280px;
-        background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%);
-        color: white;
-        padding: 2rem 0;
-        position: fixed;
-        height: 100vh;
-        overflow-y: auto;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-      }
-
-      .admin-sidebar h2 {
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 1.3rem;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        padding-bottom: 1rem;
-      }
-
-      .sidebar-user {
-        padding: 1rem 1.5rem;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        margin: 0 1rem 2rem;
-        text-align: center;
-      }
-
-      .sidebar-user .user-role {
-        font-size: 0.8rem;
-        opacity: 0.8;
-        margin-top: 0.5rem;
-      }
-
-      .sidebar-menu {
-        list-style: none;
-      }
-
-      .sidebar-menu li {
-        margin: 0;
-      }
-
-      .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 0.8rem;
-        padding: 1rem 1.5rem;
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        transition: all 0.3s;
-        border-left: 3px solid transparent;
-      }
-
-      .sidebar-menu a:hover,
-      .sidebar-menu a.active {
-        color: white;
-        background: rgba(255, 255, 255, 0.1);
-        border-left-color: #667eea;
-      }
-
-      .sidebar-menu i {
-        font-size: 1.1rem;
-        width: 30px;
-      }
-
-      .logout-btn {
-        position: absolute;
-        bottom: 1rem;
-        left: 1rem;
-        right: 1rem;
-        padding: 0.8rem;
-        background: #e74c3c;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s;
-      }
-
-      .logout-btn:hover {
-        background: #c0392b;
-      }
+      .admin-sidebar { width: 280px; background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%); color: white; padding: 2rem 0; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); }
+      .admin-sidebar h2 { text-align: center; margin-bottom: 2rem; font-size: 1.3rem; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 1rem; }
+      .sidebar-user { padding: 1rem 1.5rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 0 1rem 2rem; text-align: center; }
+      .sidebar-user .user-role { font-size: 0.8rem; opacity: 0.8; margin-top: 0.5rem; }
+      .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+      .sidebar-menu a { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
+      .sidebar-menu a:hover, .sidebar-menu a.active { color: white; background: rgba(255, 255, 255, 0.1); border-left-color: #667eea; }
+      .sidebar-menu i { font-size: 1.1rem; width: 30px; }
+      .logout-btn { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; padding: 0.8rem; background: #e74c3c; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+      .logout-btn:hover { background: #c0392b; }
 
       /* Main Content */
-      .admin-main {
-        margin-left: 280px;
-        flex: 1;
-        padding: 2rem;
-      }
-
-      .admin-header {
-        background: white;
-        padding: 2rem;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .admin-header h1 {
-        font-size: 1.8rem;
-        color: #2c3e50;
-      }
-
-      .date-filter {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-      }
-
-      .date-filter input,
-      .date-filter select {
-        padding: 0.6rem 1rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-family: "Poppins", sans-serif;
-      }
-
-      /* Stats */
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-      }
-
-      .stat-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .stat-icon {
-        font-size: 2rem;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-      }
-
-      .stat-icon.pending {
-        background: #fff3cd;
-        color: #ff9800;
-      }
-
-      .stat-icon.completed {
-        background: #d4edda;
-        color: #4caf50;
-      }
-
-      .stat-icon.revenue {
-        background: #cfe2ff;
-        color: #667eea;
-      }
-
-      .stat-value {
-        font-size: 1.5rem;
-        font-weight: 700;
-      }
-
-      .stat-label {
-        color: #666;
-        font-size: 0.85rem;
-      }
-
-      /* Tabs */
-      .tab-buttons {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        background: white;
-        padding: 1rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .tab-btn {
-        padding: 0.8rem 1.5rem;
-        background: none;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s;
-        color: #666;
-      }
-
-      .tab-btn.active {
-        border-color: #667eea;
-        color: #667eea;
-        background: rgba(102, 126, 234, 0.1);
-      }
-
-      /* Orders Section */
-      .orders-section {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-      }
-
-      .orders-header {
-        padding: 1.5rem;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .search-box {
-        display: flex;
-        gap: 0.5rem;
-      }
-
-      .search-box input {
-        padding: 0.6rem 1rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        width: 250px;
-      }
-
-      .order-queue {
-        display: grid;
-        gap: 0;
-      }
-
-      .order-card {
-        padding: 1.5rem;
-        border-bottom: 1px solid #eee;
-        display: flex;
-        justify-content: space-between;
-        align-items: start;
-        transition: all 0.3s;
-        background: #fff;
-      }
-
-      .order-card:hover {
-        background: #f9f9f9;
-      }
-
-      .order-info {
-        flex: 1;
-      }
-
-      .order-header {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .order-id {
-        font-weight: 700;
-        font-size: 1.1rem;
-        color: #2c3e50;
-      }
-
-      .order-type-badge {
-        display: inline-block;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-
-      .order-type-badge.dine-in {
-        background: #e3f2fd;
-        color: #1976d2;
-      }
-
-      .order-type-badge.takeaway {
-        background: #f3e5f5;
-        color: #7b1fa2;
-      }
-
-      .order-details {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 1rem;
-        font-size: 0.9rem;
-        color: #666;
-        margin-bottom: 1rem;
-      }
-
-      .detail-row {
-        display: flex;
-        gap: 0.5rem;
-      }
-
-      .detail-row strong {
-        color: #333;
-        min-width: 80px;
-      }
-
-      .order-items {
-        background: #f9f9f9;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-      }
-
-      .order-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.3rem 0;
-      }
-
-      .order-actions {
-        display: flex;
-        gap: 0.8rem;
-        flex-direction: column;
-        min-width: 150px;
-      }
-
-      .status-select {
-        padding: 0.6rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-family: "Poppins", sans-serif;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      .btn-small {
-        padding: 0.6rem 1rem;
-        border: none;
-        border-radius: 8px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s;
-        font-size: 0.85rem;
-      }
-
-      .btn-print {
-        background: #667eea;
-        color: white;
-      }
-
-      .btn-print:hover {
-        background: #5568d3;
-      }
-
-      .btn-cancel {
-        background: #e74c3c;
-        color: white;
-      }
-
-      .btn-cancel:hover {
-        background: #c0392b;
-      }
-
-      .empty-state {
-        padding: 3rem;
-        text-align: center;
-        color: #999;
-      }
-
-      .empty-state i {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        opacity: 0.5;
-      }
-
-      /* Table View */
-      .table-view {
-        overflow-x: auto;
-      }
-
-      .table-view table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .table-view th {
-        background: #f5f5f5;
-        padding: 1rem;
-        text-align: left;
-        font-weight: 600;
-        border-bottom: 2px solid #ddd;
-        color: #2c3e50;
-      }
-
-      .table-view td {
-        padding: 1rem;
-        border-bottom: 1px solid #eee;
-      }
-
-      .table-view tr:hover {
-        background: #fafafa;
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .admin-sidebar {
-          width: 70px;
-          padding: 1rem 0;
-        }
-
-        .admin-sidebar h2 {
-          display: none;
-        }
-
-        .sidebar-menu a {
-          padding: 1rem;
-          justify-content: center;
-        }
-
-        .sidebar-menu a span {
-          display: none;
-        }
-
-        .admin-main {
-          margin-left: 70px;
-          padding: 1rem;
-        }
-
-        .admin-header {
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .date-filter {
-          flex-direction: column;
-          width: 100%;
-        }
-
-        .order-card {
-          flex-direction: column;
-        }
-
-        .order-actions {
-          flex-direction: row;
-        }
-      }
+      .admin-main { margin-left: 280px; flex: 1; padding: 2rem; }
+      .admin-header { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; }
+      .admin-header h1 { font-size: 1.8rem; color: #2c3e50; }
+      .date-filter { display: flex; gap: 1rem; align-items: center; }
+      .date-filter input, .date-filter select { padding: 0.6rem 1rem; border: 1px solid #ddd; border-radius: 8px; font-family: "Poppins", sans-serif; }
+      .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+      .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 1rem; }
+      .stat-icon { font-size: 2rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+      .stat-icon.pending { background: #fff3cd; color: #ff9800; }
+      .stat-icon.completed { background: #d4edda; color: #4caf50; }
+      .stat-icon.revenue { background: #cfe2ff; color: #667eea; }
+      .stat-value { font-size: 1.5rem; font-weight: 700; }
+      .stat-label { color: #666; font-size: 0.85rem; }
+      .tab-buttons { display: flex; gap: 1rem; margin-bottom: 2rem; background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+      .tab-btn { padding: 0.8rem 1.5rem; background: none; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; color: #666; }
+      .tab-btn.active { border-color: #667eea; color: #667eea; background: rgba(102, 126, 234, 0.1); }
+      .orders-section { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden; margin-bottom: 2rem;}
+      .orders-header { padding: 1.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+      .search-box input { padding: 0.6rem 1rem; border: 1px solid #ddd; border-radius: 8px; width: 250px; }
+      .order-card { padding: 1.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: start; transition: all 0.3s; background: #fff; }
+      .order-card:hover { background: #f9f9f9; }
+      .order-info { flex: 1; }
+      .order-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; }
+      .order-id { font-weight: 700; font-size: 1.1rem; color: #2c3e50; }
+      .order-type-badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+      .order-type-badge.dine-in { background: #e3f2fd; color: #1976d2; }
+      .order-type-badge.takeaway { background: #f3e5f5; color: #7b1fa2; }
+      .order-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+      .detail-row strong { color: #333; min-width: 80px; }
+      .order-items { background: #f9f9f9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+      .order-item { display: flex; justify-content: space-between; padding: 0.3rem 0; }
+      .order-actions { display: flex; gap: 0.8rem; flex-direction: column; min-width: 150px; }
+      .status-select { padding: 0.6rem; border: 1px solid #ddd; border-radius: 8px; font-family: "Poppins", sans-serif; font-weight: 600; cursor: pointer; }
+      .btn-small { padding: 0.6rem 1rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.85rem; }
+      .btn-print { background: #667eea; color: white; }
+      .btn-print:hover { background: #5568d3; }
+      .empty-state { padding: 3rem; text-align: center; color: #999; }
+      .empty-state i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+      .table-view table { width: 100%; border-collapse: collapse; }
+      .table-view th { background: #f5f5f5; padding: 1rem; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; color: #2c3e50; }
+      .table-view td { padding: 1rem; border-bottom: 1px solid #eee; }
+      .table-view tr:hover { background: #fafafa; }
     </style>
   </head>
 
   <body>
     <div class="admin-dashboard">
-      <!-- SIDEBAR -->
       <div class="admin-sidebar">
-        <h2>
-          <i class="fas fa-store"></i> Smart Dine-In
-        </h2>
-
+        <h2><i class="fas fa-store"></i> Smart Dine-In</h2>
         <div class="sidebar-user">
-          <div>
-            <i class="fas fa-user-circle" style="font-size: 2rem"></i>
-          </div>
+          <div><i class="fas fa-user-circle" style="font-size: 2rem"></i></div>
           <div id="adminUserName">Admin</div>
           <div class="user-role" id="adminRoleDisplay">Admin</div>
         </div>
@@ -492,32 +83,37 @@
         <ul class="sidebar-menu">
           <li>
             <a href="#" class="menu-link active" data-section="overview">
-              <i class="fas fa-chart-line"></i>
-              <span>Overview</span>
+              <i class="fas fa-chart-line"></i> <span>Overview</span>
             </a>
           </li>
           <li>
             <a href="#" class="menu-link" data-section="orders">
-              <i class="fas fa-list-check"></i>
-              <span>Orders Queue</span>
+              <i class="fas fa-list-check"></i> <span>Orders Queue</span>
             </a>
           </li>
           <li>
             <a href="#" class="menu-link" data-section="tables">
-              <i class="fas fa-chair"></i>
-              <span>Tables</span>
+              <i class="fas fa-chair"></i> <span>Tables</span>
             </a>
           </li>
           <li>
             <a href="#" class="menu-link" data-section="payments">
-              <i class="fas fa-credit-card"></i>
-              <span>Payments</span>
+              <i class="fas fa-credit-card"></i> <span>Payments</span>
             </a>
           </li>
           <li>
             <a href="#" class="menu-link" data-section="reports">
-              <i class="fas fa-file-chart-line"></i>
-              <span>Reports</span>
+              <i class="fas fa-file-chart-line"></i> <span>Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-link" data-section="menu">
+              <i class="fas fa-burger"></i> <span>Menu Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-link" data-section="offers">
+              <i class="fas fa-bullhorn"></i> <span>Offers & Promos</span>
             </a>
           </li>
         </ul>
@@ -527,9 +123,7 @@
         </button>
       </div>
 
-      <!-- MAIN CONTENT -->
       <div class="admin-main">
-        <!-- HEADER -->
         <div class="admin-header">
           <h1 id="pageTitle">Dashboard Overview</h1>
           <div class="date-filter">
@@ -548,33 +142,24 @@
           </div>
         </div>
 
-        <!-- OVERVIEW SECTION -->
         <div id="overviewSection" class="section-content">
           <div class="stats-grid">
             <div class="stat-card">
-              <div class="stat-icon pending">
-                <i class="fas fa-hourglass-half"></i>
-              </div>
+              <div class="stat-icon pending"><i class="fas fa-hourglass-half"></i></div>
               <div>
                 <div class="stat-value" id="pendingCount">0</div>
                 <div class="stat-label">Pending Orders</div>
               </div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon completed">
-                <i class="fas fa-check-circle"></i>
-              </div>
+              <div class="stat-icon completed"><i class="fas fa-check-circle"></i></div>
               <div>
                 <div class="stat-value" id="completedCount">0</div>
                 <div class="stat-label">Completed Today</div>
               </div>
             </div>
-
             <div class="stat-card">
-              <div class="stat-icon revenue">
-                <i class="fas fa-indian-rupee-sign"></i>
-              </div>
+              <div class="stat-icon revenue"><i class="fas fa-indian-rupee-sign"></i></div>
               <div>
                 <div class="stat-value" id="revenueAmount">₹0</div>
                 <div class="stat-label">Today Revenue</div>
@@ -583,112 +168,114 @@
           </div>
 
           <div class="tab-buttons">
-            <button class="tab-btn active" onclick="switchView('queue')">
-              <i class="fas fa-list-check"></i> Queue View
-            </button>
-            <button class="tab-btn" onclick="switchView('table')">
-              <i class="fas fa-table"></i> Table View
-            </button>
+            <button class="tab-btn active" onclick="switchView('queue')"><i class="fas fa-list-check"></i> Queue View</button>
+            <button class="tab-btn" onclick="switchView('table')"><i class="fas fa-table"></i> Table View</button>
           </div>
 
-          <!-- Queue View -->
           <div id="queueView" class="orders-section">
             <div class="orders-header">
               <h3>Order Queue - Preparing Orders</h3>
-              <div class="search-box">
-                <input
-                  type="text"
-                  id="searchOrder"
-                  placeholder="Search Order ID or Table..."
-                />
-              </div>
+              <div class="search-box"><input type="text" id="searchOrder" placeholder="Search Order ID or Table..." /></div>
             </div>
             <div id="orderQueueContainer" class="order-queue"></div>
           </div>
 
-          <!-- Table View -->
           <div id="tableView" class="orders-section" style="display: none">
-            <div class="orders-header">
-              <h3>All Orders - Table View</h3>
-            </div>
+            <div class="orders-header"><h3>All Orders - Table View</h3></div>
             <div class="table-view">
               <table id="ordersTable">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Type</th>
-                    <th>Table/Phone</th>
-                    <th>Items</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Payment</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
+                <thead><tr><th>Order ID</th><th>Type</th><th>Table/Phone</th><th>Items</th><th>Amount</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead>
                 <tbody id="ordersTableBody"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- ORDERS SECTION -->
         <div id="ordersSection" class="section-content" style="display: none">
           <div class="orders-section">
             <div class="orders-header">
               <h3>All Orders</h3>
-              <div class="search-box">
-                <input
-                  type="text"
-                  id="searchOrderAdmin"
-                  placeholder="Search Order ID..."
-                />
-              </div>
+              <div class="search-box"><input type="text" id="searchOrderAdmin" placeholder="Search Order ID..." /></div>
             </div>
             <div id="allOrdersContainer" class="order-queue"></div>
           </div>
         </div>
 
-        <!-- TABLES SECTION -->
         <div id="tablesSection" class="section-content" style="display: none">
           <div class="orders-section">
-            <div class="orders-header">
-              <h3>Table Status</h3>
-            </div>
+            <div class="orders-header"><h3>Table Status</h3></div>
             <div id="tablesContainer" style="padding: 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem;"></div>
           </div>
         </div>
 
-        <!-- PAYMENTS SECTION -->
         <div id="paymentsSection" class="section-content" style="display: none">
           <div class="orders-section">
-            <div class="orders-header">
-              <h3>Payment Details</h3>
-            </div>
+            <div class="orders-header"><h3>Payment Details</h3></div>
             <div class="table-view">
               <table id="paymentsTable">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Amount</th>
-                    <th>Method</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
+                <thead><tr><th>Order ID</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
                 <tbody id="paymentsTableBody"></tbody>
               </table>
             </div>
           </div>
         </div>
 
-        <!-- REPORTS SECTION -->
         <div id="reportsSection" class="section-content" style="display: none">
           <div class="orders-section">
+            <div class="orders-header"><h3>Daily Reports</h3></div>
+            <div style="padding: 2rem; text-align: center;"><p>Reports coming soon...</p></div>
+          </div>
+        </div>
+
+        <div id="menuSection" class="section-content" style="display: none">
+          <div class="orders-section">
             <div class="orders-header">
-              <h3>Daily Reports</h3>
+              <h3>Add New Product</h3>
             </div>
-            <div style="padding: 2rem; text-align: center;">
-              <p>Reports coming soon...</p>
+            <div style="padding: 2rem;">
+              <form id="addProductForm" style="max-width: 500px; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Product Name *</label>
+                  <input type="text" id="newProductName" required style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Price (₹) *</label>
+                  <input type="number" id="newProductPrice" required style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Description</label>
+                  <textarea id="newProductDesc" style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px; height: 80px;"></textarea>
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Image URL</label>
+                  <input type="text" id="newProductImage" placeholder="/image/default.jpg" style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Add Product to Menu</button>
+                <div id="productMsg" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="offersSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header">
+              <h3>Manage Advertising Banner</h3>
+            </div>
+            <div style="padding: 2rem;">
+              <p style="margin-bottom: 1rem;">Add moving text lines that will scroll horizontally on the homepage banner.</p>
+              
+              <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 600px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <div id="offersList" style="margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 10px;"></div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+                  <input type="text" id="newOfferText" placeholder="E.g. Get 10% off on billing above ₹1299!" style="flex:1; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                  <button type="button" onclick="addOfferLine()" style="padding: 0.8rem 1.5rem; background: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Line</button>
+                </div>
+                
+                <button style="width: 100%; padding: 1rem; background: #27ae60; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;" onclick="saveOffers()">Save Offers to Live Website</button>
+                <div id="offersMsg" style="margin-top: 1rem; text-align: center; font-weight: 600; color: #27ae60;"></div>
+              </div>
             </div>
           </div>
         </div>

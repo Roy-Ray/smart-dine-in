@@ -3,6 +3,7 @@ let cart = [];
 let allMenuItems = [];
 let selectedOrderType = "dine-in";
 let selectedTable = null;
+let currentOrderId = null; // Variable to store generated order ID
 
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
@@ -461,6 +462,7 @@ function generateOrderId() {
 
 // Show success modal
 function showSuccessModal(orderId, totalAmount, method) {
+  currentOrderId = orderId; // Save the order ID for tracking
   document.getElementById("orderId").textContent = orderId;
   document.getElementById("modalTotal").textContent = `₹${totalAmount.toFixed(2)}`;
   document.getElementById("modalPaymentMethod").textContent = capitalizeMethod(method);
@@ -469,6 +471,7 @@ function showSuccessModal(orderId, totalAmount, method) {
 
 // Show pending modal (for COD)
 function showPendingModal(orderId, totalAmount, method) {
+  currentOrderId = orderId; // Save the order ID for tracking
   document.getElementById("pendingOrderId").textContent = orderId;
   document.getElementById("pendingTotal").textContent = `₹${totalAmount.toFixed(2)}`;
   document.getElementById("pendingModal").style.display = "block";
@@ -497,6 +500,13 @@ function addItemToCart(item) {
   saveCart();
   displayCart();
   updateBillingTotal();
+}
+
+// Track order function
+function trackOrder() {
+  if (currentOrderId) {
+    window.location.href = `/order-tracking.html?id=${currentOrderId}`;
+  }
 }
 
 // Allow clicking on modals to close them

@@ -5,23 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Dine-In Café</title>
 
-    <!-- FONT AWESOME -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
 
-    <!-- GOOGLE FONT -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* Enhanced Navigation & Staff Login Button */
+      .nav ul {
+        align-items: center;
+      }
+      .staff-login-btn {
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        color: #fff !important;
+        padding: 0.5rem 1.2rem !important;
+        border-radius: 30px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 4px 15px rgba(155, 109, 255, 0.3);
+        transition: all 0.3s ease !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .staff-login-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(155, 109, 255, 0.5);
+        color: #fff !important;
+      }
+
+      /* Hero Enhancements (Glassmorphism) */
+      .hero-content {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 3rem 2rem;
+      }
+      .hero h2 {
+        font-weight: 700;
+        color: #1a1a1a;
+      }
+
+      /* Card Enhancements */
+      .signature-item, .menu-item, .testi {
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .signature-item:hover, .menu-item:hover, .testi:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Subtle background styling for sections */
+      .story {
+        background: linear-gradient(180deg, #ffffff 0%, #fcf9ff 100%);
+      }
+      .testimonials {
+        background: #fcf9ff;
+        padding: 5rem 1rem;
+        border-radius: 30px;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+    </style>
   </head>
+  <div class="ticker-wrap">
+      <div class="ticker-move" id="offerTicker">
+        ✨ Welcome to Smart Dine-In! Loading exciting offers... ✨
+      </div>
+    </div>
 
   <body>
-    <!-- HEADER -->
     <header>
       <div class="container nav">
         <h1 class="logo">Smart Dine-In</h1>
@@ -33,6 +97,11 @@
             <li><a href="#story">Our Story</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li style="margin-left: 100px;"></li>
+              <a href="/admin-login.html" class="staff-login-btn">
+                <i class="fas fa-user-shield"></i> Staff Login
+              </a>
+            </li>
           </ul>
         </nav>
 
@@ -40,7 +109,6 @@
       </div>
     </header>
 
-    <!-- HERO -->
     <section id="hero" class="hero reveal">
       <div class="overlay"></div>
       <div class="hero-content">
@@ -52,7 +120,6 @@
       </div>
     </section>
 
-    <!-- SIGNATURE ITEMS -->
     <section id="favourites" class="signature-section reveal">
       <div class="container">
         <h2>Our Signature Items</h2>
@@ -87,7 +154,6 @@
       </div>
     </section>
 
-    <!-- STORY -->
     <section id="story" class="story reveal">
       <div class="container story-grid">
         <div class="story-text">
@@ -102,7 +168,6 @@
       </div>
     </section>
 
-    <!-- TESTIMONIALS -->
     <section id="testimonials" class="testimonials container reveal">
       <h2>What Our Customers Say</h2>
       <div class="testi-grid">
@@ -117,7 +182,6 @@
       </div>
     </section>
 
-    <!-- MENU -->
     <section id="menu" class="gallery container reveal">
       <h2>Our Menu Highlights</h2>
 
@@ -159,13 +223,11 @@
         </div>
       </div>
 
-      <!-- SEE ALL -->
       <div style="text-align: center; margin-top: 25px">
         <a href="/menu.html" class="btn">See All</a>
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer id="contact" class="reveal">
       <div class="container">
         <h2>Contact Us</h2>
@@ -186,5 +248,21 @@
     <button id="toTop" class="btn">↑</button>
 
     <script src="main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const res = await fetch("/api/offers");
+          if (res.ok) {
+            const offers = await res.json();
+            if (offers && offers.length > 0) {
+              const ticker = document.getElementById("offerTicker");
+              ticker.innerHTML = offers.map(o => `🌟 ${o.message} 🌟`).join('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            }
+          }
+        } catch (e) {
+          console.error("Failed to load offers", e);
+        }
+      });
+    </script>
   </body>
 </html>
