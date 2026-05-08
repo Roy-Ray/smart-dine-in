@@ -615,3 +615,21 @@ footer p {
   padding: 8px;
   width: 80%;
 }
+
+/* ===== Menu Item Button Styles ===== */
+.menu-item .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-item .btn:hover {
+  transform: translateY(-2px);
+}
+

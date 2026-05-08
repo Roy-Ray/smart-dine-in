@@ -11,7 +11,42 @@
       rel="stylesheet"
     />
 
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .cart-icon {
+        position: relative;
+        font-size: 1.3rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .cart-icon:hover {
+        transform: scale(1.1);
+      }
+
+      #cartBadge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #ff8ab3;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: none;
+      }
+    </style>
   </head>
 
   <body>
@@ -24,6 +59,12 @@
         <nav>
           <ul>
             <li><a href="/">Home</a></li>
+            <li style="position: relative; display: flex; align-items: center;">
+              <a href="#" onclick="goToCart(); return false;" class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cartBadge">0</span>
+              </a>
+            </li>
           </ul>
         </nav>
       </div>

@@ -74,6 +74,171 @@ app.post("/api/login", (req, res) => {
   });
 });
 
+// ================= MIDDLEWARE =================
+
+// Verify JWT Token
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({ error: "Invalid token" });
+    }
+    req.userId = decoded.id;
+    next();
+  });
+}
+
+// ================= ORDER ROUTES =================
+
+// 4. Create Order
+app.post("/api/orders", verifyToken, (req, res) => {
+  const { items, totalAmount, paymentMethod, status, paymentDetails } = req.body;
+  const userId = req.userId;
+  const orderId = `ORD-${Date.now()}`;
+  const timestamp = new Date();
+
+  // Validate input
+  if (!items || items.length === 0 || !totalAmount) {
+    return res.status(400).json({ error: "Invalid order data" });
+  }
+
+  // Check if orders table exists, if not create it
+  const createTableSQL = `
+    CREATE TABLE IF NOT EXISTS orders (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      orderId VARCHAR(50) UNIQUE,
+      userId INT,
+      items JSON,
+      totalAmount DECIMAL(10, 2),
+      paymentMethod VARCHAR(50),
+      paymentDetails JSON,
+      status VARCHAR(50),
+      timestamp DATETIME,
+      FOREIGN KEY (userId) REFERENCES users(id)
+    )
+  `;
+
+  db.query(createTableSQL, (err) => {
+    if (err) {
+      console.error("Error creating orders table:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    // Insert order
+    const insertSQL = `
+      INSERT INTO orders (orderId, userId, items, totalAmount, paymentMethod, paymentDetails, status, timestamp)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    db.query(
+      insertSQL,
+      [
+        orderId,
+        userId,
+        JSON.stringify(items),
+        totalAmount,
+        paymentMethod,
+        JSON.stringify(paymentDetails),
+        status,
+        timestamp,
+      ],
+      (err, result) => {
+        if (err) {
+          console.error("Error inserting order:", err);
+          return res.status(500).json({ error: "Failed to create order" });
+        }
+
+        res.status(201).json({
+          message: "Order created successfully",
+          orderId: orderId,
+          totalAmount: totalAmount,
+          paymentMethod: paymentMethod,
+        });
+      }
+    );
+  });
+});
+
+// 5. Get User's Orders
+app.get("/api/orders", verifyToken, (req, res) => {
+  const userId = req.userId;
+
+  const sql = "SELECT * FROM orders WHERE userId = ? ORDER BY timestamp DESC";
+
+  db.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error("Error fetching orders:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    // Parse JSON fields
+    const orders = results.map((order) => ({
+      ...order,
+      items: JSON.parse(order.items),
+      paymentDetails: JSON.parse(order.paymentDetails),
+    }));
+
+    res.json(orders);
+  });
+});
+
+// 6. Get Single Order Details
+app.get("/api/orders/:orderId", verifyToken, (req, res) => {
+  const { orderId } = req.params;
+  const userId = req.userId;
+
+  const sql = "SELECT * FROM orders WHERE orderId = ? AND userId = ?";
+
+  db.query(sql, [orderId, userId], (err, results) => {
+    if (err) {
+      console.error("Error fetching order:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    const order = {
+      ...results[0],
+      items: JSON.parse(results[0].items),
+      paymentDetails: JSON.parse(results[0].paymentDetails),
+    };
+
+    res.json(order);
+  });
+});
+
+// 7. Update Order Status (for admin/system)
+app.patch("/api/orders/:orderId/status", verifyToken, (req, res) => {
+  const { orderId } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ error: "Status is required" });
+  }
+
+  const sql = "UPDATE orders SET status = ? WHERE orderId = ?";
+
+  db.query(sql, [status, orderId], (err, result) => {
+    if (err) {
+      console.error("Error updating order:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Order not found" });
+    }
+
+    res.json({ message: "Order status updated successfully", status });
+  });
+});
+
 // ================= STATIC FILES =================
 
 // serve frontend

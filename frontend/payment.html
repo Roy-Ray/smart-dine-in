@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Dine-In - Billing & Checkout</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      /* Payment Page Specific Styles */
+      .payment-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .payment-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Cart Section */
+      .cart-section {
+        background: #fff;
+        padding: 2rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 1rem;
+      }
+
+      .cart-header h2 {
+        font-size: 1.5rem;
+        color: var(--text);
+      }
+
+      .empty-cart {
+        text-align: center;
+        padding: 2rem;
+        color: var(--muted);
+      }
+
+      .empty-cart i {
+        font-size: 3rem;
+        color: var(--accent2);
+        margin-bottom: 1rem;
+      }
+
+      .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #f0f0f0;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .cart-item-details {
+        flex: 1;
+      }
+
+      .cart-item-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .cart-item-price {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .cart-item-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .qty-btn {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--accent1);
+        background: #fff;
+        color: var(--accent1);
+        border-radius: 50%;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+      }
+
+      .qty-btn:hover {
+        background: var(--accent1);
+        color: #fff;
+      }
+
+      .qty-display {
+        min-width: 30px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .item-total {
+        min-width: 70px;
+        text-align: right;
+        font-weight: 600;
+        color: var(--accent1);
+      }
+
+      .remove-btn {
+        background: none;
+        border: none;
+        color: #ff6b6b;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: transform 0.2s;
+        margin-left: 0.5rem;
+      }
+
+      .remove-btn:hover {
+        transform: scale(1.2);
+      }
+
+      /* Continue Shopping Button */
+      .continue-shopping {
+        background: none;
+        border: 2px solid var(--accent1);
+        color: var(--accent1);
+        padding: 0.7rem 1.4rem;
+        border-radius: var(--radius);
+        font-weight: 500;
+        cursor: pointer;
+        width: 100%;
+        margin: 1.5rem 0;
+        transition: all 0.3s ease;
+      }
+
+      .continue-shopping:hover {
+        background: var(--accent1);
+        color: #fff;
+      }
+
+      /* Billing Summary */
+      .billing-summary {
+        background: #fff;
+        padding: 2rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+      }
+
+      .billing-summary h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.95rem;
+      }
+
+      .summary-row.total {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--accent1);
+        border: none;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--accent1);
+      }
+
+      /* Payment Methods */
+      .payment-methods {
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 2px solid #f0f0f0;
+      }
+
+      .payment-methods h4 {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        color: var(--text);
+      }
+
+      .method-option {
+        display: flex;
+        align-items: center;
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--radius);
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .method-option:hover {
+        border-color: var(--accent1);
+        background: rgba(155, 109, 255, 0.05);
+      }
+
+      .method-option input[type="radio"] {
+        margin-right: 0.8rem;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+      }
+
+      .method-option.selected {
+        border-color: var(--accent1);
+        background: rgba(155, 109, 255, 0.1);
+      }
+
+      .method-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+        cursor: pointer;
+        flex: 1;
+      }
+
+      .method-icon {
+        font-size: 1.2rem;
+        width: 25px;
+        text-align: center;
+      }
+
+      /* Payment Form (dynamic) */
+      .payment-form {
+        display: none;
+        margin-top: 1rem;
+        padding: 1rem;
+        background: rgba(155, 109, 255, 0.05);
+        border-radius: var(--radius);
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .payment-form.active {
+        display: block;
+      }
+
+      .payment-form input,
+      .payment-form select {
+        width: 100%;
+        padding: 0.7rem;
+        margin-bottom: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: var(--radius);
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+      }
+
+      .payment-form input:focus,
+      .payment-form select:focus {
+        outline: none;
+        border-color: var(--accent1);
+        box-shadow: 0 0 0 3px rgba(155, 109, 255, 0.1);
+      }
+
+      .card-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+      }
+
+      .card-inputs.full {
+        grid-template-columns: 1fr;
+      }
+
+      .qr-display {
+        text-align: center;
+        padding: 1rem;
+        background: #fff;
+        border-radius: var(--radius);
+        margin-bottom: 1rem;
+      }
+
+      .qr-display i {
+        font-size: 3rem;
+        color: var(--accent1);
+        margin-bottom: 0.5rem;
+      }
+
+      .qr-display p {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        width: 100%;
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        color: #fff;
+        padding: 1rem;
+        border: none;
+        border-radius: var(--radius);
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        margin-top: 1rem;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(155, 109, 255, 0.3);
+      }
+
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: var(--radius);
+        max-width: 500px;
+        text-align: center;
+        animation: slideUp 0.3s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .modal-icon.success {
+        color: #4caf50;
+      }
+
+      .modal-icon.pending {
+        color: var(--accent1);
+      }
+
+      .modal h2 {
+        margin-bottom: 0.5rem;
+      }
+
+      .modal p {
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+      }
+
+      .order-details {
+        background: #f9f9f9;
+        padding: 1rem;
+        border-radius: var(--radius);
+        margin: 1rem 0;
+        text-align: left;
+      }
+
+      .order-details p {
+        margin: 0.5rem 0;
+        font-size: 0.9rem;
+      }
+
+      .order-id {
+        font-weight: 600;
+        color: var(--accent1);
+      }
+
+      /* Promo Code */
+      .promo-section {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .promo-section input {
+        flex: 1;
+        padding: 0.6rem;
+        border: 1px solid #ddd;
+        border-radius: var(--radius);
+        font-size: 0.9rem;
+      }
+
+      .promo-section button {
+        padding: 0.6rem 1rem;
+        background: var(--accent1);
+        color: #fff;
+        border: none;
+        border-radius: var(--radius);
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+
+      .promo-section button:hover {
+        transform: translateY(-2px);
+      }
+
+      /* Error Message */
+      .error-msg {
+        background: #ffebee;
+        border: 1px solid #ff6b6b;
+        color: #c92a2a;
+        padding: 0.8rem;
+        border-radius: var(--radius);
+        margin-bottom: 1rem;
+        display: none;
+      }
+
+      .error-msg.show {
+        display: block;
+      }
+
+      /* Loading */
+      .loading {
+        display: none;
+        text-align: center;
+        color: var(--muted);
+        margin: 1rem 0;
+      }
+
+      .loading.show {
+        display: block;
+      }
+
+      .spinner {
+        border: 3px solid rgba(155, 109, 255, 0.1);
+        border-top: 3px solid var(--accent1);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0.5rem auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container nav">
+        <h1 class="logo">Smart Dine-In</h1>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/menu.html">Menu</a></li>
+            <li><a id="logoutBtn" href="#" style="cursor: pointer">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <h2 style="text-align: center; margin: 2rem 0">Billing & Checkout</h2>
+
+      <div class="payment-container">
+        <!-- LEFT SECTION: CART -->
+        <div class="cart-section">
+          <div class="cart-header">
+            <h2>
+              <i class="fas fa-shopping-cart"></i> Your Cart
+            </h2>
+            <span id="cartCount" style="background: var(--accent2); color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600;">0</span>
+          </div>
+
+          <div id="cartItems"></div>
+
+          <button class="continue-shopping" onclick="goBackToMenu()">
+            <i class="fas fa-plus"></i> Add More Items
+          </button>
+        </div>
+
+        <!-- RIGHT SECTION: BILLING SUMMARY & PAYMENT -->
+        <div>
+          <!-- BILLING SUMMARY -->
+          <div class="billing-summary">
+            <h3>
+              <i class="fas fa-receipt"></i> Billing Summary
+            </h3>
+
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span id="subtotal">₹0.00</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Tax (18%):</span>
+              <span id="tax">₹0.00</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Delivery Charges:</span>
+              <span id="delivery">₹0.00</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Discount:</span>
+              <span id="discount" style="color: #4caf50;">₹0.00</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total Amount:</span>
+              <span id="totalAmount">₹0.00</span>
+            </div>
+
+            <!-- PROMO CODE -->
+            <div class="promo-section">
+              <input
+                type="text"
+                id="promoCode"
+                placeholder="Enter promo code"
+                maxlength="10"
+              />
+              <button onclick="applyPromo()">Apply</button>
+            </div>
+
+            <!-- PAYMENT METHODS -->
+            <div class="payment-methods">
+              <h4>
+                <i class="fas fa-credit-card"></i> Select Payment Method
+              </h4>
+
+              <div class="error-msg" id="errorMsg"></div>
+
+              <!-- UPI -->
+              <label class="method-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="upi"
+                  onchange="showPaymentForm('upi')"
+                />
+                <span class="method-label">
+                  <span class="method-icon"><i class="fas fa-mobile-alt"></i></span>
+                  UPI
+                </span>
+              </label>
+
+              <div id="upi-form" class="payment-form">
+                <input
+                  type="text"
+                  id="upiId"
+                  placeholder="Enter UPI ID (e.g., yourname@upi)"
+                  required
+                />
+                <small style="color: var(--muted)">
+                  You'll receive a payment request on your UPI app
+                </small>
+              </div>
+
+              <!-- QR CODE -->
+              <label class="method-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="qr"
+                  onchange="showPaymentForm('qr')"
+                />
+                <span class="method-label">
+                  <span class="method-icon"><i class="fas fa-qrcode"></i></span>
+                  QR Code
+                </span>
+              </label>
+
+              <div id="qr-form" class="payment-form">
+                <div class="qr-display">
+                  <div style="font-size: 3rem; color: var(--accent1);">
+                    ▓▓▓▓▓
+                    <br />
+                    ▓ ▓▓ ▓
+                    <br />
+                    ▓▓▓▓▓
+                  </div>
+                  <p>Scan this QR code with any UPI app to make payment</p>
+                </div>
+                <input
+                  type="text"
+                  id="qrReference"
+                  placeholder="Enter transaction reference (optional)"
+                />
+              </div>
+
+              <!-- CARD -->
+              <label class="method-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="card"
+                  onchange="showPaymentForm('card')"
+                />
+                <span class="method-label">
+                  <span class="method-icon"><i class="fas fa-credit-card"></i></span>
+                  Debit/Credit Card
+                </span>
+              </label>
+
+              <div id="card-form" class="payment-form">
+                <input
+                  type="text"
+                  id="cardNumber"
+                  placeholder="Card Number (16 digits)"
+                  maxlength="16"
+                />
+                <div class="card-inputs">
+                  <input
+                    type="text"
+                    id="cardExpiry"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                  />
+                  <input
+                    type="text"
+                    id="cardCVV"
+                    placeholder="CVV"
+                    maxlength="3"
+                  />
+                </div>
+                <input
+                  type="text"
+                  id="cardName"
+                  placeholder="Cardholder Name"
+                />
+              </div>
+
+              <!-- NET BANKING -->
+              <label class="method-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="netbanking"
+                  onchange="showPaymentForm('netbanking')"
+                />
+                <span class="method-label">
+                  <span class="method-icon"><i class="fas fa-bank"></i></span>
+                  Net Banking
+                </span>
+              </label>
+
+              <div id="netbanking-form" class="payment-form">
+                <select id="bankSelect" required>
+                  <option value="">Select Your Bank</option>
+                  <option value="sbi">State Bank of India</option>
+                  <option value="hdfc">HDFC Bank</option>
+                  <option value="icici">ICICI Bank</option>
+                  <option value="axis">Axis Bank</option>
+                  <option value="bob">Bank of Baroda</option>
+                  <option value="pnb">Punjab National Bank</option>
+                  <option value="kotak">Kotak Mahindra Bank</option>
+                  <option value="yes">YES Bank</option>
+                </select>
+                <small style="color: var(--muted)">
+                  You'll be redirected to your bank's website
+                </small>
+              </div>
+
+              <!-- CASH ON DELIVERY -->
+              <label class="method-option">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="cod"
+                  onchange="showPaymentForm('cod')"
+                />
+                <span class="method-label">
+                  <span class="method-icon"><i class="fas fa-money-bill-wave"></i></span>
+                  Cash on Delivery
+                </span>
+              </label>
+
+              <div id="cod-form" class="payment-form">
+                <div
+                  style="
+                    background: #e8f5e9;
+                    padding: 1rem;
+                    border-radius: var(--radius);
+                    color: #2e7d32;
+                    font-size: 0.9rem;
+                    text-align: center;
+                  "
+                >
+                  <i class="fas fa-check-circle"></i> Pay when your order
+                  arrives. No extra charges.
+                </div>
+              </div>
+            </div>
+
+            <div class="loading" id="loading">
+              <div class="spinner"></div>
+              <p>Processing payment...</p>
+            </div>
+
+            <button class="btn-primary" onclick="processPayment()" id="paymentBtn">
+              <i class="fas fa-lock"></i> Pay ₹<span id="payAmount">0</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="successModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-icon success">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>Order Placed Successfully!</h2>
+        <p>Your order has been confirmed and will be prepared.</p>
+        <div class="order-details">
+          <p>
+            <strong>Order ID:</strong> <span class="order-id" id="orderId">#ORD-000000</span>
+          </p>
+          <p>
+            <strong>Total Amount:</strong> <span id="modalTotal">₹0.00</span>
+          </p>
+          <p>
+            <strong>Payment Method:</strong>
+            <span id="modalPaymentMethod">-</span>
+          </p>
+          <p style="color: var(--accent1)">
+            <strong>Estimated Time:</strong> 20-30 minutes
+          </p>
+        </div>
+        <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 1rem">
+          Back to Home
+        </button>
+      </div>
+    </div>
+
+    <!-- PENDING MODAL (for Cash on Delivery) -->
+    <div id="pendingModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-icon pending">
+          <i class="fas fa-hourglass-end"></i>
+        </div>
+        <h2>Order Pending</h2>
+        <p>Your order is pending payment confirmation.</p>
+        <div class="order-details">
+          <p>
+            <strong>Order ID:</strong> <span class="order-id" id="pendingOrderId">#ORD-000000</span>
+          </p>
+          <p>
+            <strong>Total Amount:</strong> <span id="pendingTotal">₹0.00</span>
+          </p>
+          <p style="color: #ff9800">
+            <strong>Status:</strong> Awaiting Payment on Delivery
+          </p>
+        </div>
+        <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 1rem">
+          Close
+        </button>
+      </div>
+    </div>
+
+    <script src="/payment.js"></script>
+  </body>
+</html>
