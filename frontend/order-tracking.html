@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Tracking - Smart Dine-In</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e0c3fc 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .tracking-container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(120, 72, 232, 0.12);
+      padding: 32px 24px 24px 24px;
+    }
+    .tracking-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .tracking-header i {
+      color: #7848e8;
+      font-size: 2rem;
+    }
+    .tracking-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #222;
+    }
+    .order-id {
+      font-size: 1rem;
+      color: #7848e8;
+      margin-bottom: 10px;
+    }
+    .order-details {
+      margin-bottom: 18px;
+      font-size: 1rem;
+      color: #444;
+    }
+    .status-steps {
+      display: flex;
+      justify-content: space-between;
+      margin: 24px 0 18px 0;
+      position: relative;
+    }
+    .status-steps::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 8%;
+      right: 8%;
+      height: 4px;
+      background: #e0c3fc;
+      z-index: 0;
+      border-radius: 2px;
+      transform: translateY(-50%);
+    }
+    .step {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      color: #bbb;
+      border: 2px solid #e0c3fc;
+      transition: all 0.2s;
+    }
+    .step.active {
+      color: #fff;
+      background: #7848e8;
+      border-color: #7848e8;
+      box-shadow: 0 2px 8px rgba(120, 72, 232, 0.18);
+    }
+    .step-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 0.92rem;
+      color: #888;
+    }
+    .step-labels span.active {
+      color: #7848e8;
+      font-weight: 600;
+    }
+    .order-items {
+      margin: 18px 0 10px 0;
+      padding: 0;
+      list-style: none;
+    }
+    .order-items li {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 1rem;
+    }
+    .order-total {
+      text-align: right;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222;
+      margin-top: 8px;
+    }
+    .refresh-btn {
+      display: block;
+      margin: 24px auto 0 auto;
+      background: #7848e8;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .refresh-btn:hover {
+      background: #5a2fc2;
+    }
+    .no-order {
+      text-align: center;
+      color: #888;
+      margin: 40px 0 0 0;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="tracking-container">
+    <div class="tracking-header">
+      <i class="fa-solid fa-utensils"></i>
+      <span class="tracking-title">Track Your Order</span>
+    </div>
+    <div id="orderTrackingContent">
+      <!-- Order tracking details will be injected here by JS -->
+    </div>
+    <button class="refresh-btn" onclick="refreshOrderStatus()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+  </div>
+  <script src="order-tracking.js"></script>
+</body>
+</html>

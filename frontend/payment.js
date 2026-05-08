@@ -1,6 +1,8 @@
 // payment.js
 let cart = [];
 let allMenuItems = [];
+let selectedOrderType = "dine-in";
+let selectedTable = null;
 
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
@@ -8,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadMenuItems();
   loadCart();
   setupEventListeners();
+  generateTableNumbers();
 });
 
 // Check if user is logged in
@@ -185,7 +188,53 @@ function setupEventListeners() {
   });
 }
 
-// Logout
+// Generate table numbers for dine-in
+function generateTableNumbers() {
+  const tableGrid = document.getElementById("tableGrid");
+  tableGrid.innerHTML = "";
+  
+  for (let i = 1; i <= 12; i++) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "table-btn";
+    btn.textContent = `Table ${i}`;
+    btn.onclick = () => selectTable(i, btn);
+    tableGrid.appendChild(btn);
+  }
+  
+  // Select first table by default
+  selectTable(1, tableGrid.firstChild);
+}
+
+// Select order type
+function selectOrderType(type, element) {
+  selectedOrderType = type;
+  
+  // Update UI
+  document.querySelectorAll(".type-option").forEach(opt => opt.classList.remove("active"));
+  element.classList.add("active");
+  
+  // Show/hide table selection
+  const tableSelection = document.getElementById("tableSelection");
+  if (type === "dine-in") {
+    tableSelection.classList.add("active");
+    selectedTable = 1; // Reset to table 1
+    generateTableNumbers(); // Regenerate table selection
+  } else {
+    tableSelection.classList.remove("active");
+    selectedTable = null;
+  }
+}
+
+// Select table number
+function selectTable(tableNum, element) {
+  selectedTable = tableNum;
+  
+  // Update UI
+  document.querySelectorAll(".table-btn").forEach(btn => btn.classList.remove("selected"));
+  element.classList.add("selected");
+}
+
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("dineInCart");
@@ -328,6 +377,8 @@ async function processPayment() {
       items: cart,
       totalAmount,
       paymentMethod: method,
+      orderType: selectedOrderType,
+      tableNumber: selectedOrderType === "dine-in" ? selectedTable : null,
       status: method === "cod" ? "pending" : "completed",
       timestamp: new Date().toISOString(),
     };

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Smart Dine-In</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .admin-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 1rem;
+      }
+
+      .admin-box {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 400px;
+        width: 100%;
+        animation: slideUp 0.5s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .admin-box h1 {
+        text-align: center;
+        margin-bottom: 0.5rem;
+        color: #1b1b1b;
+        font-size: 1.8rem;
+      }
+
+      .admin-box .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+      }
+
+      .admin-box i {
+        display: block;
+        text-align: center;
+        font-size: 3rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #1b1b1b;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+      }
+
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .error-msg {
+        background: #ffebee;
+        border: 1px solid #ff6b6b;
+        color: #c92a2a;
+        padding: 0.8rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: none;
+      }
+
+      .error-msg.show {
+        display: block;
+      }
+
+      .btn-admin {
+        width: 100%;
+        padding: 0.9rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 1rem;
+      }
+
+      .btn-admin:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-admin:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .back-link {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+
+      .back-link a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+
+      .back-link a:hover {
+        color: #764ba2;
+      }
+
+      .loading {
+        display: none;
+        text-align: center;
+      }
+
+      .loading.show {
+        display: block;
+      }
+
+      .spinner-small {
+        border: 3px solid rgba(102, 126, 234, 0.1);
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 0.5rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="admin-container">
+      <div class="admin-box">
+        <i class="fas fa-lock"></i>
+        <h1>Admin Panel</h1>
+        <p class="subtitle">Smart Dine-In Management</p>
+
+        <form onsubmit="handleAdminLogin(event)">
+          <div class="error-msg" id="errorMsg"></div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-envelope"></i> Email
+            </label>
+            <input
+              type="email"
+              id="adminEmail"
+              placeholder="admin@smartdine.com"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-key"></i> Password
+            </label>
+            <input
+              type="password"
+              id="adminPassword"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label>
+              <i class="fas fa-user-tie"></i> Role
+            </label>
+            <select id="adminRole" required>
+              <option value="">Select your role</option>
+              <option value="admin">Admin (Full Access)</option>
+              <option value="manager">Manager (Order Management)</option>
+              <option value="staff">Staff (View Only)</option>
+            </select>
+          </div>
+
+          <div class="loading" id="loading">
+            <div class="spinner-small"></div>
+            <p>Verifying credentials...</p>
+          </div>
+
+          <button type="submit" class="btn-admin" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+          </button>
+        </form>
+
+        <div class="back-link">
+          <a href="/">← Back to Home</a>
+        </div>
+
+        <div style="background: #f0f0f0; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; font-size: 0.85rem; color: #666; text-align: center;">
+          <p style="margin: 0; font-weight: 600; margin-bottom: 0.5rem;">Demo Credentials:</p>
+          <p style="margin: 0; margin-bottom: 0.3rem;"><strong>Email:</strong> admin@smartdine.com</p>
+          <p style="margin: 0;"><strong>Password:</strong> Admin@123</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="/admin-login.js"></script>
+  </body>
+</html>
