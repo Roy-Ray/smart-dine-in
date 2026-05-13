@@ -97,7 +97,15 @@ function verifyToken(req, res, next) {
 
 // 4. Create Order
 app.post("/api/orders", verifyToken, (req, res) => {
-  const { items, totalAmount, paymentMethod, status, paymentDetails, orderType, tableNumber } = req.body;
+  const {
+    items,
+    totalAmount,
+    paymentMethod,
+    status,
+    paymentDetails,
+    orderType,
+    tableNumber,
+  } = req.body;
   const userId = req.userId;
   const orderId = `ORD-${Date.now()}`;
   const timestamp = new Date();
@@ -163,7 +171,7 @@ app.post("/api/orders", verifyToken, (req, res) => {
           totalAmount: totalAmount,
           paymentMethod: paymentMethod,
         });
-      }
+      },
     );
   });
 });
@@ -284,7 +292,11 @@ app.post("/api/admin/login", async (req, res) => {
       let admin = results[0];
 
       // If no admin found and trying demo credentials, create it
-      if (!admin && email === "admin@smartdine.com" && password === "Admin@123") {
+      if (
+        !admin &&
+        email === "admin@smartdine.com" &&
+        password === "Admin@123"
+      ) {
         const hashedPassword = await bcrypt.hash(password, 10);
         const insertSQL =
           "INSERT INTO admins (email, password, name, role) VALUES (?, ?, ?, ?)";
@@ -297,7 +309,7 @@ app.post("/api/admin/login", async (req, res) => {
             }
             // Retry login
             handleAdminLoginLogic(email, password, role, res);
-          }
+          },
         );
       } else if (admin) {
         handleAdminLoginLogic(email, password, role, res);
@@ -328,7 +340,7 @@ function handleAdminLoginLogic(email, password, role, res) {
     const token = jwt.sign(
       { id: admin.id, role: admin.role, isAdmin: true },
       JWT_SECRET,
-      { expiresIn: "8h" }
+      { expiresIn: "8h" },
     );
 
     res.json({
@@ -468,15 +480,20 @@ app.use("/image", express.static(path.join(__dirname, "../image")));
 // ==========================================
 
 // Initialize Offers Table with default data
-db.query("CREATE TABLE IF NOT EXISTS offers (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255))", (err) => {
-  if (!err) {
-    db.query("SELECT COUNT(*) as count FROM offers", (err, results) => {
-      if (!err && results[0].count === 0) {
-        db.query("INSERT INTO offers (message) VALUES ('Get 10% off on billing above ₹1299!'), ('First order? Get 20% off!')");
-      }
-    });
-  }
-});
+db.query(
+  "CREATE TABLE IF NOT EXISTS offers (id INT AUTO_INCREMENT PRIMARY KEY, message VARCHAR(255))",
+  (err) => {
+    if (!err) {
+      db.query("SELECT COUNT(*) as count FROM offers", (err, results) => {
+        if (!err && results[0].count === 0) {
+          db.query(
+            "INSERT INTO offers (message) VALUES ('Get 10% off on billing above ₹1299!'), ('First order? Get 20% off!')",
+          );
+        }
+      });
+    }
+  },
+);
 
 // Admin API: Add new menu item
 app.post("/api/admin/menu", verifyAdminToken, (req, res) => {
@@ -484,12 +501,17 @@ app.post("/api/admin/menu", verifyAdminToken, (req, res) => {
   if (!name || !price) {
     return res.status(400).json({ error: "Name and price are required" });
   }
-  
-  const sql = "INSERT INTO menu_items (name, price, description, image) VALUES (?, ?, ?, ?)";
-  db.query(sql, [name, price, description || '', image || '/image/default.jpg'], (err, result) => {
-    if (err) return res.status(500).json({ error: "Failed to add product" });
-    res.json({ message: "Product added successfully", id: result.insertId });
-  });
+
+  const sql =
+    "INSERT INTO menu_items (name, price, description, image) VALUES (?, ?, ?, ?)";
+  db.query(
+    sql,
+    [name, price, description || "", image || "/image/default.jpg"],
+    (err, result) => {
+      if (err) return res.status(500).json({ error: "Failed to add product" });
+      res.json({ message: "Product added successfully", id: result.insertId });
+    },
+  );
 });
 
 // Public API: Get offers for the homepage banner
@@ -502,14 +524,15 @@ app.get("/api/offers", (req, res) => {
 
 // Admin API: Update offers (replaces all existing)
 app.post("/api/admin/offers", verifyAdminToken, (req, res) => {
-  const { offers } = req.body; 
-  if (!offers || !Array.isArray(offers)) return res.status(400).json({ error: "Invalid data" });
+  const { offers } = req.body;
+  if (!offers || !Array.isArray(offers))
+    return res.status(400).json({ error: "Invalid data" });
 
   db.query("TRUNCATE TABLE offers", (err) => {
     if (err) return res.status(500).json({ error: "Failed to clear offers" });
     if (offers.length === 0) return res.json({ message: "Offers updated" });
 
-    const values = offers.map(o => [o]);
+    const values = offers.map((o) => [o]);
     db.query("INSERT INTO offers (message) VALUES ?", [values], (err) => {
       if (err) return res.status(500).json({ error: "Failed to save offers" });
       res.json({ message: "Offers updated successfully" });
