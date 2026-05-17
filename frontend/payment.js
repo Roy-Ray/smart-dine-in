@@ -352,7 +352,7 @@ function validatePaymentDetails() {
   return true;
 }
 
-// Process payment
+// Process payment (MODIFIED FOR SHOWCASE SIMULATION)
 async function processPayment() {
   if (cart.length === 0) {
     showError("Your cart is empty. Please add items first.");
@@ -366,8 +366,10 @@ async function processPayment() {
   const paymentBtn = document.getElementById("paymentBtn");
   const loading = document.getElementById("loading");
 
+  // 1. UI updates to show payment is processing
   paymentBtn.disabled = true;
-  loading.classList.add("show");
+  paymentBtn.innerText = "Processing Payment...";
+  if(loading) loading.classList.add("show");
 
   try {
     const method = document.querySelector('input[name="paymentMethod"]:checked').value;
@@ -388,7 +390,10 @@ async function processPayment() {
     const paymentDetails = getPaymentDetails(method);
     orderData.paymentDetails = paymentDetails;
 
-    // Send to backend
+    // 2. FAKE DELAY: Wait 2 seconds to simulate a real payment gateway
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // 3. Send to backend to confirm and save order
     const token = localStorage.getItem("token");
     const response = await fetch("/api/orders", {
       method: "POST",
@@ -421,8 +426,10 @@ async function processPayment() {
     console.error("Payment error:", err);
     showError("Error processing payment. Please try again.");
   } finally {
+    // Restore button state
     paymentBtn.disabled = false;
-    loading.classList.remove("show");
+    paymentBtn.innerText = "Pay Now";
+    if(loading) loading.classList.remove("show");
   }
 }
 
