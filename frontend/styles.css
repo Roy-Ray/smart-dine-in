@@ -658,3 +658,41 @@ footer p {
         0% { transform: translateX(0); }
         100% { transform: translateX(-100%); }
       }
+      /* 1. Make sure the container holds the video properly */
+.hero {
+  position: relative;
+  overflow: hidden;
+  /* If you had a background-image or background-color here, you can remove it */
+}
+
+/* 2. Style the video to cover the screen perfectly without stretching */
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover; 
+  z-index: -2; /* Keeps it strictly in the background */
+}
+
+/* 3. The dark overlay so white text stays readable against bright video frames */
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Adjust 0.4 (40% opacity) as needed */
+  z-index: -1; /* Sits above the video, but behind the text */
+}
+
+/* 4. Ensure your text pops to the front */
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: white; /* Make sure text is visible! */
+}
