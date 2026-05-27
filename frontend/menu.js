@@ -27,13 +27,34 @@ function updateCartBadge() {
 }
 
 async function loadMenu() {
-  const res = await fetch("/api/menu");
-  allItems = await res.json();
-  displayItems(allItems);
+  try {
+    console.log("Fetching menu from /api/menu...");
+    const res = await fetch("/api/menu");
+    console.log("Response status:", res.status);
+    
+    if (!res.ok) {
+      throw new Error(`API error: ${res.status} ${res.statusText}`);
+    }
+    
+    allItems = await res.json();
+    console.log("Menu items loaded:", allItems.length, "items");
+    
+    if (allItems.length === 0) {
+      const container = document.getElementById("menuGrid");
+      container.innerHTML = `<div class="no-results" style="grid-column: 1/-1; padding: 3rem;"><i class="fas fa-inbox" style="font-size: 3rem; color: var(--accent1); margin-bottom: 1rem;"></i><p>No menu items available at the moment.</p></div>`;
+      return;
+    }
+    
+    displayItems(allItems);
+  } catch (error) {
+    console.error("Error loading menu:", error);
+    const container = document.getElementById("menuGrid");
+    container.innerHTML = `<div class="no-results" style="grid-column: 1/-1; padding: 3rem;"><i class="fas fa-exclamation-circle" style="font-size: 3rem; color: #ff6b6b; margin-bottom: 1rem;"></i><p>Error loading menu. Make sure backend is running on http://localhost:5000<br><small style="color: #999;">${error.message}</small></p></div>`;
+  }
 }
 
 function displayItems(items) {
-  const container = document.getElementById("menuContainer");
+  const container = document.getElementById("menuGrid");
   container.innerHTML = "";
 
   items.forEach((item) => {
@@ -133,24 +154,25 @@ function goToCart() {
 }
 
 // SEARCH
-document.getElementById("searchBar")?.addEventListener("input", (e) => {
+document.getElementById("search")?.addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
   const filtered = allItems.filter((i) => i.name.toLowerCase().includes(value));
   displayItems(filtered);
 });
 
 // SORT
-document.getElementById("sortPrice")?.addEventListener("change", (e) => {
+document.getElementById("sort")?.addEventListener("change", (e) => {
   let sorted = [...allItems];
 
-  if (e.target.value === "low") sorted.sort((a, b) => a.price - b.price);
-  if (e.target.value === "high") sorted.sort((a, b) => b.price - a.price);
+  if (e.target.value === "price-low") sorted.sort((a, b) => a.price - b.price);
+  if (e.target.value === "price-high") sorted.sort((a, b) => b.price - a.price);
+  if (e.target.value === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
 
   displayItems(sorted);
 });
 
 // FILTER
-document.getElementById("categoryFilter")?.addEventListener("change", (e) => {
+document.getElementById("category")?.addEventListener("change", (e) => {
   const value = e.target.value;
   const filtered = value
     ? allItems.filter((i) => i.category === value)

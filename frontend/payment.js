@@ -47,7 +47,7 @@ function loadCart() {
         {
           id: menuItem.id,
           name: menuItem.name,
-          price: menuItem.price,
+          price: parseFloat(menuItem.price),
           quantity: 1,
           image: menuItem.image,
         },
@@ -60,8 +60,15 @@ function loadCart() {
   const savedCart = localStorage.getItem("dineInCart");
   if (savedCart) {
     cart = JSON.parse(savedCart);
+    // Ensure prices are numbers
+    cart = cart.map(item => ({
+      ...item,
+      price: parseFloat(item.price),
+      quantity: parseInt(item.quantity)
+    }));
   }
 
+  console.log("Cart loaded:", cart);
   displayCart();
   updateBillingTotal();
 }
@@ -85,12 +92,13 @@ function displayCart() {
 
   let html = "";
   cart.forEach((item) => {
-    const itemTotal = (item.price * item.quantity).toFixed(2);
+    const price = parseFloat(item.price);
+    const itemTotal = (price * item.quantity).toFixed(2);
     html += `
       <div class="cart-item" id="item-${item.id}">
         <div class="cart-item-details">
           <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-price">₹${item.price.toFixed(2)}</div>
+          <div class="cart-item-price">₹${price.toFixed(2)}</div>
         </div>
         <div class="cart-item-controls">
           <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
@@ -139,7 +147,7 @@ function saveCart() {
 
 // Update billing total
 function updateBillingTotal() {
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
   const tax = subtotal * 0.18;
   const delivery = subtotal > 500 ? 0 : 40;
   const discount = parseFloat(document.getElementById("discount").textContent.replace("₹", "")) || 0;
