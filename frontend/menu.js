@@ -111,7 +111,7 @@ function showAddedNotification(itemName) {
     position: fixed;
     top: 80px;
     right: 20px;
-    background: #4caf50;
+    background: linear-gradient(135deg, var(--accent1), var(--accent2));
     color: white;
     padding: 1rem 1.5rem;
     border-radius: 8px;

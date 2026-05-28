@@ -38,7 +38,7 @@ function setupDashboard() {
       e.preventDefault();
       const section = link.getAttribute("data-section");
       switchSection(section);
-      
+
       // Update active state
       document.querySelectorAll(".menu-link").forEach((l) => {
         l.classList.remove("active");
@@ -131,15 +131,18 @@ async function loadAllOrders() {
 function updateStats() {
   const preparingOrders = allOrders.filter((o) => o.status === "preparing");
   const completedOrders = allOrders.filter((o) =>
-    ["served", "delivered"].includes(o.status)
+    ["served", "delivered"].includes(o.status),
   );
-  const totalRevenue = allOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+  const totalRevenue = allOrders.reduce(
+    (sum, o) => sum + (o.totalAmount || 0),
+    0,
+  );
 
-  document.getElementById("pendingCount").textContent =
-    preparingOrders.length;
+  document.getElementById("pendingCount").textContent = preparingOrders.length;
   document.getElementById("completedCount").textContent =
     completedOrders.length;
-  document.getElementById("revenueAmount").textContent = `₹${totalRevenue.toFixed(2)}`;
+  document.getElementById("revenueAmount").textContent =
+    `₹${totalRevenue.toFixed(2)}`;
 }
 
 // Display order queue
@@ -161,7 +164,10 @@ function displayOrderQueue() {
 // Create order card HTML
 function createOrderCardHTML(order) {
   const itemsHtml = order.items
-    .map((item) => `<div class="order-item"><span>${item.name} x${item.quantity}</span><span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`)
+    .map(
+      (item) =>
+        `<div class="order-item"><span>${item.name} x${item.quantity}</span><span>₹${(item.price * item.quantity).toFixed(2)}</span></div>`,
+    )
     .join("");
 
   const tableInfo =
@@ -175,8 +181,8 @@ function createOrderCardHTML(order) {
         <div class="order-header">
           <span class="order-id">${order.orderId}</span>
           <span class="order-type-badge ${order.orderType}">${
-    order.orderType === "dine-in" ? "🍽️ Dine-In" : "🛍️ Take Away"
-  }</span>
+            order.orderType === "dine-in" ? "🍽️ Dine-In" : "🛍️ Take Away"
+          }</span>
         </div>
         <div class="order-details">
           <div class="detail-row">${tableInfo}</div>
@@ -192,7 +198,7 @@ function createOrderCardHTML(order) {
               (status) =>
                 `<option value="${status}" ${order.status === status ? "selected" : ""}>${
                   status.charAt(0).toUpperCase() + status.slice(1)
-                }</option>`
+                }</option>`,
             )
             .join("")}
         </select>
@@ -223,7 +229,10 @@ async function updateOrderStatus(orderId, newStatus, orderType) {
 
     // Reload orders
     loadAllOrders();
-    showNotification(`Order ${orderId} status updated to ${newStatus}`, "success");
+    showNotification(
+      `Order ${orderId} status updated to ${newStatus}`,
+      "success",
+    );
   } catch (error) {
     console.error("Error updating status:", error);
     showNotification("Failed to update order status", "error");
@@ -253,13 +262,13 @@ function displayTableView() {
               (status) =>
                 `<option value="${status}" ${order.status === status ? "selected" : ""}>${
                   status.charAt(0).toUpperCase() + status.slice(1)
-                }</option>`
+                }</option>`,
             )
             .join("")}
         </select>
       </td>
     </tr>
-  `
+  `,
     )
     .join("");
 }
@@ -285,11 +294,17 @@ function displayTableStatus() {
 
   for (let i = 1; i <= 12; i++) {
     const tableOrders = allOrders.filter(
-      (o) => o.orderType === "dine-in" && o.tableNumber === i && o.status !== "served"
+      (o) =>
+        o.orderType === "dine-in" &&
+        o.tableNumber === i &&
+        o.status !== "served",
     );
     const status = tableOrders.length > 0 ? "occupied" : "available";
-    const bgColor = status === "occupied" ? "#fff3cd" : "#d4edda";
-    const textColor = status === "occupied" ? "#ff9800" : "#4caf50";
+    const bgColor =
+      status === "occupied"
+        ? "rgba(251, 191, 36, 0.12)"
+        : "rgba(34, 197, 94, 0.12)";
+    const textColor = status === "occupied" ? "#FBBF24" : "#84cc16";
 
     const html = `
       <div style="background: ${bgColor}; color: ${textColor}; padding: 1.5rem; border-radius: 8px; text-align: center; font-weight: 600;">
@@ -319,7 +334,7 @@ function displayPayments() {
       <td>${order.status === "completed" ? "Paid" : "Pending"}</td>
       <td>${new Date(order.timestamp).toLocaleString()}</td>
     </tr>
-  `
+  `,
     )
     .join("");
 }
@@ -344,13 +359,11 @@ function filterOrders() {
 
 // Search orders
 function searchOrders() {
-  const search = document
-    .getElementById("searchOrder")
-    .value.toLowerCase();
+  const search = document.getElementById("searchOrder").value.toLowerCase();
   filteredOrders = allOrders.filter(
     (order) =>
       order.orderId.toLowerCase().includes(search) ||
-      (order.tableNumber && order.tableNumber.toString().includes(search))
+      (order.tableNumber && order.tableNumber.toString().includes(search)),
   );
   displayOrderQueue();
 }
@@ -361,7 +374,7 @@ function searchOrdersAdmin() {
     .getElementById("searchOrderAdmin")
     .value.toLowerCase();
   filteredOrders = allOrders.filter((order) =>
-    order.orderId.toLowerCase().includes(search)
+    order.orderId.toLowerCase().includes(search),
   );
   displayAllOrders();
 }
@@ -421,7 +434,7 @@ function showNotification(message, type) {
     right: 20px;
     padding: 1rem 1.5rem;
     border-radius: 8px;
-    background: ${type === "success" ? "#4caf50" : "#e74c3c"};
+    background: ${type === "success" ? "rgba(16, 185, 129, 0.18)" : "rgba(248, 113, 113, 0.18)"};
     color: white;
     font-weight: 600;
     z-index: 10000;
@@ -463,25 +476,25 @@ async function handleAddProduct(e) {
   const price = document.getElementById("newProductPrice").value;
   const description = document.getElementById("newProductDesc").value;
   const image = document.getElementById("newProductImage").value;
-  
+
   const adminToken = localStorage.getItem("adminToken");
   const msgDiv = document.getElementById("productMsg");
-  
+
   try {
     const response = await fetch("/api/admin/menu", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${adminToken}`
+        Authorization: `Bearer ${adminToken}`,
       },
-      body: JSON.stringify({ name, price, description, image })
+      body: JSON.stringify({ name, price, description, image }),
     });
-    
+
     if (response.ok) {
       msgDiv.style.color = "green";
       msgDiv.textContent = "Product added successfully!";
       document.getElementById("addProductForm").reset();
-      setTimeout(() => msgDiv.textContent = "", 3000);
+      setTimeout(() => (msgDiv.textContent = ""), 3000);
     } else {
       const data = await response.json();
       msgDiv.style.color = "red";
@@ -498,7 +511,7 @@ async function loadOffers() {
     const response = await fetch("/api/offers");
     if (response.ok) {
       const data = await response.json();
-      currentOffers = data.map(o => o.message);
+      currentOffers = data.map((o) => o.message);
       renderOffersList();
     }
   } catch (error) {
@@ -509,7 +522,7 @@ async function loadOffers() {
 function renderOffersList() {
   const list = document.getElementById("offersList");
   if (!list) return;
-  
+
   list.innerHTML = "";
   currentOffers.forEach((offer, index) => {
     const div = document.createElement("div");
@@ -520,11 +533,11 @@ function renderOffersList() {
     div.style.padding = "0.8rem";
     div.style.border = "1px solid #ddd";
     div.style.borderRadius = "4px";
-    
+
     const text = document.createElement("span");
     text.textContent = offer;
     text.style.fontWeight = "500";
-    
+
     const btn = document.createElement("button");
     btn.innerHTML = '<i class="fas fa-trash"></i>';
     btn.style.color = "#e74c3c";
@@ -536,7 +549,7 @@ function renderOffersList() {
       currentOffers.splice(index, 1);
       renderOffersList();
     };
-    
+
     div.appendChild(text);
     div.appendChild(btn);
     list.appendChild(div);
@@ -558,20 +571,20 @@ async function saveOffers() {
   const msgDiv = document.getElementById("offersMsg");
   msgDiv.style.color = "#27ae60";
   msgDiv.textContent = "Saving...";
-  
+
   try {
     const response = await fetch("/api/admin/offers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${adminToken}`
+        Authorization: `Bearer ${adminToken}`,
       },
-      body: JSON.stringify({ offers: currentOffers })
+      body: JSON.stringify({ offers: currentOffers }),
     });
-    
+
     if (response.ok) {
       msgDiv.textContent = "Offers successfully saved to the live website!";
-      setTimeout(() => msgDiv.textContent = "", 3000);
+      setTimeout(() => (msgDiv.textContent = ""), 3000);
     } else {
       msgDiv.style.color = "red";
       msgDiv.textContent = "Failed to save offers";

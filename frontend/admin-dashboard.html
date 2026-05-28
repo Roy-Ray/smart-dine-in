@@ -86,13 +86,13 @@
 
       .menu-item:hover {
         background: rgba(255, 255, 255, 0.1);
-        border-left-color: #0ea5e9;
+        border-left-color: var(--accent1);
         color: #fff;
       }
 
       .menu-item.active {
         background: rgba(14, 165, 233, 0.2);
-        border-left-color: #f59e0b;
+        border-left-color: var(--accent2);
         color: #fff;
         font-weight: 600;
       }
@@ -294,7 +294,7 @@
 
       .order-id {
         font-weight: 700;
-        color: #0ea5e9;
+        color: var(--accent1);
       }
 
       .status-badge {
@@ -309,19 +309,19 @@
       .status-preparing {
         background: linear-gradient(
           135deg,
-          rgba(255, 193, 7, 0.2),
-          rgba(255, 152, 0, 0.2)
+          rgba(251, 191, 36, 0.18),
+          rgba(251, 191, 36, 0.08)
         );
-        color: #ff9800;
+        color: #fbbf24;
       }
 
       .status-ready {
         background: linear-gradient(
           135deg,
-          rgba(76, 175, 80, 0.2),
-          rgba(56, 142, 60, 0.2)
+          rgba(34, 197, 94, 0.18),
+          rgba(34, 197, 94, 0.08)
         );
-        color: #4caf50;
+        color: #84cc16;
       }
 
       .status-delivered {
@@ -335,23 +335,23 @@
 
       .status-select {
         padding: 0.6rem;
-        border: 2px solid rgba(14, 165, 233, 0.2);
+        border: 2px solid rgba(6, 182, 212, 0.12);
         border-radius: 6px;
         cursor: pointer;
         font-weight: 600;
-        background: #fff;
+        background: #0f172a;
         color: var(--text);
         transition: all 0.3s ease;
       }
 
       .status-select:hover,
       .status-select:focus {
-        border-color: #0ea5e9;
-        box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
+        border-color: var(--accent1);
+        box-shadow: 0 0 10px rgba(6, 182, 212, 0.12);
       }
 
       .amount {
-        color: #0ea5e9;
+        color: var(--accent1);
         font-weight: 700;
       }
 
@@ -379,7 +379,7 @@
         display: inline-block;
         width: 30px;
         height: 30px;
-        border: 3px solid rgba(155, 109, 255, 0.2);
+        border: 3px solid rgba(6, 182, 212, 0.2);
         border-top-color: var(--accent1);
         border-radius: 50%;
         animation: spin 1s linear infinite;
@@ -728,7 +728,7 @@
               </span>
             </td>
             <td>
-              <button onclick="viewOrderDetails('${order.orderId}')" style="background: linear-gradient(135deg, #0EA5E9, #F59E0B); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">View</button>
+              <button onclick="viewOrderDetails('${order.orderId}')" style="background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">View</button>
             </td>
           </tr>
         `,

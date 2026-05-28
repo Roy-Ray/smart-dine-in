@@ -61,10 +61,10 @@ function loadCart() {
   if (savedCart) {
     cart = JSON.parse(savedCart);
     // Ensure prices are numbers
-    cart = cart.map(item => ({
+    cart = cart.map((item) => ({
       ...item,
       price: parseFloat(item.price),
-      quantity: parseInt(item.quantity)
+      quantity: parseInt(item.quantity),
     }));
   }
 
@@ -147,15 +147,22 @@ function saveCart() {
 
 // Update billing total
 function updateBillingTotal() {
-  const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+  const subtotal = cart.reduce(
+    (sum, item) => sum + parseFloat(item.price) * item.quantity,
+    0,
+  );
   const tax = subtotal * 0.18;
   const delivery = subtotal > 500 ? 0 : 40;
-  const discount = parseFloat(document.getElementById("discount").textContent.replace("₹", "")) || 0;
+  const discount =
+    parseFloat(
+      document.getElementById("discount").textContent.replace("₹", ""),
+    ) || 0;
   const total = subtotal + tax + delivery - discount;
 
   document.getElementById("subtotal").textContent = `₹${subtotal.toFixed(2)}`;
   document.getElementById("tax").textContent = `₹${tax.toFixed(2)}`;
-  document.getElementById("delivery").textContent = delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`;
+  document.getElementById("delivery").textContent =
+    delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`;
   document.getElementById("totalAmount").textContent = `₹${total.toFixed(2)}`;
   document.getElementById("payAmount").textContent = total.toFixed(2);
 }
@@ -181,7 +188,7 @@ function showPaymentForm(method) {
 
   // Add selected class to current option
   const selectedOption = document.querySelector(
-    `input[value="${method}"]`
+    `input[value="${method}"]`,
   ).parentElement;
   selectedOption.classList.add("selected");
 
@@ -201,7 +208,7 @@ function setupEventListeners() {
 function generateTableNumbers() {
   const tableGrid = document.getElementById("tableGrid");
   tableGrid.innerHTML = "";
-  
+
   for (let i = 1; i <= 12; i++) {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -210,7 +217,7 @@ function generateTableNumbers() {
     btn.onclick = () => selectTable(i, btn);
     tableGrid.appendChild(btn);
   }
-  
+
   // Select first table by default
   selectTable(1, tableGrid.firstChild);
 }
@@ -218,11 +225,13 @@ function generateTableNumbers() {
 // Select order type
 function selectOrderType(type, element) {
   selectedOrderType = type;
-  
+
   // Update UI
-  document.querySelectorAll(".type-option").forEach(opt => opt.classList.remove("active"));
+  document
+    .querySelectorAll(".type-option")
+    .forEach((opt) => opt.classList.remove("active"));
   element.classList.add("active");
-  
+
   // Show/hide table selection
   const tableSelection = document.getElementById("tableSelection");
   if (type === "dine-in") {
@@ -238,9 +247,11 @@ function selectOrderType(type, element) {
 // Select table number
 function selectTable(tableNum, element) {
   selectedTable = tableNum;
-  
+
   // Update UI
-  document.querySelectorAll(".table-btn").forEach(btn => btn.classList.remove("selected"));
+  document
+    .querySelectorAll(".table-btn")
+    .forEach((btn) => btn.classList.remove("selected"));
   element.classList.add("selected");
 }
 
@@ -259,7 +270,7 @@ function goBackToMenu() {
 function applyPromo() {
   const code = document.getElementById("promoCode").value.toUpperCase();
   const subtotal = parseFloat(
-    document.getElementById("subtotal").textContent.replace("₹", "")
+    document.getElementById("subtotal").textContent.replace("₹", ""),
   );
 
   const promoCodes = {
@@ -296,9 +307,12 @@ function hideError() {
 function showMessage(msg, type) {
   const errorDiv = document.getElementById("errorMsg");
   errorDiv.textContent = msg;
-  errorDiv.style.background = type === "success" ? "#e8f5e9" : "#ffebee";
-  errorDiv.style.borderColor = type === "success" ? "#4caf50" : "#ff6b6b";
-  errorDiv.style.color = type === "success" ? "#2e7d32" : "#c92a2a";
+  errorDiv.style.background =
+    type === "success"
+      ? "rgba(16, 185, 129, 0.12)"
+      : "rgba(248, 113, 113, 0.12)";
+  errorDiv.style.borderColor = type === "success" ? "#10b981" : "#f87171";
+  errorDiv.style.color = type === "success" ? "#d1fae5" : "#fee2e2";
   errorDiv.classList.add("show");
 
   setTimeout(() => errorDiv.classList.remove("show"), 3000);
@@ -377,11 +391,15 @@ async function processPayment() {
   // 1. UI updates to show payment is processing
   paymentBtn.disabled = true;
   paymentBtn.innerText = "Processing Payment...";
-  if(loading) loading.classList.add("show");
+  if (loading) loading.classList.add("show");
 
   try {
-    const method = document.querySelector('input[name="paymentMethod"]:checked').value;
-    const totalAmount = parseFloat(document.getElementById("totalAmount").textContent.replace("₹", ""));
+    const method = document.querySelector(
+      'input[name="paymentMethod"]:checked',
+    ).value;
+    const totalAmount = parseFloat(
+      document.getElementById("totalAmount").textContent.replace("₹", ""),
+    );
 
     // Prepare order data
     const orderData = {
@@ -399,7 +417,7 @@ async function processPayment() {
     orderData.paymentDetails = paymentDetails;
 
     // 2. FAKE DELAY: Wait 2 seconds to simulate a real payment gateway
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // 3. Send to backend to confirm and save order
     const token = localStorage.getItem("token");
@@ -437,7 +455,7 @@ async function processPayment() {
     // Restore button state
     paymentBtn.disabled = false;
     paymentBtn.innerText = "Pay Now";
-    if(loading) loading.classList.remove("show");
+    if (loading) loading.classList.remove("show");
   }
 }
 
@@ -450,12 +468,16 @@ function getPaymentDetails(method) {
       };
     case "card":
       return {
-        cardNumber: "**** **** **** " + document.getElementById("cardNumber").value.slice(-4),
+        cardNumber:
+          "**** **** **** " +
+          document.getElementById("cardNumber").value.slice(-4),
         cardName: document.getElementById("cardName").value,
       };
     case "netbanking":
       return {
-        bank: document.getElementById("bankSelect").options[document.getElementById("bankSelect").selectedIndex].text,
+        bank: document.getElementById("bankSelect").options[
+          document.getElementById("bankSelect").selectedIndex
+        ].text,
       };
     case "qr":
       return {
@@ -479,8 +501,10 @@ function generateOrderId() {
 function showSuccessModal(orderId, totalAmount, method) {
   currentOrderId = orderId; // Save the order ID for tracking
   document.getElementById("orderId").textContent = orderId;
-  document.getElementById("modalTotal").textContent = `₹${totalAmount.toFixed(2)}`;
-  document.getElementById("modalPaymentMethod").textContent = capitalizeMethod(method);
+  document.getElementById("modalTotal").textContent =
+    `₹${totalAmount.toFixed(2)}`;
+  document.getElementById("modalPaymentMethod").textContent =
+    capitalizeMethod(method);
   document.getElementById("successModal").style.display = "block";
 }
 
@@ -488,7 +512,8 @@ function showSuccessModal(orderId, totalAmount, method) {
 function showPendingModal(orderId, totalAmount, method) {
   currentOrderId = orderId; // Save the order ID for tracking
   document.getElementById("pendingOrderId").textContent = orderId;
-  document.getElementById("pendingTotal").textContent = `₹${totalAmount.toFixed(2)}`;
+  document.getElementById("pendingTotal").textContent =
+    `₹${totalAmount.toFixed(2)}`;
   document.getElementById("pendingModal").style.display = "block";
 }
 

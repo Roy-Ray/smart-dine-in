@@ -78,18 +78,18 @@
         padding: 1.5rem;
         background: linear-gradient(
           135deg,
-          rgba(155, 109, 255, 0.02),
-          rgba(255, 138, 179, 0.02)
+          rgba(6, 182, 212, 0.08),
+          rgba(251, 191, 36, 0.06)
         );
         border-radius: 15px;
-        border: 1px solid rgba(155, 109, 255, 0.1);
+        border: 1px solid rgba(6, 182, 212, 0.08);
         transition: all 0.3s ease;
         align-items: flex-start;
       }
 
       .cart-item:hover {
-        border-color: rgba(155, 109, 255, 0.2);
-        box-shadow: 0 6px 20px rgba(155, 109, 255, 0.08);
+        border-color: rgba(6, 182, 212, 0.22);
+        box-shadow: 0 6px 20px rgba(6, 182, 212, 0.12);
       }
 
       .cart-item-image {
@@ -173,11 +173,11 @@
       .billing-section {
         position: sticky;
         top: 100px;
-        background: #fff;
+        background: #0f172a;
         border-radius: 20px;
         padding: 2.5rem;
-        box-shadow: 0 10px 30px rgba(155, 109, 255, 0.1);
-        border: 1px solid rgba(155, 109, 255, 0.08);
+        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.06);
+        border: 1px solid rgba(6, 182, 212, 0.06);
         height: fit-content;
       }
 
@@ -193,7 +193,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.8rem 0;
-        border-bottom: 1px solid rgba(155, 109, 255, 0.1);
+        border-bottom: 1px solid rgba(6, 182, 212, 0.08);
         font-size: 0.95rem;
       }
 
@@ -204,16 +204,16 @@
         color: var(--text);
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 2px solid rgba(14, 165, 233, 0.2);
+        border-top: 2px solid rgba(6, 182, 212, 0.18);
       }
 
       .billing-row .amount {
-        color: #0ea5e9;
+        color: var(--accent1);
         font-weight: 700;
       }
 
       .billing-row.total .amount {
-        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -249,13 +249,13 @@
 
       .promo-input-group input:focus {
         outline: none;
-        border-color: #0ea5e9;
-        box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
+        border-color: var(--accent1);
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.12);
       }
 
       .promo-input-group button {
         padding: 0.8rem 1.5rem;
-        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
         color: #fff;
         border: none;
         border-radius: 10px;
@@ -273,7 +273,7 @@
       .payment-methods {
         margin: 2.5rem 0;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(155, 109, 255, 0.1);
+        border-top: 1px solid rgba(6, 182, 212, 0.08);
       }
 
       .payment-methods h3 {
@@ -293,16 +293,16 @@
         display: flex;
         align-items: center;
         padding: 1.2rem;
-        border: 2px solid rgba(155, 109, 255, 0.15);
+        border: 2px solid rgba(6, 182, 212, 0.08);
         border-radius: 12px;
         cursor: pointer;
         transition: all 0.3s ease;
-        background: #fff;
+        background: #0f172a;
       }
 
       .payment-option:hover {
-        border-color: rgba(155, 109, 255, 0.4);
-        background: rgba(155, 109, 255, 0.02);
+        border-color: rgba(6, 182, 212, 0.22);
+        background: rgba(6, 182, 212, 0.02);
       }
 
       .payment-option input[type="radio"] {
@@ -328,11 +328,11 @@
       }
 
       .payment-option.selected {
-        border-color: #0ea5e9;
+        border-color: var(--accent1);
         background: linear-gradient(
           135deg,
-          rgba(14, 165, 233, 0.05),
-          rgba(245, 158, 11, 0.05)
+          rgba(6, 182, 212, 0.04),
+          rgba(251, 191, 36, 0.04)
         );
       }
 
@@ -340,7 +340,7 @@
       .checkout-btn {
         width: 100%;
         padding: 1.2rem;
-        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -349,7 +349,7 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin-top: 2rem;
-        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.18);
         letter-spacing: 0.5px;
       }
 
@@ -381,13 +381,14 @@
       }
 
       .modal-content {
-        background: #fff;
+        background: #0f172a;
         padding: 3rem;
         border-radius: 20px;
         text-align: center;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
         max-width: 500px;
         animation: slideUp 0.3s ease;
+        border: 1px solid rgba(6, 182, 212, 0.06);
       }
 
       .modal-content h2 {
@@ -400,8 +401,8 @@
       .modal-content .order-id {
         background: linear-gradient(
           135deg,
-          rgba(14, 165, 233, 0.1),
-          rgba(245, 158, 11, 0.1)
+          rgba(6, 182, 212, 0.06),
+          rgba(251, 191, 36, 0.06)
         );
         padding: 1.5rem;
         border-radius: 12px;
@@ -409,12 +410,12 @@
         font-family: monospace;
         font-size: 1.1rem;
         font-weight: 700;
-        color: #0ea5e9;
+        color: var(--accent1);
         letter-spacing: 1px;
       }
 
       .modal-content .modal-button {
-        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
         color: #fff;
         padding: 1rem 2rem;
         border: none;
@@ -473,7 +474,11 @@
               <button
                 id="logoutBtn"
                 style="
-                  background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+                  background: linear-gradient(
+                    135deg,
+                    var(--accent1),
+                    var(--accent2)
+                  );
                   color: #fff;
                   border: none;
                   padding: 0.6rem 1.2rem;
@@ -516,8 +521,8 @@
             width: 100%;
             margin-top: 2rem;
             padding: 1rem;
-            background: rgba(155, 109, 255, 0.1);
-            border: 2px solid rgba(155, 109, 255, 0.2);
+            background: rgba(6, 182, 212, 0.08);
+            border: 2px solid rgba(6, 182, 212, 0.2);
             border-radius: 10px;
             color: var(--accent1);
             font-weight: 600;
