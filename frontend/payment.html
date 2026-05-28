@@ -457,8 +457,189 @@
           flex-direction: column;
         }
       }
+
+      /* =========================
+   PAYMENT PROCESSING MODAL
+========================= */
+
+.processing-modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.75);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.processing-box{
+    width: 90%;
+    max-width: 420px;
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    animation: popup 0.4s ease;
+}
+
+@keyframes popup{
+    from{
+        transform: scale(0.9);
+        opacity:0;
+    }
+    to{
+        transform: scale(1);
+        opacity:1;
+    }
+}
+
+.loader-ring{
+    width: 70px;
+    height: 70px;
+    border: 6px solid #e5e7eb;
+    border-top: 6px solid #06b6d4;
+    border-radius: 50%;
+    margin: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin{
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.processing-box h2{
+    margin-top: 1.5rem;
+    color: #111827;
+}
+
+.processing-box p{
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
+
+.processing-steps{
+    margin-top: 2rem;
+    text-align: left;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.step{
+    background:#f8fafc;
+    padding:12px 16px;
+    border-radius:12px;
+    font-weight:500;
+    color:#374151;
+}
+
+.step.loading{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.dot-loader{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#06b6d4;
+    animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.5);}
+    100%{transform:scale(1);}
+}
+/* =========================
+   FAKE PAYMENT UI
+========================= */
+
+.fake-razorpay{
+    background:white;
+    padding:2rem;
+    border-radius:20px;
+    margin-top:1.5rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.fake-razorpay input{
+    width:100%;
+    margin-top:1rem;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    color:#111827;
+    font-weight:500;
+}
+
+.rz-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#111827;
+    font-weight:700;
+    font-size:1.1rem;
+}
+
+.card-row{
+    display:flex;
+    gap:12px;
+}
+
+.qr-box{
+    background:white;
+    padding:2rem;
+    border-radius:20px;
+    text-align:center;
+    margin-top:1.5rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+.qr-box img{
+    width:220px;
+    margin-bottom:1rem;
+}
+
+.qr-box h3{
+    color:#111827;
+}
+
+.qr-box p{
+    color:#6b7280;
+}
     </style>
   </head>
+<!-- PAYMENT PROCESSING MODAL -->
+ <div id="processingModal" class="processing-modal">
+  
+  <div class="processing-box">
+
+    <div class="loader-ring"></div>
+
+    <h2>Processing Your Payment</h2>
+
+    <p>Please wait while we securely process your transaction...</p>
+
+    <div class="processing-steps">
+      <div class="step active">✔ Connecting to Bank</div>
+      <div class="step active">✔ Verifying Payment</div>
+
+      <div class="step loading">
+        <span class="dot-loader"></span>
+        Generating Order ID
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
   <body>
     <header>
@@ -594,6 +775,16 @@
               <input type="radio" name="payment" id="upi" />
               <label for="upi"><i class="fas fa-mobile-alt"></i> UPI</label>
             </div>
+            <div class="payment-option" onclick="selectPayment(this, 'qr')">
+
+              <input type="radio" name="payment" id="qr" />
+
+              <label for="qr">
+                <i class="fas fa-qrcode"></i>
+                QR Payment
+              </label>
+
+            </div>
             <div class="payment-option" onclick="selectPayment(this, 'card')">
               <input type="radio" name="payment" id="card" />
               <label for="card"
@@ -617,6 +808,7 @@
             </div>
           </div>
         </div>
+        <div id="paymentUI" style="margin-top:2rem;"></div>
 
         <button class="checkout-btn" onclick="proceedToPayment()">
           <i class="fas fa-lock"></i> Proceed to Payment
@@ -741,13 +933,89 @@
       }
 
       function selectPayment(element, method) {
-        document
-          .querySelectorAll(".payment-option")
-          .forEach((el) => el.classList.remove("selected"));
-        element.classList.add("selected");
-        document.getElementById(method).checked = true;
-      }
 
+  document
+    .querySelectorAll(".payment-option")
+    .forEach((el) => el.classList.remove("selected"));
+
+  element.classList.add("selected");
+
+  document.getElementById(method).checked = true;
+
+  const paymentUI = document.getElementById("paymentUI");
+
+  if(method === "card"){
+
+    paymentUI.innerHTML = `
+
+      <div class="fake-razorpay">
+
+        <div class="rz-header">
+          <i class="fas fa-shield-alt"></i>
+          <span>Secure Razorpay Payment</span>
+        </div>
+
+        <input type="text"
+          placeholder="Card Number">
+
+        <div class="card-row">
+
+          <input type="text"
+            placeholder="MM/YY">
+
+          <input type="text"
+            placeholder="CVV">
+
+        </div>
+
+        <input type="text"
+          placeholder="Card Holder Name">
+
+      </div>
+
+    `;
+
+  }
+
+  else if(method === "qr"){
+
+    paymentUI.innerHTML = `
+
+      <div class="qr-box">
+
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=SmartDineInDemoPayment"
+        >
+
+        <h3>Scan & Pay</h3>
+
+        <p>Use PhonePe, GPay or Paytm</p>
+
+      </div>
+
+    `;
+
+  }
+
+  else{
+
+    paymentUI.innerHTML = "";
+
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+      
       function applyPromo() {
         const code = document.getElementById("promoInput").value.toUpperCase();
         const subtotalForDiscount = cart.reduce(
@@ -789,46 +1057,98 @@
       }
 
       async function proceedToPayment() {
-        if (cart.length === 0) {
-          alert("Your cart is empty");
-          return;
-        }
 
-        const paymentMethod = document.querySelector(
-          'input[name="payment"]:checked',
-        );
-        if (!paymentMethod) {
-          alert("Please select a payment method");
-          return;
-        }
+  if(cart.length === 0){
+    alert("Your cart is empty");
+    return;
+  }
 
-        try {
-          const response = await fetch("/api/orders", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              items: cart,
-              totalAmount: totalAmount,
-              paymentMethod: paymentMethod.id,
-              status: "completed",
-              paymentDetails: { method: paymentMethod.id },
-            }),
-          });
+  const paymentMethod = document.querySelector(
+    'input[name="payment"]:checked'
+  );
 
-          const data = await response.json();
-          if (data.orderId) {
-            document.getElementById("orderIdDisplay").textContent =
-              data.orderId;
-            document.getElementById("successModal").classList.add("active");
-            localStorage.removeItem("dineInCart");
-          }
-        } catch (error) {
-          alert("Error placing order: " + error.message);
-        }
-      }
+  if(!paymentMethod){
+    alert("Select payment method");
+    return;
+  }
+
+  // SHOW PROCESSING MODAL
+  document.getElementById("processingModal")
+    .style.display = "flex";
+
+  // FAKE PROCESSING DELAY
+  await new Promise(resolve =>
+    setTimeout(resolve, 2000)
+  );
+
+  // GENERATE ORDER ID
+  const orderId =
+    "ORD-" + Math.floor(Math.random() * 999999);
+
+  try {
+
+    // SEND ORDER TO BACKEND
+    const response = await fetch("/api/orders", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+
+      body: JSON.stringify({
+
+        items: cart,
+
+        totalAmount: totalAmount,
+
+        paymentMethod: paymentMethod.id,
+
+        status: "completed",
+
+        paymentDetails: {
+          method: paymentMethod.id
+        },
+
+        orderType: "dine-in",
+
+        tableNumber: 1
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    // HIDE PROCESSING
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    // SHOW SUCCESS
+    document.getElementById("orderIdDisplay")
+      .textContent = data.orderId || orderId;
+
+    document.getElementById("successModal")
+      .classList.add("active");
+
+    // CLEAR CART
+    localStorage.removeItem("dineInCart");
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    alert("Failed to place order");
+
+  }
+
+}
+
 
       function completeOrder() {
         window.location.href = "/order-tracking.html";

@@ -10,32 +10,37 @@
     />
     <link rel="stylesheet" href="/styles.css" />
     <style>
-      .auth-container {
-        max-width: 400px;
-        margin: 100px auto;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-        background: #0f172a;
-        border: 1px solid rgba(6, 182, 212, 0.06);
-      }
-      .auth-container input {
-        width: 90%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid rgba(6, 182, 212, 0.12);
-        border-radius: 5px;
-        background: #0b1220;
-        color: #f1f5f9;
-      }
-      .toggle-link {
-        color: #fbbf24;
-        cursor: pointer;
-        text-decoration: underline;
-        margin-top: 15px;
-        display: inline-block;
-      }
-    </style>
+      
+    .auth-container {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    background: #010819;
+    border: 1px solid rgba(50, 173, 194, 0.06);
+    
+  }
+  
+
+  .auth-container input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid rgba(95, 5, 55, 0.12);
+    border-radius: 5px;
+    background: #97a6d3;
+    color: #f1f5f9;
+  }
+  
+  .toggle-link {
+    color: #fbbf24;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 15px;
+    display: inline-block;
+  }
+</style>
   </head>
   <body style="background: var(--bg)">
     <header>
@@ -51,6 +56,8 @@
     <div class="container">
       <div class="auth-container" id="loginBox">
         <h2>Welcome Back</h2>
+<p>Access your Smart Dine-In account</p>
+
         <form id="loginForm">
           <input
             type="email"
@@ -73,6 +80,7 @@
 
       <div class="auth-container" id="registerBox" style="display: none">
         <h2>Create Account</h2>
+<p>Create your Smart Dine-In customer account</p>
         <form id="registerForm">
           <input type="text" id="regName" placeholder="Full Name" required />
           <input

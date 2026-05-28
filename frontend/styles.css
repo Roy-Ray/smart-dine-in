@@ -1018,3 +1018,336 @@ footer p {
   z-index: 1;
   color: white; /* Make sure text is visible! */
 }
+/* =========================================================
+   ADMIN DASHBOARD FIXES
+========================================================= */
+
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #1453a4;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.admin-sidebar {
+  width: 280px;
+  background: linear-gradient(180deg, #111827 0%, #1e293b 100%);
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.admin-sidebar h2 {
+  padding: 2rem 1.5rem 1rem;
+  margin: 0;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.sidebar-user {
+  margin: 1rem;
+  padding: 1.2rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.08);
+  text-align: center;
+}
+
+.sidebar-user #adminUserName {
+  color: white;
+  font-weight: 600;
+}
+
+.user-role {
+  color: #cbd5e1;
+}
+
+/* =========================
+   SIDEBAR MENU FIX
+========================= */
+
+.admin-sidebar .sidebar-menu {
+  list-style: none;
+  padding: 0 1rem;
+  margin: 0;
+  flex: 1;
+}
+
+.admin-sidebar .sidebar-menu li {
+  margin-bottom: 0.7rem;
+}
+
+/* THIS FIXES COLLISION WITH MAIN WEBSITE .menu-item */
+
+.admin-sidebar .sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 1rem 1.2rem;
+  border-radius: 14px;
+  text-decoration: none;
+  color: #dbe4ee;
+  background: transparent;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  border-left: none;
+  transform: none;
+}
+
+.admin-sidebar .sidebar-menu a span {
+  color: inherit;
+}
+
+.admin-sidebar .sidebar-menu a i {
+  width: 20px;
+}
+
+.admin-sidebar .sidebar-menu a:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  transform: translateX(4px);
+}
+
+.admin-sidebar .sidebar-menu a.active {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: white;
+  box-shadow: 0 8px 20px rgba(79,70,229,0.35);
+}
+
+/* =========================
+   LOGOUT FIX
+========================= */
+
+.logout-btn {
+  margin: 1rem;
+  margin-top: auto;
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  color: white;
+  border-radius: 14px;
+  padding: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================
+   MAIN AREA
+========================= */
+
+.admin-main {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  padding: 2rem;
+  background: #f4f7fb;
+  min-height: 100vh;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.admin-header {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+.admin-header h1 {
+  color: #111827;
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* =========================
+   FILTERS
+========================= */
+
+.date-filter {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.date-filter input,
+.date-filter select {
+  background: white;
+  color: #111827;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+/* =========================
+   STATS GRID
+========================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+.stat-value {
+  color: #111827;
+}
+
+.stat-label {
+  color: #64748b;
+}
+
+/* =========================
+   ORDER SECTIONS
+========================= */
+
+.orders-section {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+}
+
+.orders-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.orders-header h3 {
+  color: #111827;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box input {
+  background: white;
+  color: #111827;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+}
+
+/* =========================
+   ORDER CARD
+========================= */
+
+.order-card {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.order-id {
+  color: #111827;
+}
+
+.order-details,
+.order-item {
+  color: #475569;
+}
+
+/* =========================
+   TABLES
+========================= */
+
+.table-view table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-view th {
+  background: #f8fafc;
+  color: #334155;
+}
+
+.table-view td {
+  color: #475569;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-small {
+  border-radius: 10px;
+}
+
+.btn-print {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  color: white;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 900px) {
+  .admin-sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+  }
+
+  .admin-main {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .admin-dashboard {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-card {
+    flex-direction: column;
+  }
+
+  .date-filter {
+    width: 100%;
+  }
+
+  .date-filter input,
+  .date-filter select {
+    width: 100%;
+  }
+}

@@ -67,6 +67,110 @@
       .table-view th { background: #f5f5f5; padding: 1rem; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; color: #2c3e50; }
       .table-view td { padding: 1rem; border-bottom: 1px solid #eee; }
       .table-view tr:hover { background: #fafafa; }
+      /* =========================
+     OFFERS SECTION FIX
+  ========================= */
+
+  #offersSection p,
+  #offersSection h3,
+  #offersSection label,
+  #offersSection div {
+    color: #111827;
+    opacity: 1 !important;
+  }
+
+  .offers-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 18px;
+    max-width: 700px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
+
+  #offersList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  #offersList input {
+    height: 52px;
+  }
+
+  /* =========================
+     BUTTONS
+  ========================= */
+
+  button {
+    transition: 0.3s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-print {
+    background: linear-gradient(135deg,#06b6d4,#3b82f6);
+    color: white;
+    border: none;
+  }
+
+  .btn-print:hover {
+    opacity: 0.95;
+  }
+
+  /* =========================
+     TABLE
+  ========================= */
+
+  .table-view table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-view th {
+    background: #f8fafc;
+    color: #111827;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .table-view td {
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    color: #374151;
+  }
+
+  .table-view tr:hover {
+    background: #f9fafb;
+  }
+
+  /* =========================
+     RESPONSIVE
+  ========================= */
+
+  @media(max-width: 992px){
+
+    .admin-sidebar{
+      width: 100%;
+      position: relative;
+      height: auto;
+    }
+
+    .admin-main{
+      margin-left: 0;
+    }
+
+    .admin-header{
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+  }
+
     </style>
   </head>
 
@@ -103,7 +207,7 @@
           </li>
           <li>
             <a href="#" class="menu-link" data-section="reports">
-              <i class="fas fa-file-chart-line"></i> <span>Reports</span>
+              <i class="fas fa-chart-bar"></i> <span>Reports</span>
             </a>
           </li>
           <li>

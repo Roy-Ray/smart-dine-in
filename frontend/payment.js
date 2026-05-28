@@ -376,8 +376,9 @@ function validatePaymentDetails() {
 
 // Process payment (MODIFIED FOR SHOWCASE SIMULATION)
 async function processPayment() {
+
   if (cart.length === 0) {
-    showError("Your cart is empty. Please add items first.");
+    showError("Your cart is empty.");
     return;
   }
 
@@ -386,42 +387,51 @@ async function processPayment() {
   }
 
   const paymentBtn = document.getElementById("paymentBtn");
-  const loading = document.getElementById("loading");
 
-  // 1. UI updates to show payment is processing
   paymentBtn.disabled = true;
-  paymentBtn.innerText = "Processing Payment...";
-  if (loading) loading.classList.add("show");
+  paymentBtn.innerText = "Processing...";
+
+  // SHOW PROCESSING MODAL
+  document.getElementById("processingModal").style.display = "flex";
 
   try {
+
     const method = document.querySelector(
-      'input[name="paymentMethod"]:checked',
+      'input[name="paymentMethod"]:checked'
     ).value;
+
     const totalAmount = parseFloat(
-      document.getElementById("totalAmount").textContent.replace("₹", ""),
+      document.getElementById("totalAmount")
+      .textContent.replace("₹", "")
     );
 
-    // Prepare order data
+    // SIMULATE PAYMENT GATEWAY DELAY
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // GENERATE ORDER ID
+    const orderId = generateOrderId();
+
+    // PREPARE ORDER
     const orderData = {
+      orderId,
       items: cart,
       totalAmount,
       paymentMethod: method,
       orderType: selectedOrderType,
-      tableNumber: selectedOrderType === "dine-in" ? selectedTable : null,
-      status: method === "cod" ? "pending" : "completed",
+      tableNumber:
+        selectedOrderType === "dine-in"
+        ? selectedTable
+        : null,
+
+      status: "completed",
+
       timestamp: new Date().toISOString(),
     };
 
-    // Get payment details based on method
-    const paymentDetails = getPaymentDetails(method);
-    orderData.paymentDetails = paymentDetails;
-
-    // 2. FAKE DELAY: Wait 2 seconds to simulate a real payment gateway
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    // 3. Send to backend to confirm and save order
+    // SAVE TO BACKEND
     const token = localStorage.getItem("token");
-    const response = await fetch("/api/orders", {
+
+    await fetch("/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -430,33 +440,35 @@ async function processPayment() {
       body: JSON.stringify(orderData),
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to create order");
-    }
-
-    const result = await response.json();
-    const orderId = result.orderId || generateOrderId();
-
-    // Clear cart
+    // CLEAR CART
     cart = [];
     localStorage.removeItem("dineInCart");
-    document.getElementById("discount").textContent = "₹0.00";
 
-    // Show appropriate modal
-    if (method === "cod") {
-      showPendingModal(orderId, totalAmount, method);
-    } else {
-      showSuccessModal(orderId, totalAmount, method);
-    }
-  } catch (err) {
-    console.error("Payment error:", err);
-    showError("Error processing payment. Please try again.");
-  } finally {
-    // Restore button state
+    // HIDE PROCESSING
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    // SHOW SUCCESS
+    showSuccessModal(orderId, totalAmount, method);
+
+  }
+  catch(err){
+
+    console.error(err);
+
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    showError("Payment Failed.");
+
+  }
+  finally{
+
     paymentBtn.disabled = false;
     paymentBtn.innerText = "Pay Now";
-    if (loading) loading.classList.remove("show");
+
   }
+
 }
 
 // Get payment details based on method
