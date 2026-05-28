@@ -4,775 +4,284 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Smart Dine-In</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <style>
-      /* Enhanced Admin Dashboard */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background: #0f172a;
-        font-family: "Poppins", sans-serif;
-      }
-
-      .admin-container {
-        display: grid;
-        grid-template-columns: 280px 1fr;
-        min-height: 100vh;
-      }
-
+      body { background: #f5f5f5; }
+      .admin-dashboard { display: flex; min-height: 100vh; }
+      
       /* Sidebar */
-      .admin-sidebar {
-        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-        color: #fff;
-        padding: 2rem 0;
-        position: fixed;
-        height: 100vh;
-        width: 280px;
-        overflow-y: auto;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
-      }
-
-      .sidebar-header {
-        padding: 0 2rem 2rem;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        margin-bottom: 1.5rem;
-      }
-
-      .sidebar-logo {
-        font-size: 1.4rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #06b6d4, #fbbf24);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 0.5rem;
-      }
-
-      .sidebar-subtitle {
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.7);
-      }
-
-      .sidebar-menu {
-        list-style: none;
-      }
-
-      .menu-item {
-        padding: 1.2rem 2rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        border-left: 4px solid transparent;
-        position: relative;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      .menu-item:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-left-color: var(--accent1);
-        color: #fff;
-      }
-
-      .menu-item.active {
-        background: rgba(14, 165, 233, 0.2);
-        border-left-color: var(--accent2);
-        color: #fff;
-        font-weight: 600;
-      }
-
-      .menu-item i {
-        font-size: 1.1rem;
-      }
+      .admin-sidebar { width: 280px; background: linear-gradient(180deg, #2c3e50 0%, #1a252f 100%); color: white; padding: 2rem 0; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2); }
+      .admin-sidebar h2 { text-align: center; margin-bottom: 2rem; font-size: 1.3rem; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 1rem; }
+      .sidebar-user { padding: 1rem 1.5rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; margin: 0 1rem 2rem; text-align: center; }
+      .sidebar-user .user-role { font-size: 0.8rem; opacity: 0.8; margin-top: 0.5rem; }
+      .sidebar-menu { list-style: none; padding: 0; margin: 0; }
+      .sidebar-menu a { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.5rem; color: rgba(255, 255, 255, 0.7); text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
+      .sidebar-menu a:hover, .sidebar-menu a.active { color: white; background: rgba(255, 255, 255, 0.1); border-left-color: #667eea; }
+      .sidebar-menu i { font-size: 1.1rem; width: 30px; }
+      .logout-btn { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; padding: 0.8rem; background: #e74c3c; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+      .logout-btn:hover { background: #c0392b; }
 
       /* Main Content */
-      .admin-main {
-        margin-left: 280px;
-      }
-
-      .admin-header {
-        background: linear-gradient(135deg, #1e293b 0%, #1a1f2e 100%);
-        padding: 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
-        border-bottom: 1px solid rgba(6, 182, 212, 0.15);
-      }
-
-      .admin-header h1 {
-        font-size: 2rem;
-        color: #f1f5f9;
-        font-weight: 700;
-      }
-
-      .admin-user-info {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .admin-user-info span {
-        color: #94a3b8;
-        font-weight: 600;
-      }
-
-      .logout-btn {
-        background: linear-gradient(135deg, #06b6d4, #fbbf24);
-        color: #fff;
-        border: none;
-        padding: 0.8rem 1.5rem;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-      }
-
-      .logout-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
-      }
-
-      .admin-content {
-        padding: 2rem;
-      }
-
-      /* Stats Cards */
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin-bottom: 3rem;
-      }
-
-      .stat-card {
-        background: #1e293b;
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(6, 182, 212, 0.1);
-        transition: all 0.3s ease;
-        border-left: 4px solid transparent;
-      }
-
-      .stat-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 30px rgba(6, 182, 212, 0.2);
-      }
-
-      .stat-card.pending {
-        border-left-color: #fbbf24;
-      }
-
-      .stat-card.completed {
-        border-left-color: #10b981;
-      }
-
-      .stat-card.revenue {
-        border-left-color: #06b6d4;
-      }
-
-      .stat-label {
-        color: #94a3b8;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-      }
-
-      .stat-value {
-        font-size: 2.5rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #06b6d4, #fbbf24);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .stat-icon {
-        position: absolute;
-        top: 1.5rem;
-        right: 1.5rem;
-        font-size: 2.5rem;
-        opacity: 0.1;
-      }
-
-      /* Orders Table */
-      .orders-section {
-        background: #1e293b;
-        border-radius: 16px;
-        padding: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(6, 182, 212, 0.1);
-      }
-
-      .orders-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-
-      .orders-header h2 {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #f1f5f9;
-      }
-
-      .filter-group {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .filter-group input,
-      .filter-group select {
-        padding: 0.8rem;
-        border: 2px solid rgba(6, 182, 212, 0.2);
-        border-radius: 8px;
-        font-family: "Poppins", sans-serif;
-        transition: all 0.3s ease;
-        background: #0f172a;
-        color: #f1f5f9;
-      }
-
-      .filter-group input:focus,
-      .filter-group select:focus {
-        outline: none;
-        border-color: #06b6d4;
-        box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
-      }
-
-      .orders-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .orders-table th {
-        background: linear-gradient(
-          135deg,
-          rgba(14, 165, 233, 0.05),
-          rgba(245, 158, 11, 0.05)
-        );
-        padding: 1.2rem;
-        text-align: left;
-        font-weight: 700;
-        color: var(--text);
-        border-bottom: 2px solid rgba(14, 165, 233, 0.1);
-      }
-
-      .orders-table td {
-        padding: 1.2rem;
-        border-bottom: 1px solid rgba(14, 165, 233, 0.08);
-      }
-
-      .orders-table tr:hover {
-        background: linear-gradient(
-          135deg,
-          rgba(14, 165, 233, 0.02),
-          rgba(245, 158, 11, 0.02)
-        );
-      }
-
-      .order-id {
-        font-weight: 700;
-        color: var(--accent1);
-      }
-
-      .status-badge {
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .status-preparing {
-        background: linear-gradient(
-          135deg,
-          rgba(251, 191, 36, 0.18),
-          rgba(251, 191, 36, 0.08)
-        );
-        color: #fbbf24;
-      }
-
-      .status-ready {
-        background: linear-gradient(
-          135deg,
-          rgba(34, 197, 94, 0.18),
-          rgba(34, 197, 94, 0.08)
-        );
-        color: #84cc16;
-      }
-
-      .status-delivered {
-        background: linear-gradient(
-          135deg,
-          rgba(33, 150, 243, 0.2),
-          rgba(21, 101, 192, 0.2)
-        );
-        color: #2196f3;
-      }
-
-      .status-select {
-        padding: 0.6rem;
-        border: 2px solid rgba(6, 182, 212, 0.12);
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: 600;
-        background: #0f172a;
-        color: var(--text);
-        transition: all 0.3s ease;
-      }
-
-      .status-select:hover,
-      .status-select:focus {
-        border-color: var(--accent1);
-        box-shadow: 0 0 10px rgba(6, 182, 212, 0.12);
-      }
-
-      .amount {
-        color: var(--accent1);
-        font-weight: 700;
-      }
-
-      /* Empty State */
-      .empty-state {
-        text-align: center;
-        padding: 3rem;
-        color: var(--muted);
-      }
-
-      .empty-state i {
-        font-size: 3rem;
-        opacity: 0.2;
-        margin-bottom: 1rem;
-      }
-
-      /* Loading */
-      .loading {
-        text-align: center;
-        padding: 2rem;
-      }
-
-      .loading::after {
-        content: "";
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        border: 3px solid rgba(6, 182, 212, 0.2);
-        border-top-color: var(--accent1);
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .admin-container {
-          grid-template-columns: 1fr;
-        }
-
-        .admin-sidebar {
-          width: 100%;
-          position: static;
-          height: auto;
-          display: none;
-        }
-
-        .admin-sidebar.active {
-          display: block;
-        }
-
-        .admin-main {
-          margin-left: 0;
-        }
-
-        .stats-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .orders-table {
-          font-size: 0.9rem;
-        }
-
-        .orders-table th,
-        .orders-table td {
-          padding: 0.8rem;
-        }
-
-        .filter-group {
-          flex-direction: column;
-        }
-
-        .filter-group input,
-        .filter-group select {
-          width: 100%;
-        }
-      }
+      .admin-main { margin-left: 280px; flex: 1; padding: 2rem; }
+      .admin-header { background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; justify-content: space-between; align-items: center; }
+      .admin-header h1 { font-size: 1.8rem; color: #2c3e50; }
+      .date-filter { display: flex; gap: 1rem; align-items: center; }
+      .date-filter input, .date-filter select { padding: 0.6rem 1rem; border: 1px solid #ddd; border-radius: 8px; font-family: "Poppins", sans-serif; }
+      .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+      .stat-card { background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 1rem; }
+      .stat-icon { font-size: 2rem; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+      .stat-icon.pending { background: #fff3cd; color: #ff9800; }
+      .stat-icon.completed { background: #d4edda; color: #4caf50; }
+      .stat-icon.revenue { background: #cfe2ff; color: #667eea; }
+      .stat-value { font-size: 1.5rem; font-weight: 700; }
+      .stat-label { color: #666; font-size: 0.85rem; }
+      .tab-buttons { display: flex; gap: 1rem; margin-bottom: 2rem; background: white; padding: 1rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+      .tab-btn { padding: 0.8rem 1.5rem; background: none; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; color: #666; }
+      .tab-btn.active { border-color: #667eea; color: #667eea; background: rgba(102, 126, 234, 0.1); }
+      .orders-section { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden; margin-bottom: 2rem;}
+      .orders-header { padding: 1.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+      .search-box input { padding: 0.6rem 1rem; border: 1px solid #ddd; border-radius: 8px; width: 250px; }
+      .order-card { padding: 1.5rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: start; transition: all 0.3s; background: #fff; }
+      .order-card:hover { background: #f9f9f9; }
+      .order-info { flex: 1; }
+      .order-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; }
+      .order-id { font-weight: 700; font-size: 1.1rem; color: #2c3e50; }
+      .order-type-badge { display: inline-block; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+      .order-type-badge.dine-in { background: #e3f2fd; color: #1976d2; }
+      .order-type-badge.takeaway { background: #f3e5f5; color: #7b1fa2; }
+      .order-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; font-size: 0.9rem; color: #666; margin-bottom: 1rem; }
+      .detail-row strong { color: #333; min-width: 80px; }
+      .order-items { background: #f9f9f9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+      .order-item { display: flex; justify-content: space-between; padding: 0.3rem 0; }
+      .order-actions { display: flex; gap: 0.8rem; flex-direction: column; min-width: 150px; }
+      .status-select { padding: 0.6rem; border: 1px solid #ddd; border-radius: 8px; font-family: "Poppins", sans-serif; font-weight: 600; cursor: pointer; }
+      .btn-small { padding: 0.6rem 1rem; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 0.85rem; }
+      .btn-print { background: #667eea; color: white; }
+      .btn-print:hover { background: #5568d3; }
+      .empty-state { padding: 3rem; text-align: center; color: #999; }
+      .empty-state i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
+      .table-view table { width: 100%; border-collapse: collapse; }
+      .table-view th { background: #f5f5f5; padding: 1rem; text-align: left; font-weight: 600; border-bottom: 2px solid #ddd; color: #2c3e50; }
+      .table-view td { padding: 1rem; border-bottom: 1px solid #eee; }
+      .table-view tr:hover { background: #fafafa; }
     </style>
   </head>
 
   <body>
-    <div class="admin-container">
-      <!-- Sidebar -->
-      <aside class="admin-sidebar">
-        <div class="sidebar-header">
-          <div class="sidebar-logo">
-            <i class="fas fa-utensils"></i> Smart Dine-In
-          </div>
-          <div class="sidebar-subtitle">Admin Panel</div>
+    <div class="admin-dashboard">
+      <div class="admin-sidebar">
+        <h2><i class="fas fa-store"></i> Smart Dine-In</h2>
+        <div class="sidebar-user">
+          <div><i class="fas fa-user-circle" style="font-size: 2rem"></i></div>
+          <div id="adminUserName">Admin</div>
+          <div class="user-role" id="adminRoleDisplay">Admin</div>
         </div>
 
         <ul class="sidebar-menu">
-          <li class="menu-item active" data-section="overview">
-            <i class="fas fa-chart-line"></i> Dashboard
+          <li>
+            <a href="#" class="menu-link active" data-section="overview">
+              <i class="fas fa-chart-line"></i> <span>Overview</span>
+            </a>
           </li>
-          <li class="menu-item" data-section="orders">
-            <i class="fas fa-list"></i> Orders
+          <li>
+            <a href="#" class="menu-link" data-section="orders">
+              <i class="fas fa-list-check"></i> <span>Orders Queue</span>
+            </a>
           </li>
-          <li class="menu-item" data-section="tables">
-            <i class="fas fa-chair"></i> Table Management
+          <li>
+            <a href="#" class="menu-link" data-section="tables">
+              <i class="fas fa-chair"></i> <span>Tables</span>
+            </a>
           </li>
-          <li class="menu-item" data-section="payments">
-            <i class="fas fa-credit-card"></i> Payments
+          <li>
+            <a href="#" class="menu-link" data-section="payments">
+              <i class="fas fa-credit-card"></i> <span>Payments</span>
+            </a>
           </li>
-          <li class="menu-item" data-section="reports">
-            <i class="fas fa-file-invoice-dollar"></i> Reports
+          <li>
+            <a href="#" class="menu-link" data-section="reports">
+              <i class="fas fa-file-chart-line"></i> <span>Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-link" data-section="menu">
+              <i class="fas fa-burger"></i> <span>Menu Management</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="menu-link" data-section="offers">
+              <i class="fas fa-bullhorn"></i> <span>Offers & Promos</span>
+            </a>
           </li>
         </ul>
-      </aside>
 
-      <!-- Main Content -->
-      <main class="admin-main">
-        <header class="admin-header">
+        <button class="logout-btn" onclick="adminLogout()">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+
+      <div class="admin-main">
+        <div class="admin-header">
           <h1 id="pageTitle">Dashboard Overview</h1>
-          <div class="admin-user-info">
-            <span id="adminUserName">Admin</span>
-            <button class="logout-btn" onclick="logout()">Logout</button>
+          <div class="date-filter">
+            <input type="date" id="filterDate" />
+            <select id="statusFilter">
+              <option value="">All Status</option>
+              <option value="preparing">Preparing</option>
+              <option value="ready">Ready</option>
+              <option value="served">Served</option>
+              <option value="out-for-delivery">Out for Delivery</option>
+              <option value="delivered">Delivered</option>
+            </select>
+            <button class="btn-small btn-print" onclick="refreshOrders()">
+              <i class="fas fa-sync"></i> Refresh
+            </button>
           </div>
-        </header>
-
-        <div class="admin-content">
-          <!-- Dashboard Overview -->
-          <section id="overviewSection">
-            <div class="stats-grid">
-              <div class="stat-card pending">
-                <div class="stat-label">Pending Orders</div>
-                <div class="stat-value" id="pendingCount">0</div>
-                <div class="stat-icon">
-                  <i class="fas fa-hourglass-half"></i>
-                </div>
-              </div>
-
-              <div class="stat-card completed">
-                <div class="stat-label">Completed Orders</div>
-                <div class="stat-value" id="completedCount">0</div>
-                <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-              </div>
-
-              <div class="stat-card revenue">
-                <div class="stat-label">Daily Revenue</div>
-                <div class="stat-value" id="revenueAmount">₹0</div>
-                <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
-              </div>
-            </div>
-
-            <!-- Order Queue -->
-            <div class="orders-section">
-              <div class="orders-header">
-                <h2>📋 Order Queue</h2>
-              </div>
-              <div id="orderQueueContainer" class="loading"></div>
-            </div>
-          </section>
-
-          <!-- Orders Management -->
-          <section id="ordersSection" style="display: none">
-            <div class="orders-section">
-              <div class="orders-header">
-                <h2>All Orders</h2>
-                <div class="filter-group">
-                  <input
-                    type="text"
-                    id="searchOrder"
-                    placeholder="Search order ID..."
-                  />
-                  <select id="statusFilter">
-                    <option value="">All Status</option>
-                    <option value="preparing">Preparing</option>
-                    <option value="ready">Ready</option>
-                    <option value="delivered">Delivered</option>
-                  </select>
-                  <input type="date" id="filterDate" />
-                </div>
-              </div>
-              <table class="orders-table">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Payment</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody id="allOrdersContainer" class="loading">
-                  <tr>
-                    <td colspan="6" style="text-align: center; padding: 2rem">
-                      <div class="loading"></div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Table Management -->
-          <section id="tablesSection" style="display: none">
-            <div class="orders-section">
-              <div class="orders-header">
-                <h2>Table Status</h2>
-              </div>
-              <div
-                id="tableStatusContainer"
-                style="
-                  display: grid;
-                  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                  gap: 1.5rem;
-                "
-              ></div>
-            </div>
-          </section>
-
-          <!-- Payments -->
-          <section id="paymentsSection" style="display: none">
-            <div class="orders-section">
-              <div class="orders-header">
-                <h2>Payment Details</h2>
-              </div>
-              <table class="orders-table">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Amount</th>
-                    <th>Method</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody id="paymentsContainer" class="loading">
-                  <tr>
-                    <td colspan="5" style="text-align: center; padding: 2rem">
-                      <div class="loading"></div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <!-- Reports -->
-          <section id="reportsSection" style="display: none">
-            <div class="orders-section">
-              <div class="orders-header">
-                <h2>Daily Reports</h2>
-                <input type="date" id="reportDate" />
-              </div>
-              <div
-                id="reportsContainer"
-                style="
-                  display: grid;
-                  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                  gap: 2rem;
-                "
-              ></div>
-            </div>
-          </section>
         </div>
-      </main>
+
+        <div id="overviewSection" class="section-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon pending"><i class="fas fa-hourglass-half"></i></div>
+              <div>
+                <div class="stat-value" id="pendingCount">0</div>
+                <div class="stat-label">Pending Orders</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon completed"><i class="fas fa-check-circle"></i></div>
+              <div>
+                <div class="stat-value" id="completedCount">0</div>
+                <div class="stat-label">Completed Today</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon revenue"><i class="fas fa-indian-rupee-sign"></i></div>
+              <div>
+                <div class="stat-value" id="revenueAmount">₹0</div>
+                <div class="stat-label">Today Revenue</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchView('queue')"><i class="fas fa-list-check"></i> Queue View</button>
+            <button class="tab-btn" onclick="switchView('table')"><i class="fas fa-table"></i> Table View</button>
+          </div>
+
+          <div id="queueView" class="orders-section">
+            <div class="orders-header">
+              <h3>Order Queue - Preparing Orders</h3>
+              <div class="search-box"><input type="text" id="searchOrder" placeholder="Search Order ID or Table..." /></div>
+            </div>
+            <div id="orderQueueContainer" class="order-queue"></div>
+          </div>
+
+          <div id="tableView" class="orders-section" style="display: none">
+            <div class="orders-header"><h3>All Orders - Table View</h3></div>
+            <div class="table-view">
+              <table id="ordersTable">
+                <thead><tr><th>Order ID</th><th>Type</th><th>Table/Phone</th><th>Items</th><th>Amount</th><th>Status</th><th>Payment</th><th>Actions</th></tr></thead>
+                <tbody id="ordersTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="ordersSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header">
+              <h3>All Orders</h3>
+              <div class="search-box"><input type="text" id="searchOrderAdmin" placeholder="Search Order ID..." /></div>
+            </div>
+            <div id="allOrdersContainer" class="order-queue"></div>
+          </div>
+        </div>
+
+        <div id="tablesSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header"><h3>Table Status</h3></div>
+            <div id="tablesContainer" style="padding: 1.5rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem;"></div>
+          </div>
+        </div>
+
+        <div id="paymentsSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header"><h3>Payment Details</h3></div>
+            <div class="table-view">
+              <table id="paymentsTable">
+                <thead><tr><th>Order ID</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody id="paymentsTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="reportsSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header"><h3>Daily Reports</h3></div>
+            <div style="padding: 2rem; text-align: center;"><p>Reports coming soon...</p></div>
+          </div>
+        </div>
+
+        <div id="menuSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header">
+              <h3>Add New Product</h3>
+            </div>
+            <div style="padding: 2rem;">
+              <form id="addProductForm" style="max-width: 500px; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Product Name *</label>
+                  <input type="text" id="newProductName" required style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Price (₹) *</label>
+                  <input type="number" id="newProductPrice" required style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Description</label>
+                  <textarea id="newProductDesc" style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px; height: 80px;"></textarea>
+                </div>
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Image URL</label>
+                  <input type="text" id="newProductImage" placeholder="/image/default.jpg" style="width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+                <button type="submit" style="width: 100%; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">Add Product to Menu</button>
+                <div id="productMsg" style="margin-top: 1rem; text-align: center; font-weight: 600;"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div id="offersSection" class="section-content" style="display: none">
+          <div class="orders-section">
+            <div class="orders-header">
+              <h3>Manage Advertising Banner</h3>
+            </div>
+            <div style="padding: 2rem;">
+              <p style="margin-bottom: 1rem;">Add moving text lines that will scroll horizontally on the homepage banner.</p>
+              
+              <div style="background: white; padding: 2rem; border-radius: 8px; max-width: 600px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <div id="offersList" style="margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 10px;"></div>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 1.5rem;">
+                  <input type="text" id="newOfferText" placeholder="E.g. Get 10% off on billing above ₹1299!" style="flex:1; padding: 0.8rem; border: 1px solid #ccc; border-radius: 4px;">
+                  <button type="button" onclick="addOfferLine()" style="padding: 0.8rem 1.5rem; background: #2c3e50; color: white; border: none; border-radius: 4px; cursor: pointer;">Add Line</button>
+                </div>
+                
+                <button style="width: 100%; padding: 1rem; background: #27ae60; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;" onclick="saveOffers()">Save Offers to Live Website</button>
+                <div id="offersMsg" style="margin-top: 1rem; text-align: center; font-weight: 600; color: #27ae60;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script>
-      const adminToken = localStorage.getItem("adminToken");
-      if (!adminToken) {
-        window.location.href = "/admin-login.html";
-      }
-
-      document.getElementById("adminUserName").textContent =
-        localStorage.getItem("adminName") || "Admin";
-
-      let allOrders = [];
-
-      // Menu Navigation
-      document.querySelectorAll(".menu-item").forEach((item) => {
-        item.addEventListener("click", (e) => {
-          const section = item.getAttribute("data-section");
-          switchSection(section);
-
-          document
-            .querySelectorAll(".menu-item")
-            .forEach((m) => m.classList.remove("active"));
-          item.classList.add("active");
-        });
-      });
-
-      function switchSection(section) {
-        document
-          .querySelectorAll("[id$='Section']")
-          .forEach((s) => (s.style.display = "none"));
-        document.getElementById(section + "Section").style.display = "block";
-
-        const titleMap = {
-          overview: "Dashboard Overview",
-          orders: "Order Management",
-          tables: "Table Management",
-          payments: "Payment Details",
-          reports: "Daily Reports",
-        };
-        document.getElementById("pageTitle").textContent = titleMap[section];
-
-        if (section === "orders") loadAllOrders();
-      }
-
-      async function loadAllOrders() {
-        try {
-          const response = await fetch("/api/admin/orders", {
-            headers: { Authorization: `Bearer ${adminToken}` },
-          });
-
-          if (!response.ok) {
-            if (response.status === 401) {
-              logout();
-              return;
-            }
-            throw new Error("Failed to load orders");
-          }
-
-          allOrders = await response.json();
-          updateStats();
-          displayAllOrders();
-        } catch (error) {
-          console.error("Error:", error);
-        }
-      }
-
-      function updateStats() {
-        const preparing = allOrders.filter((o) => o.status === "preparing");
-        const completed = allOrders.filter((o) =>
-          ["served", "delivered"].includes(o.status),
-        );
-        const revenue = allOrders.reduce(
-          (sum, o) => sum + (o.totalAmount || 0),
-          0,
-        );
-
-        document.getElementById("pendingCount").textContent = preparing.length;
-        document.getElementById("completedCount").textContent =
-          completed.length;
-        document.getElementById("revenueAmount").textContent =
-          `₹${revenue.toFixed(2)}`;
-      }
-
-      function displayAllOrders() {
-        const container = document.getElementById("allOrdersContainer");
-        if (allOrders.length === 0) {
-          container.innerHTML =
-            '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No orders yet</td></tr>';
-          return;
-        }
-
-        container.innerHTML = allOrders
-          .map(
-            (order) => `
-          <tr>
-            <td><span class="order-id">${order.orderId}</span></td>
-            <td>${order.userName || "Guest"}</td>
-            <td><span class="amount">₹${order.totalAmount.toFixed(2)}</span></td>
-            <td>
-              <select class="status-select" onchange="updateOrderStatus('${order.orderId}', this.value)">
-                <option value="preparing" ${order.status === "preparing" ? "selected" : ""}>Preparing</option>
-                <option value="ready" ${order.status === "ready" ? "selected" : ""}>Ready</option>
-                <option value="served" ${order.status === "served" ? "selected" : ""}>Served</option>
-                <option value="delivered" ${order.status === "delivered" ? "selected" : ""}>Delivered</option>
-              </select>
-            </td>
-            <td>
-              <span class="status-badge status-${order.status}">
-                ${order.paymentMethod || "N/A"}
-              </span>
-            </td>
-            <td>
-              <button onclick="viewOrderDetails('${order.orderId}')" style="background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">View</button>
-            </td>
-          </tr>
-        `,
-          )
-          .join("");
-      }
-
-      async function updateOrderStatus(orderId, status) {
-        try {
-          const response = await fetch(`/api/admin/orders/${orderId}/status`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${adminToken}`,
-            },
-            body: JSON.stringify({ status }),
-          });
-
-          if (response.ok) {
-            loadAllOrders();
-          }
-        } catch (error) {
-          console.error("Error updating order:", error);
-        }
-      }
-
-      function viewOrderDetails(orderId) {
-        const order = allOrders.find((o) => o.orderId === orderId);
-        if (order) {
-          alert(
-            `Order: ${order.orderId}\nTotal: ₹${order.totalAmount}\nStatus: ${order.status}\nPayment: ${order.paymentMethod}`,
-          );
-        }
-      }
-
-      function logout() {
-        localStorage.removeItem("adminToken");
-        localStorage.removeItem("adminName");
-        window.location.href = "/admin-login.html";
-      }
-
-      // Load initial data
-      loadAllOrders();
-      setInterval(loadAllOrders, 5000);
-    </script>
+    <script src="/admin-dashboard.js"></script>
   </body>
 </html>
