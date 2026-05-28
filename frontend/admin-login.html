@@ -23,9 +23,10 @@
         padding: 0;
       }
 
-      body, html {
+      body,
+      html {
         height: 100%;
-        font-family: 'Poppins', sans-serif;
+        font-family: "Poppins", sans-serif;
       }
 
       .admin-container {
@@ -33,20 +34,23 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* Premium subtle background */
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        /* Premium dark background */
+        background: linear-gradient(135deg, #0f172a 0%, #1a1f2e 100%);
         padding: 1rem;
       }
 
       .admin-box {
-        background: #ffffff;
+        background: #1e293b;
         padding: 3.5rem 3rem;
         border-radius: 24px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+        box-shadow:
+          0 20px 40px rgba(6, 182, 212, 0.15),
+          0 1px 3px rgba(0, 0, 0, 0.3);
         max-width: 440px;
         width: 100%;
         animation: slideUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
         position: relative;
+        border: 1px solid rgba(6, 182, 212, 0.1);
       }
 
       @keyframes slideUp {
@@ -64,7 +68,7 @@
       .icon-wrapper {
         width: 64px;
         height: 64px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #06b6d4 0%, #fbbf24 100%);
         border-radius: 18px;
         display: flex;
         align-items: center;
@@ -72,12 +76,12 @@
         margin: 0 auto 1.5rem;
         color: white;
         font-size: 1.8rem;
-        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 10px 20px rgba(6, 182, 212, 0.3);
       }
 
       .admin-box h1 {
         text-align: center;
-        color: #1a202c;
+        color: #f1f5f9;
         font-size: 1.7rem;
         font-weight: 700;
         margin-bottom: 0.3rem;
@@ -85,7 +89,7 @@
 
       .admin-box .subtitle {
         text-align: center;
-        color: #718096;
+        color: #94a3b8;
         margin-bottom: 2.5rem;
         font-size: 0.95rem;
       }
@@ -98,14 +102,14 @@
       .form-group label {
         display: block;
         margin-bottom: 0.5rem;
-        color: #4a5568;
+        color: #e2e8f0;
         font-weight: 500;
         font-size: 0.9rem;
       }
 
       .form-group label i {
         margin-right: 5px;
-        color: #a0aec0;
+        color: #94a3b8;
       }
 
       .input-wrapper {
@@ -116,32 +120,32 @@
       .form-group select {
         width: 100%;
         padding: 0.9rem 1.2rem;
-        border: 2px solid #e2e8f0;
+        border: 2px solid rgba(6, 182, 212, 0.2);
         border-radius: 12px;
-        background: #f7fafc;
+        background: #0f172a;
         font-family: inherit;
         font-size: 0.95rem;
-        color: #2d3748;
+        color: #f1f5f9;
         transition: all 0.3s ease;
       }
 
       .form-group input:focus,
       .form-group select:focus {
         outline: none;
-        border-color: #667eea;
-        background: #ffffff;
-        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        border-color: #06b6d4;
+        background: #1a1f2e;
+        box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.15);
       }
 
       .form-group input::placeholder {
-        color: #a0aec0;
+        color: #64748b;
       }
 
       /* Errors & Loading */
       .error-msg {
-        background: #fff5f5;
-        border-left: 4px solid #fc8181;
-        color: #c53030;
+        background: rgba(239, 68, 68, 0.1);
+        border-left: 4px solid #ef4444;
+        color: #fca5a5;
         padding: 0.8rem 1rem;
         border-radius: 8px;
         margin-bottom: 1.5rem;
@@ -155,15 +159,19 @@
       }
 
       @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
 
       /* Button */
       .btn-admin {
         width: 100%;
         padding: 1rem;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #06b6d4 0%, #fbbf24 100%);
         color: white;
         border: none;
         border-radius: 12px;
@@ -176,12 +184,12 @@
         justify-content: center;
         align-items: center;
         gap: 8px;
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
       }
 
       .btn-admin:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
       }
 
       .btn-admin:disabled {
@@ -197,7 +205,7 @@
       }
 
       .back-link a {
-        color: #a0aec0;
+        color: #94a3b8;
         text-decoration: none;
         font-weight: 500;
         font-size: 0.9rem;
@@ -205,25 +213,25 @@
       }
 
       .back-link a:hover {
-        color: #667eea;
+        color: #06b6d4;
       }
 
       /* Redesigned Demo Credentials Box */
       .demo-box {
-        background: #ebf4ff;
-        border: 1px solid #c3dafe;
+        background: rgba(6, 182, 212, 0.1);
+        border: 1px solid rgba(6, 182, 212, 0.2);
         padding: 1rem 1.2rem;
         border-radius: 12px;
         margin-top: 2rem;
         font-size: 0.85rem;
-        color: #4a5568;
+        color: #e2e8f0;
         display: flex;
         align-items: flex-start;
         gap: 12px;
       }
 
       .demo-box i {
-        color: #667eea;
+        color: #06b6d4;
         font-size: 1.2rem;
         margin-top: 2px;
       }
@@ -246,8 +254,8 @@
         display: block;
       }
       .spinner-small {
-        border: 3px solid rgba(102, 126, 234, 0.1);
-        border-top: 3px solid #667eea;
+        border: 3px solid rgba(6, 182, 212, 0.1);
+        border-top: 3px solid #06b6d4;
         border-radius: 50%;
         width: 22px;
         height: 22px;
@@ -255,8 +263,12 @@
         margin: 0 auto 0.5rem;
       }
       @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
@@ -264,11 +276,10 @@
   <body>
     <div class="admin-container">
       <div class="admin-box">
-        
         <div class="icon-wrapper">
           <i class="fas fa-shield-alt"></i>
         </div>
-        
+
         <h1>Staff Portal</h1>
         <p class="subtitle">Secure Login for Smart Dine-In</p>
 
@@ -313,27 +324,35 @@
 
           <div class="loading" id="loading">
             <div class="spinner-small"></div>
-            <p style="color: #718096; font-size: 0.85rem;">Authenticating...</p>
+            <p style="color: #718096; font-size: 0.85rem">Authenticating...</p>
           </div>
 
           <button type="submit" class="btn-admin" id="loginBtn">
-            Sign In <i class="fas fa-arrow-right" style="font-size: 0.8rem; margin-top: 2px;"></i>
+            Sign In
+            <i
+              class="fas fa-arrow-right"
+              style="font-size: 0.8rem; margin-top: 2px"
+            ></i>
           </button>
         </form>
 
         <div class="back-link">
-          <a href="/"><i class="fas fa-arrow-left" style="margin-right: 5px;"></i> Return to Website</a>
+          <a href="/"
+            ><i class="fas fa-arrow-left" style="margin-right: 5px"></i> Return
+            to Website</a
+          >
         </div>
 
         <div class="demo-box">
           <i class="fas fa-info-circle"></i>
           <div class="demo-info">
-            <p style="font-weight: 600; color: #2d3748;">System Access Credentials:</p>
+            <p style="font-weight: 600; color: #2d3748">
+              System Access Credentials:
+            </p>
             <p><strong>Email:</strong> admin@smartdine.com</p>
             <p><strong>Pass:</strong> Admin@123</p>
           </div>
         </div>
-
       </div>
     </div>
 

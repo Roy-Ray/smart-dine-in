@@ -1,18 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Menu - Smart Dine-In Café</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
 
     <style>
       /* Enhanced Menu Page Styles */
       .menu-header {
-        background: linear-gradient(135deg, #9b6dff 0%, #ff8ab3 100%);
+        background: linear-gradient(135deg, #06b6d4 0%, #fbbf24 100%);
         color: #fff;
         padding: 4rem 1.5rem 3rem;
         text-align: center;
@@ -21,13 +27,17 @@
       }
 
       .menu-header::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.1), transparent);
+        background: radial-gradient(
+          ellipse at 50% 50%,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
         pointer-events: none;
       }
 
@@ -37,13 +47,13 @@
         margin-bottom: 0.5rem;
         position: relative;
         z-index: 1;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
       .menu-header p {
         font-size: 1.1rem;
         margin-bottom: 2rem;
-        color: rgba(255,255,255,0.95);
+        color: rgba(255, 255, 255, 0.95);
         position: relative;
         z-index: 1;
       }
@@ -84,7 +94,10 @@
         outline: none;
         border-color: var(--accent1);
         box-shadow: 0 0 15px rgba(155, 109, 255, 0.2);
-        background: linear-gradient(rgba(155, 109, 255, 0.02), rgba(255, 138, 179, 0.02));
+        background: linear-gradient(
+          rgba(155, 109, 255, 0.02),
+          rgba(255, 138, 179, 0.02)
+        );
       }
 
       .menu-controls input::placeholder {
@@ -94,7 +107,7 @@
       /* Menu Grid Container */
       .menu-section {
         padding: 4rem 1.5rem;
-        background: linear-gradient(180deg, #fffdf9 0%, #fcf9ff 100%);
+        background: linear-gradient(180deg, #1a1f2e 0%, #0f172a 100%);
       }
 
       .menu-section h2 {
@@ -102,7 +115,7 @@
         font-size: 2rem;
         margin-bottom: 3rem;
         font-weight: 700;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -130,13 +143,17 @@
       }
 
       .menu-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: linear-gradient(135deg, rgba(155, 109, 255, 0.05), rgba(255, 138, 179, 0.05));
+        background: linear-gradient(
+          135deg,
+          rgba(155, 109, 255, 0.05),
+          rgba(255, 138, 179, 0.05)
+        );
         opacity: 0;
         transition: opacity 0.35s ease;
         pointer-events: none;
@@ -177,14 +194,14 @@
         position: absolute;
         top: 12px;
         right: 12px;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         color: #fff;
         padding: 0.5rem 0.9rem;
         border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 700;
         z-index: 2;
-        box-shadow: 0 4px 15px rgba(155, 109, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
       }
 
       .card-content {
@@ -226,20 +243,20 @@
         align-items: center;
         justify-content: space-between;
         padding-top: 1rem;
-        border-top: 1px solid rgba(155, 109, 255, 0.1);
+        border-top: 1px solid rgba(6, 182, 212, 0.15);
       }
 
       .card-price {
         font-size: 1.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
       }
 
       .card-button {
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         color: #fff;
         border: none;
         padding: 0.7rem 1.3rem;
@@ -267,7 +284,7 @@
       }
 
       .loading::after {
-        content: '';
+        content: "";
         display: inline-block;
         width: 30px;
         height: 30px;
@@ -278,7 +295,9 @@
       }
 
       @keyframes spin {
-        to { transform: rotate(360deg); }
+        to {
+          transform: rotate(360deg);
+        }
       }
 
       /* Responsive */
@@ -314,20 +333,67 @@
             <li><a href="/index.html">Home</a></li>
             <li><a href="/menu.html">Menu</a></li>
             <li><a href="/order-tracking.html">Orders</a></li>
-            <li style="margin-left: 80px;"></li>
+            <li style="margin-left: 80px"></li>
             <li>
-              <a href="#" id="profileBtn" style="display: flex; align-items: center; gap: 6px;">
-                <i class="fas fa-user-circle"></i> <span id="userNameDisplay">Profile</span>
+              <a
+                href="#"
+                id="profileBtn"
+                style="display: flex; align-items: center; gap: 6px"
+              >
+                <i class="fas fa-user-circle"></i>
+                <span id="userNameDisplay">Profile</span>
               </a>
             </li>
             <li>
-              <a href="#" id="cartIcon" style="position: relative; display: flex; align-items: center;">
+              <a
+                href="#"
+                id="cartIcon"
+                style="position: relative; display: flex; align-items: center"
+              >
                 <i class="fas fa-shopping-cart"></i>
-                <span id="cartBadge" style="position: absolute; top: -8px; right: -10px; background: linear-gradient(135deg, #9b6dff, #ff8ab3); color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700;">0</span>
+                <span
+                  id="cartBadge"
+                  style="
+                    position: absolute;
+                    top: -8px;
+                    right: -10px;
+                    background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+                    color: #fff;
+                    border-radius: 50%;
+                    width: 22px;
+                    height: 22px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                  "
+                  >0</span
+                >
               </a>
             </li>
             <li>
-              <button id="logoutBtn" style="background: linear-gradient(135deg, #9b6dff, #ff8ab3); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(155, 109, 255, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(155, 109, 255, 0.2)'">
+              <button
+                id="logoutBtn"
+                style="
+                  background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+                  color: #fff;
+                  border: none;
+                  padding: 0.6rem 1.2rem;
+                  border-radius: 20px;
+                  cursor: pointer;
+                  font-weight: 600;
+                  transition: all 0.3s ease;
+                "
+                onmouseover="
+                  this.style.transform = 'translateY(-2px)';
+                  this.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.3)';
+                "
+                onmouseout="
+                  this.style.transform = 'translateY(0)';
+                  this.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.2)';
+                "
+              >
                 Logout
               </button>
             </li>
@@ -339,16 +405,19 @@
 
     <section class="menu-header">
       <h1>✨ Our Delicious Menu ✨</h1>
-      <p>Explore our premium selection of fresh drinks, pastries, and gourmet meals</p>
+      <p>
+        Explore our premium selection of fresh drinks, pastries, and gourmet
+        meals
+      </p>
     </section>
 
     <section class="menu-controls">
-      <div style="display: flex; align-items: center; gap: 0.8rem;">
+      <div style="display: flex; align-items: center; gap: 0.8rem">
         <label for="search"><i class="fas fa-search"></i></label>
         <input type="text" id="search" placeholder="Search menu items..." />
       </div>
 
-      <div style="display: flex; align-items: center; gap: 0.8rem;">
+      <div style="display: flex; align-items: center; gap: 0.8rem">
         <label for="category"><i class="fas fa-filter"></i></label>
         <select id="category">
           <option value="">All Categories</option>
@@ -360,7 +429,7 @@
         </select>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 0.8rem;">
+      <div style="display: flex; align-items: center; gap: 0.8rem">
         <label for="sort"><i class="fas fa-sort"></i></label>
         <select id="sort">
           <option value="">Sort By</option>
@@ -373,28 +442,41 @@
 
     <section class="menu-section">
       <h2 id="sectionTitle">All Items</h2>
-      <div class="menu-grid" id="menuGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+      <div
+        class="menu-grid"
+        id="menuGrid"
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 2rem;
+        "
+      >
         <div class="loading"></div>
       </div>
-      <div class="no-results" id="noResults" style="display: none;">
-        <i class="fas fa-search" style="font-size: 3rem; color: var(--accent1); margin-bottom: 1rem;"></i>
+      <div class="no-results" id="noResults" style="display: none">
+        <i
+          class="fas fa-search"
+          style="font-size: 3rem; color: var(--accent1); margin-bottom: 1rem"
+        ></i>
         <p>No items found. Try adjusting your filters!</p>
       </div>
     </section>
 
-    <footer id="contact" style="margin-top: 0;">
+    <footer id="contact" style="margin-top: 0">
       <div class="container">
         <h2>📞 Contact Us</h2>
         <p>Email: trisharay2004@gmail.com | Phone: +91-6299070028</p>
         <section class="newsletter-section">
           <h3>Subscribe to Our Newsletter</h3>
           <p>Get updates on new menu items and special offers!</p>
-          <form class="newsletter" style="margin: 0;">
+          <form class="newsletter" style="margin: 0">
             <input type="email" placeholder="Enter your email" required />
             <button class="btn" type="submit">Subscribe</button>
           </form>
         </section>
-        <p style="margin-top: 2rem;">© 2025 Smart Dine-In | All Rights Reserved</p>
+        <p style="margin-top: 2rem">
+          © 2025 Smart Dine-In | All Rights Reserved
+        </p>
       </div>
     </footer>
 
@@ -408,7 +490,8 @@
       }
 
       // Display user name
-      document.getElementById("userNameDisplay").textContent = localStorage.getItem("userName") || "Profile";
+      document.getElementById("userNameDisplay").textContent =
+        localStorage.getItem("userName") || "Profile";
 
       // Load menu items
       async function loadMenuItems() {
@@ -419,7 +502,8 @@
           displayMenu(allMenuItems);
         } catch (error) {
           console.error("Error loading menu:", error);
-          document.getElementById("menuGrid").innerHTML = '<p style="color: var(--muted);">Error loading menu. Please try again.</p>';
+          document.getElementById("menuGrid").innerHTML =
+            '<p style="color: var(--muted);">Error loading menu. Please try again.</p>';
         }
       }
 
@@ -435,7 +519,9 @@
 
         menuGrid.style.display = "grid";
         noResults.style.display = "none";
-        menuGrid.innerHTML = items.map(item => `
+        menuGrid.innerHTML = items
+          .map(
+            (item) => `
           <div class="menu-card">
             <div class="card-image">
               <img src="${item.image}" alt="${item.name}" />
@@ -455,12 +541,14 @@
               </div>
             </div>
           </div>
-        `).join("");
+        `,
+          )
+          .join("");
       }
 
       function addToCart(itemId) {
-        const item = allMenuItems.find(m => m.id === itemId);
-        const existingItem = cart.find(c => c.id === itemId);
+        const item = allMenuItems.find((m) => m.id === itemId);
+        const existingItem = cart.find((c) => c.id === itemId);
 
         if (existingItem) {
           existingItem.quantity++;
@@ -470,7 +558,7 @@
             name: item.name,
             price: parseFloat(item.price),
             quantity: 1,
-            image: item.image
+            image: item.image,
           });
         }
 
@@ -499,7 +587,7 @@
           position: fixed;
           top: 80px;
           right: 20px;
-          background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+          background: linear-gradient(135deg, #0EA5E9, #F59E0B);
           color: #fff;
           padding: 1rem 1.5rem;
           border-radius: 10px;
@@ -516,9 +604,11 @@
       // Search functionality
       document.getElementById("search").addEventListener("input", (e) => {
         const query = e.target.value.toLowerCase();
-        const filtered = allMenuItems.filter(item =>
-          item.name.toLowerCase().includes(query) ||
-          (item.description && item.description.toLowerCase().includes(query))
+        const filtered = allMenuItems.filter(
+          (item) =>
+            item.name.toLowerCase().includes(query) ||
+            (item.description &&
+              item.description.toLowerCase().includes(query)),
         );
         displayMenu(filtered);
       });
@@ -526,7 +616,9 @@
       // Category filter
       document.getElementById("category").addEventListener("change", (e) => {
         const category = e.target.value;
-        const filtered = category ? allMenuItems.filter(item => item.category === category) : allMenuItems;
+        const filtered = category
+          ? allMenuItems.filter((item) => item.category === category)
+          : allMenuItems;
         displayMenu(filtered);
       });
 
@@ -534,9 +626,12 @@
       document.getElementById("sort").addEventListener("change", (e) => {
         const sort = e.target.value;
         let sorted = [...allMenuItems];
-        if (sort === "price-low") sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        else if (sort === "price-high") sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-        else if (sort === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
+        if (sort === "price-low")
+          sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        else if (sort === "price-high")
+          sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        else if (sort === "name")
+          sorted.sort((a, b) => a.name.localeCompare(b.name));
         displayMenu(sorted);
       });
 

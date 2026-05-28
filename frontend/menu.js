@@ -31,20 +31,20 @@ async function loadMenu() {
     console.log("Fetching menu from /api/menu...");
     const res = await fetch("/api/menu");
     console.log("Response status:", res.status);
-    
+
     if (!res.ok) {
       throw new Error(`API error: ${res.status} ${res.statusText}`);
     }
-    
+
     allItems = await res.json();
     console.log("Menu items loaded:", allItems.length, "items");
-    
+
     if (allItems.length === 0) {
       const container = document.getElementById("menuGrid");
       container.innerHTML = `<div class="no-results" style="grid-column: 1/-1; padding: 3rem;"><i class="fas fa-inbox" style="font-size: 3rem; color: var(--accent1); margin-bottom: 1rem;"></i><p>No menu items available at the moment.</p></div>`;
       return;
     }
-    
+
     displayItems(allItems);
   } catch (error) {
     console.error("Error loading menu:", error);
@@ -63,9 +63,9 @@ function displayItems(items) {
         <img src="${item.image}" alt="${item.name}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:0.8rem;" />
         <h3>${item.name}</h3>
         <p style="color:#666; font-size:0.9rem;">${item.description || ""}</p>
-        <p style="font-weight:bold; color:#9b6dff; margin:10px 0;">₹${item.price}</p>
+        <p style="font-weight:bold; color:#06B6D4; margin:10px 0;">₹${item.price}</p>
         <div style="display: flex; gap: 0.5rem;">
-          <button onclick="addToCart(${item.id}, '${item.name}', ${item.price})" class="btn" style="width:100%; background: #fff; border: 2px solid #9b6dff; color: #9b6dff;">
+          <button onclick="addToCart(${item.id}, '${item.name}', ${item.price})" class="btn" style="width:100%; background: #1E293B; border: 2px solid #06B6D4; color: #06B6D4;">
             <i class="fas fa-shopping-cart"></i> Add to Cart
           </button>
           <button onclick="buyNow(${item.id}, ${item.price})" class="btn" style="width:100%;">
@@ -166,7 +166,8 @@ document.getElementById("sort")?.addEventListener("change", (e) => {
 
   if (e.target.value === "price-low") sorted.sort((a, b) => a.price - b.price);
   if (e.target.value === "price-high") sorted.sort((a, b) => b.price - a.price);
-  if (e.target.value === "name") sorted.sort((a, b) => a.name.localeCompare(b.name));
+  if (e.target.value === "name")
+    sorted.sort((a, b) => a.name.localeCompare(b.name));
 
   displayItems(sorted);
 });
@@ -184,4 +185,3 @@ document.getElementById("category")?.addEventListener("change", (e) => {
 // Initialize
 loadCartFromStorage();
 loadMenu();
-

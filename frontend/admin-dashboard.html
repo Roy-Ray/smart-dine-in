@@ -1,11 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Smart Dine-In</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* Enhanced Admin Dashboard */
@@ -16,7 +22,7 @@
       }
 
       body {
-        background: #f8f9fb;
+        background: #0f172a;
         font-family: "Poppins", sans-serif;
       }
 
@@ -28,7 +34,7 @@
 
       /* Sidebar */
       .admin-sidebar {
-        background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+        background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
         color: #fff;
         padding: 2rem 0;
         position: fixed;
@@ -47,7 +53,7 @@
       .sidebar-logo {
         font-size: 1.4rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -80,13 +86,13 @@
 
       .menu-item:hover {
         background: rgba(255, 255, 255, 0.1);
-        border-left-color: #9b6dff;
+        border-left-color: #0ea5e9;
         color: #fff;
       }
 
       .menu-item.active {
-        background: rgba(155, 109, 255, 0.2);
-        border-left-color: #ff8ab3;
+        background: rgba(14, 165, 233, 0.2);
+        border-left-color: #f59e0b;
         color: #fff;
         font-weight: 600;
       }
@@ -101,18 +107,18 @@
       }
 
       .admin-header {
-        background: linear-gradient(135deg, #fff 0%, #fcf9ff 100%);
+        background: linear-gradient(135deg, #1e293b 0%, #1a1f2e 100%);
         padding: 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 20px rgba(155, 109, 255, 0.1);
-        border-bottom: 1px solid rgba(155, 109, 255, 0.1);
+        box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1);
+        border-bottom: 1px solid rgba(6, 182, 212, 0.15);
       }
 
       .admin-header h1 {
         font-size: 2rem;
-        color: var(--text);
+        color: #f1f5f9;
         font-weight: 700;
       }
 
@@ -123,12 +129,12 @@
       }
 
       .admin-user-info span {
-        color: var(--muted);
+        color: #94a3b8;
         font-weight: 600;
       }
 
       .logout-btn {
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         color: #fff;
         border: none;
         padding: 0.8rem 1.5rem;
@@ -136,12 +142,12 @@
         cursor: pointer;
         font-weight: 600;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(155, 109, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
       }
 
       .logout-btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(155, 109, 255, 0.4);
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
       }
 
       .admin-content {
@@ -157,34 +163,34 @@
       }
 
       .stat-card {
-        background: #fff;
+        background: #1e293b;
         border-radius: 16px;
         padding: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(155, 109, 255, 0.08);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(6, 182, 212, 0.1);
         transition: all 0.3s ease;
         border-left: 4px solid transparent;
       }
 
       .stat-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 12px 30px rgba(155, 109, 255, 0.15);
+        box-shadow: 0 12px 30px rgba(6, 182, 212, 0.2);
       }
 
       .stat-card.pending {
-        border-left-color: #ff8ab3;
+        border-left-color: #fbbf24;
       }
 
       .stat-card.completed {
-        border-left-color: #22c55e;
+        border-left-color: #10b981;
       }
 
       .stat-card.revenue {
-        border-left-color: #9b6dff;
+        border-left-color: #06b6d4;
       }
 
       .stat-label {
-        color: var(--muted);
+        color: #94a3b8;
         font-weight: 600;
         margin-bottom: 0.5rem;
         font-size: 0.95rem;
@@ -193,7 +199,7 @@
       .stat-value {
         font-size: 2.5rem;
         font-weight: 800;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -209,11 +215,11 @@
 
       /* Orders Table */
       .orders-section {
-        background: #fff;
+        background: #1e293b;
         border-radius: 16px;
         padding: 2rem;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(155, 109, 255, 0.08);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(6, 182, 212, 0.1);
       }
 
       .orders-header {
@@ -228,7 +234,7 @@
       .orders-header h2 {
         font-size: 1.5rem;
         font-weight: 700;
-        color: var(--text);
+        color: #f1f5f9;
       }
 
       .filter-group {
@@ -240,17 +246,19 @@
       .filter-group input,
       .filter-group select {
         padding: 0.8rem;
-        border: 2px solid rgba(155, 109, 255, 0.2);
+        border: 2px solid rgba(6, 182, 212, 0.2);
         border-radius: 8px;
         font-family: "Poppins", sans-serif;
         transition: all 0.3s ease;
+        background: #0f172a;
+        color: #f1f5f9;
       }
 
       .filter-group input:focus,
       .filter-group select:focus {
         outline: none;
-        border-color: var(--accent1);
-        box-shadow: 0 0 12px rgba(155, 109, 255, 0.2);
+        border-color: #06b6d4;
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.2);
       }
 
       .orders-table {
@@ -259,26 +267,34 @@
       }
 
       .orders-table th {
-        background: linear-gradient(135deg, rgba(155, 109, 255, 0.05), rgba(255, 138, 179, 0.05));
+        background: linear-gradient(
+          135deg,
+          rgba(14, 165, 233, 0.05),
+          rgba(245, 158, 11, 0.05)
+        );
         padding: 1.2rem;
         text-align: left;
         font-weight: 700;
         color: var(--text);
-        border-bottom: 2px solid rgba(155, 109, 255, 0.1);
+        border-bottom: 2px solid rgba(14, 165, 233, 0.1);
       }
 
       .orders-table td {
         padding: 1.2rem;
-        border-bottom: 1px solid rgba(155, 109, 255, 0.08);
+        border-bottom: 1px solid rgba(14, 165, 233, 0.08);
       }
 
       .orders-table tr:hover {
-        background: linear-gradient(135deg, rgba(155, 109, 255, 0.02), rgba(255, 138, 179, 0.02));
+        background: linear-gradient(
+          135deg,
+          rgba(14, 165, 233, 0.02),
+          rgba(245, 158, 11, 0.02)
+        );
       }
 
       .order-id {
         font-weight: 700;
-        color: var(--accent1);
+        color: #0ea5e9;
       }
 
       .status-badge {
@@ -291,23 +307,35 @@
       }
 
       .status-preparing {
-        background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2));
+        background: linear-gradient(
+          135deg,
+          rgba(255, 193, 7, 0.2),
+          rgba(255, 152, 0, 0.2)
+        );
         color: #ff9800;
       }
 
       .status-ready {
-        background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(56, 142, 60, 0.2));
+        background: linear-gradient(
+          135deg,
+          rgba(76, 175, 80, 0.2),
+          rgba(56, 142, 60, 0.2)
+        );
         color: #4caf50;
       }
 
       .status-delivered {
-        background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(21, 101, 192, 0.2));
+        background: linear-gradient(
+          135deg,
+          rgba(33, 150, 243, 0.2),
+          rgba(21, 101, 192, 0.2)
+        );
         color: #2196f3;
       }
 
       .status-select {
         padding: 0.6rem;
-        border: 2px solid rgba(155, 109, 255, 0.2);
+        border: 2px solid rgba(14, 165, 233, 0.2);
         border-radius: 6px;
         cursor: pointer;
         font-weight: 600;
@@ -318,12 +346,12 @@
 
       .status-select:hover,
       .status-select:focus {
-        border-color: var(--accent1);
-        box-shadow: 0 0 10px rgba(155, 109, 255, 0.2);
+        border-color: #0ea5e9;
+        box-shadow: 0 0 10px rgba(14, 165, 233, 0.2);
       }
 
       .amount {
-        color: var(--accent1);
+        color: #0ea5e9;
         font-weight: 700;
       }
 
@@ -347,7 +375,7 @@
       }
 
       .loading::after {
-        content: '';
+        content: "";
         display: inline-block;
         width: 30px;
         height: 30px;
@@ -358,7 +386,9 @@
       }
 
       @keyframes spin {
-        to { transform: rotate(360deg); }
+        to {
+          transform: rotate(360deg);
+        }
       }
 
       /* Responsive */
@@ -454,7 +484,9 @@
               <div class="stat-card pending">
                 <div class="stat-label">Pending Orders</div>
                 <div class="stat-value" id="pendingCount">0</div>
-                <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+                <div class="stat-icon">
+                  <i class="fas fa-hourglass-half"></i>
+                </div>
               </div>
 
               <div class="stat-card completed">
@@ -480,12 +512,16 @@
           </section>
 
           <!-- Orders Management -->
-          <section id="ordersSection" style="display: none;">
+          <section id="ordersSection" style="display: none">
             <div class="orders-section">
               <div class="orders-header">
                 <h2>All Orders</h2>
                 <div class="filter-group">
-                  <input type="text" id="searchOrder" placeholder="Search order ID..." />
+                  <input
+                    type="text"
+                    id="searchOrder"
+                    placeholder="Search order ID..."
+                  />
                   <select id="statusFilter">
                     <option value="">All Status</option>
                     <option value="preparing">Preparing</option>
@@ -507,25 +543,35 @@
                   </tr>
                 </thead>
                 <tbody id="allOrdersContainer" class="loading">
-                  <tr><td colspan="6" style="text-align: center; padding: 2rem;"><div class="loading"></div></td></tr>
+                  <tr>
+                    <td colspan="6" style="text-align: center; padding: 2rem">
+                      <div class="loading"></div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
 
           <!-- Table Management -->
-          <section id="tablesSection" style="display: none;">
+          <section id="tablesSection" style="display: none">
             <div class="orders-section">
               <div class="orders-header">
                 <h2>Table Status</h2>
               </div>
-              <div id="tableStatusContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem;">
-              </div>
+              <div
+                id="tableStatusContainer"
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                  gap: 1.5rem;
+                "
+              ></div>
             </div>
           </section>
 
           <!-- Payments -->
-          <section id="paymentsSection" style="display: none;">
+          <section id="paymentsSection" style="display: none">
             <div class="orders-section">
               <div class="orders-header">
                 <h2>Payment Details</h2>
@@ -541,20 +587,31 @@
                   </tr>
                 </thead>
                 <tbody id="paymentsContainer" class="loading">
-                  <tr><td colspan="5" style="text-align: center; padding: 2rem;"><div class="loading"></div></td></tr>
+                  <tr>
+                    <td colspan="5" style="text-align: center; padding: 2rem">
+                      <div class="loading"></div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </section>
 
           <!-- Reports -->
-          <section id="reportsSection" style="display: none;">
+          <section id="reportsSection" style="display: none">
             <div class="orders-section">
               <div class="orders-header">
                 <h2>Daily Reports</h2>
                 <input type="date" id="reportDate" />
               </div>
-              <div id="reportsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;"></div>
+              <div
+                id="reportsContainer"
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                  gap: 2rem;
+                "
+              ></div>
             </div>
           </section>
         </div>
@@ -567,23 +624,28 @@
         window.location.href = "/admin-login.html";
       }
 
-      document.getElementById("adminUserName").textContent = localStorage.getItem("adminName") || "Admin";
+      document.getElementById("adminUserName").textContent =
+        localStorage.getItem("adminName") || "Admin";
 
       let allOrders = [];
 
       // Menu Navigation
-      document.querySelectorAll(".menu-item").forEach(item => {
+      document.querySelectorAll(".menu-item").forEach((item) => {
         item.addEventListener("click", (e) => {
           const section = item.getAttribute("data-section");
           switchSection(section);
 
-          document.querySelectorAll(".menu-item").forEach(m => m.classList.remove("active"));
+          document
+            .querySelectorAll(".menu-item")
+            .forEach((m) => m.classList.remove("active"));
           item.classList.add("active");
         });
       });
 
       function switchSection(section) {
-        document.querySelectorAll("[id$='Section']").forEach(s => s.style.display = "none");
+        document
+          .querySelectorAll("[id$='Section']")
+          .forEach((s) => (s.style.display = "none"));
         document.getElementById(section + "Section").style.display = "block";
 
         const titleMap = {
@@ -591,7 +653,7 @@
           orders: "Order Management",
           tables: "Table Management",
           payments: "Payment Details",
-          reports: "Daily Reports"
+          reports: "Daily Reports",
         };
         document.getElementById("pageTitle").textContent = titleMap[section];
 
@@ -601,7 +663,7 @@
       async function loadAllOrders() {
         try {
           const response = await fetch("/api/admin/orders", {
-            headers: { "Authorization": `Bearer ${adminToken}` }
+            headers: { Authorization: `Bearer ${adminToken}` },
           });
 
           if (!response.ok) {
@@ -621,23 +683,33 @@
       }
 
       function updateStats() {
-        const preparing = allOrders.filter(o => o.status === "preparing");
-        const completed = allOrders.filter(o => ["served", "delivered"].includes(o.status));
-        const revenue = allOrders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+        const preparing = allOrders.filter((o) => o.status === "preparing");
+        const completed = allOrders.filter((o) =>
+          ["served", "delivered"].includes(o.status),
+        );
+        const revenue = allOrders.reduce(
+          (sum, o) => sum + (o.totalAmount || 0),
+          0,
+        );
 
         document.getElementById("pendingCount").textContent = preparing.length;
-        document.getElementById("completedCount").textContent = completed.length;
-        document.getElementById("revenueAmount").textContent = `₹${revenue.toFixed(2)}`;
+        document.getElementById("completedCount").textContent =
+          completed.length;
+        document.getElementById("revenueAmount").textContent =
+          `₹${revenue.toFixed(2)}`;
       }
 
       function displayAllOrders() {
         const container = document.getElementById("allOrdersContainer");
         if (allOrders.length === 0) {
-          container.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No orders yet</td></tr>';
+          container.innerHTML =
+            '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No orders yet</td></tr>';
           return;
         }
 
-        container.innerHTML = allOrders.map(order => `
+        container.innerHTML = allOrders
+          .map(
+            (order) => `
           <tr>
             <td><span class="order-id">${order.orderId}</span></td>
             <td>${order.userName || "Guest"}</td>
@@ -656,10 +728,12 @@
               </span>
             </td>
             <td>
-              <button onclick="viewOrderDetails('${order.orderId}')" style="background: linear-gradient(135deg, #9b6dff, #ff8ab3); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">View</button>
+              <button onclick="viewOrderDetails('${order.orderId}')" style="background: linear-gradient(135deg, #0EA5E9, #F59E0B); color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 600;">View</button>
             </td>
           </tr>
-        `).join("");
+        `,
+          )
+          .join("");
       }
 
       async function updateOrderStatus(orderId, status) {
@@ -668,9 +742,9 @@
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${adminToken}`
+              Authorization: `Bearer ${adminToken}`,
             },
-            body: JSON.stringify({ status })
+            body: JSON.stringify({ status }),
           });
 
           if (response.ok) {
@@ -682,9 +756,11 @@
       }
 
       function viewOrderDetails(orderId) {
-        const order = allOrders.find(o => o.orderId === orderId);
+        const order = allOrders.find((o) => o.orderId === orderId);
         if (order) {
-          alert(`Order: ${order.orderId}\nTotal: ₹${order.totalAmount}\nStatus: ${order.status}\nPayment: ${order.paymentMethod}`);
+          alert(
+            `Order: ${order.orderId}\nTotal: ₹${order.totalAmount}\nStatus: ${order.status}\nPayment: ${order.paymentMethod}`,
+          );
         }
       }
 

@@ -1,16 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkout - Smart Dine-In</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <style>
       /* Enhanced Checkout Styles */
       body {
-        background: linear-gradient(180deg, #fffdf9 0%, #fcf9ff 100%);
+        background: linear-gradient(180deg, #1a1f2e 0%, #0f172a 100%);
       }
 
       .checkout-container {
@@ -24,11 +30,11 @@
 
       /* Cart Section */
       .cart-section {
-        background: #fff;
+        background: #1e293b;
         border-radius: 20px;
         padding: 2.5rem;
-        box-shadow: 0 10px 30px rgba(155, 109, 255, 0.1);
-        border: 1px solid rgba(155, 109, 255, 0.08);
+        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+        border: 1px solid rgba(6, 182, 212, 0.1);
       }
 
       .cart-section h2 {
@@ -70,7 +76,11 @@
         display: flex;
         gap: 1.5rem;
         padding: 1.5rem;
-        background: linear-gradient(135deg, rgba(155, 109, 255, 0.02), rgba(255, 138, 179, 0.02));
+        background: linear-gradient(
+          135deg,
+          rgba(155, 109, 255, 0.02),
+          rgba(255, 138, 179, 0.02)
+        );
         border-radius: 15px;
         border: 1px solid rgba(155, 109, 255, 0.1);
         transition: all 0.3s ease;
@@ -118,12 +128,12 @@
       .qty-btn {
         width: 36px;
         height: 36px;
-        border: 2px solid rgba(155, 109, 255, 0.2);
-        background: #fff;
+        border: 2px solid rgba(6, 182, 212, 0.2);
+        background: #0f172a;
         border-radius: 8px;
         cursor: pointer;
         font-weight: 700;
-        color: var(--accent1);
+        color: #06b6d4;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
@@ -131,9 +141,9 @@
       }
 
       .qty-btn:hover {
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         color: #fff;
-        border-color: var(--accent1);
+        border-color: #06b6d4;
         transform: scale(1.08);
       }
 
@@ -194,16 +204,16 @@
         color: var(--text);
         margin-top: 1rem;
         padding-top: 1rem;
-        border-top: 2px solid rgba(155, 109, 255, 0.2);
+        border-top: 2px solid rgba(14, 165, 233, 0.2);
       }
 
       .billing-row .amount {
-        color: var(--accent1);
+        color: #0ea5e9;
         font-weight: 700;
       }
 
       .billing-row.total .amount {
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -213,13 +223,13 @@
       .promo-section {
         margin: 2rem 0;
         padding-top: 1.5rem;
-        border-top: 1px solid rgba(155, 109, 255, 0.1);
+        border-top: 1px solid rgba(6, 182, 212, 0.1);
       }
 
       .promo-label {
         font-weight: 600;
         margin-bottom: 0.8rem;
-        color: var(--text);
+        color: #f1f5f9;
         font-size: 0.95rem;
       }
 
@@ -231,7 +241,7 @@
       .promo-input-group input {
         flex: 1;
         padding: 0.8rem;
-        border: 2px solid rgba(155, 109, 255, 0.2);
+        border: 2px solid rgba(14, 165, 233, 0.2);
         border-radius: 10px;
         font-family: "Poppins", sans-serif;
         transition: all 0.3s ease;
@@ -239,13 +249,13 @@
 
       .promo-input-group input:focus {
         outline: none;
-        border-color: var(--accent1);
-        box-shadow: 0 0 12px rgba(155, 109, 255, 0.2);
+        border-color: #0ea5e9;
+        box-shadow: 0 0 12px rgba(14, 165, 233, 0.2);
       }
 
       .promo-input-group button {
         padding: 0.8rem 1.5rem;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
         color: #fff;
         border: none;
         border-radius: 10px;
@@ -256,7 +266,7 @@
 
       .promo-input-group button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(155, 109, 255, 0.3);
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
       }
 
       /* Payment Method Selection */
@@ -318,15 +328,19 @@
       }
 
       .payment-option.selected {
-        border-color: var(--accent1);
-        background: linear-gradient(135deg, rgba(155, 109, 255, 0.05), rgba(255, 138, 179, 0.05));
+        border-color: #0ea5e9;
+        background: linear-gradient(
+          135deg,
+          rgba(14, 165, 233, 0.05),
+          rgba(245, 158, 11, 0.05)
+        );
       }
 
       /* Checkout Button */
       .checkout-btn {
         width: 100%;
         padding: 1.2rem;
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
         color: #fff;
         border: none;
         border-radius: 12px;
@@ -335,13 +349,13 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin-top: 2rem;
-        box-shadow: 0 8px 25px rgba(155, 109, 255, 0.3);
+        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
         letter-spacing: 0.5px;
       }
 
       .checkout-btn:hover:not(:disabled) {
         transform: translateY(-3px);
-        box-shadow: 0 12px 35px rgba(155, 109, 255, 0.4);
+        box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
         filter: brightness(1.08);
       }
 
@@ -371,7 +385,7 @@
         padding: 3rem;
         border-radius: 20px;
         text-align: center;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         max-width: 500px;
         animation: slideUp 0.3s ease;
       }
@@ -380,23 +394,27 @@
         font-size: 1.8rem;
         font-weight: 700;
         margin-bottom: 1rem;
-        color: var(--text);
+        color: #f1f5f9;
       }
 
       .modal-content .order-id {
-        background: linear-gradient(135deg, rgba(155, 109, 255, 0.1), rgba(255, 138, 179, 0.1));
+        background: linear-gradient(
+          135deg,
+          rgba(14, 165, 233, 0.1),
+          rgba(245, 158, 11, 0.1)
+        );
         padding: 1.5rem;
         border-radius: 12px;
         margin: 1.5rem 0;
         font-family: monospace;
         font-size: 1.1rem;
         font-weight: 700;
-        color: var(--accent1);
+        color: #0ea5e9;
         letter-spacing: 1px;
       }
 
       .modal-content .modal-button {
-        background: linear-gradient(135deg, #9b6dff, #ff8ab3);
+        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
         color: #fff;
         padding: 1rem 2rem;
         border: none;
@@ -450,15 +468,40 @@
             <li><a href="/index.html">Home</a></li>
             <li><a href="/menu.html">Menu</a></li>
             <li><a href="/order-tracking.html">Orders</a></li>
-            <li style="margin-left: auto;"></li>
-            <li><button id="logoutBtn" style="background: linear-gradient(135deg, #9b6dff, #ff8ab3); color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: 600;">Logout</button></li>
+            <li style="margin-left: auto"></li>
+            <li>
+              <button
+                id="logoutBtn"
+                style="
+                  background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+                  color: #fff;
+                  border: none;
+                  padding: 0.6rem 1.2rem;
+                  border-radius: 20px;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+              >
+                Logout
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <div style="background: linear-gradient(135deg, #9b6dff, #ff8ab3); color: #fff; padding: 2rem; text-align: center; margin-bottom: 2rem;">
-      <h1 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem;">🛒 Complete Your Order</h1>
+    <div
+      style="
+        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+        color: #fff;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+      "
+    >
+      <h1 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem">
+        🛒 Complete Your Order
+      </h1>
       <p>Review your items and proceed to payment</p>
     </div>
 
@@ -467,7 +510,21 @@
       <div class="cart-section">
         <h2><i class="fas fa-shopping-bag"></i> Your Order</h2>
         <div id="cartItems" class="cart-items-list"></div>
-        <button onclick="goBackToMenu()" style="width: 100%; margin-top: 2rem; padding: 1rem; background: rgba(155, 109, 255, 0.1); border: 2px solid rgba(155, 109, 255, 0.2); border-radius: 10px; color: var(--accent1); font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+        <button
+          onclick="goBackToMenu()"
+          style="
+            width: 100%;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(155, 109, 255, 0.1);
+            border: 2px solid rgba(155, 109, 255, 0.2);
+            border-radius: 10px;
+            color: var(--accent1);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          "
+        >
           <i class="fas fa-plus"></i> Add More Items
         </button>
       </div>
@@ -490,8 +547,13 @@
           <span class="amount" id="deliveryDisplay">₹0.00</span>
         </div>
         <div class="billing-row">
-          <span id="discountLabel" style="display: none;">Discount</span>
-          <span class="amount" id="discountDisplay" style="display: none; color: #ff6b6b;">-₹0.00</span>
+          <span id="discountLabel" style="display: none">Discount</span>
+          <span
+            class="amount"
+            id="discountDisplay"
+            style="display: none; color: #ff6b6b"
+            >-₹0.00</span
+          >
         </div>
         <div class="billing-row total">
           <span>Total Amount</span>
@@ -502,10 +564,21 @@
         <div class="promo-section">
           <div class="promo-label">Apply Promo Code</div>
           <div class="promo-input-group">
-            <input type="text" id="promoInput" placeholder="Enter code (e.g., WELCOME50)" />
+            <input
+              type="text"
+              id="promoInput"
+              placeholder="Enter code (e.g., WELCOME50)"
+            />
             <button onclick="applyPromo()">Apply</button>
           </div>
-          <div id="promoMessage" style="font-size: 0.85rem; margin-top: 0.5rem; color: var(--accent1);"></div>
+          <div
+            id="promoMessage"
+            style="
+              font-size: 0.85rem;
+              margin-top: 0.5rem;
+              color: var(--accent1);
+            "
+          ></div>
         </div>
 
         <!-- Payment Methods -->
@@ -518,15 +591,24 @@
             </div>
             <div class="payment-option" onclick="selectPayment(this, 'card')">
               <input type="radio" name="payment" id="card" />
-              <label for="card"><i class="fas fa-credit-card"></i> Credit/Debit Card</label>
+              <label for="card"
+                ><i class="fas fa-credit-card"></i> Credit/Debit Card</label
+              >
             </div>
-            <div class="payment-option" onclick="selectPayment(this, 'netbanking')">
+            <div
+              class="payment-option"
+              onclick="selectPayment(this, 'netbanking')"
+            >
               <input type="radio" name="payment" id="netbanking" />
-              <label for="netbanking"><i class="fas fa-university"></i> Net Banking</label>
+              <label for="netbanking"
+                ><i class="fas fa-university"></i> Net Banking</label
+              >
             </div>
             <div class="payment-option" onclick="selectPayment(this, 'cod')">
               <input type="radio" name="payment" id="cod" />
-              <label for="cod"><i class="fas fa-money-bill"></i> Cash on Delivery</label>
+              <label for="cod"
+                ><i class="fas fa-money-bill"></i> Cash on Delivery</label
+              >
             </div>
           </div>
         </div>
@@ -540,12 +622,21 @@
     <!-- Success Modal -->
     <div id="successModal" class="modal">
       <div class="modal-content">
-        <i class="fas fa-check-circle" style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem;"></i>
+        <i
+          class="fas fa-check-circle"
+          style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem"
+        ></i>
         <h2>Order Confirmed! ✨</h2>
-        <p style="color: var(--muted); margin-bottom: 1rem;">Your order has been placed successfully</p>
+        <p style="color: var(--muted); margin-bottom: 1rem">
+          Your order has been placed successfully
+        </p>
         <div class="order-id" id="orderIdDisplay">ORD-2025...</div>
-        <p style="color: var(--muted); font-size: 0.9rem;">Estimated delivery: 20-30 minutes</p>
-        <button class="modal-button" onclick="completeOrder()">Track Order</button>
+        <p style="color: var(--muted); font-size: 0.9rem">
+          Estimated delivery: 20-30 minutes
+        </p>
+        <button class="modal-button" onclick="completeOrder()">
+          Track Order
+        </button>
       </div>
     </div>
 
@@ -578,7 +669,9 @@
           return;
         }
 
-        container.innerHTML = cart.map(item => `
+        container.innerHTML = cart
+          .map(
+            (item) => `
           <div class="cart-item">
             <img src="${item.image}" alt="${item.name}" class="cart-item-image" />
             <div class="cart-item-details">
@@ -597,11 +690,13 @@
               <div style="font-weight: 700; color: var(--accent1);">₹${(parseFloat(item.price) * item.quantity).toFixed(2)}</div>
             </div>
           </div>
-        `).join("");
+        `,
+          )
+          .join("");
       }
 
       function updateQuantity(itemId, change) {
-        const item = cart.find(c => c.id === itemId);
+        const item = cart.find((c) => c.id === itemId);
         if (item) {
           item.quantity += change;
           if (item.quantity <= 0) {
@@ -615,56 +710,75 @@
       }
 
       function removeItem(itemId) {
-        cart = cart.filter(c => c.id !== itemId);
+        cart = cart.filter((c) => c.id !== itemId);
         localStorage.setItem("dineInCart", JSON.stringify(cart));
         displayCart();
         updateBilling();
       }
 
       function updateBilling() {
-        const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+        const subtotal = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
         const tax = subtotal * 0.18;
         const delivery = subtotal > 500 ? 0 : 40;
         totalAmount = subtotal + tax + delivery;
 
-        document.getElementById("subtotalDisplay").textContent = `₹${subtotal.toFixed(2)}`;
-        document.getElementById("taxDisplay").textContent = `₹${tax.toFixed(2)}`;
-        document.getElementById("deliveryDisplay").textContent = delivery > 0 ? `₹${delivery.toFixed(2)}` : "Free";
-        document.getElementById("totalDisplay").textContent = `₹${totalAmount.toFixed(2)}`;
+        document.getElementById("subtotalDisplay").textContent =
+          `₹${subtotal.toFixed(2)}`;
+        document.getElementById("taxDisplay").textContent =
+          `₹${tax.toFixed(2)}`;
+        document.getElementById("deliveryDisplay").textContent =
+          delivery > 0 ? `₹${delivery.toFixed(2)}` : "Free";
+        document.getElementById("totalDisplay").textContent =
+          `₹${totalAmount.toFixed(2)}`;
       }
 
       function selectPayment(element, method) {
-        document.querySelectorAll(".payment-option").forEach(el => el.classList.remove("selected"));
+        document
+          .querySelectorAll(".payment-option")
+          .forEach((el) => el.classList.remove("selected"));
         element.classList.add("selected");
         document.getElementById(method).checked = true;
       }
 
       function applyPromo() {
         const code = document.getElementById("promoInput").value.toUpperCase();
-        const subtotalForDiscount = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+        const subtotalForDiscount = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
         const promoCodes = {
-          "WELCOME50": 50,
-          "DINE100": 100,
-          "LUCKY20": subtotalForDiscount * 0.20,
-          "FLAT30": 30
+          WELCOME50: 50,
+          DINE100: 100,
+          LUCKY20: subtotalForDiscount * 0.2,
+          FLAT30: 30,
         };
 
         if (promoCodes[code]) {
           const discount = promoCodes[code];
-          const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+          const subtotal = cart.reduce(
+            (sum, item) => sum + parseFloat(item.price) * item.quantity,
+            0,
+          );
           const tax = subtotal * 0.18;
           const delivery = subtotal > 500 ? 0 : 40;
-          totalAmount = (subtotal + tax + delivery) - discount;
+          totalAmount = subtotal + tax + delivery - discount;
 
           document.getElementById("discountLabel").style.display = "block";
           document.getElementById("discountDisplay").style.display = "block";
-          document.getElementById("discountDisplay").textContent = `-₹${discount.toFixed(2)}`;
-          document.getElementById("totalDisplay").textContent = `₹${totalAmount.toFixed(2)}`;
+          document.getElementById("discountDisplay").textContent =
+            `-₹${discount.toFixed(2)}`;
+          document.getElementById("totalDisplay").textContent =
+            `₹${totalAmount.toFixed(2)}`;
 
-          document.getElementById("promoMessage").textContent = "✓ Promo code applied successfully!";
+          document.getElementById("promoMessage").textContent =
+            "✓ Promo code applied successfully!";
           document.getElementById("promoMessage").style.color = "#22c55e";
         } else {
-          document.getElementById("promoMessage").textContent = "✗ Invalid promo code";
+          document.getElementById("promoMessage").textContent =
+            "✗ Invalid promo code";
           document.getElementById("promoMessage").style.color = "#ff6b6b";
         }
       }
@@ -675,7 +789,9 @@
           return;
         }
 
-        const paymentMethod = document.querySelector('input[name="payment"]:checked');
+        const paymentMethod = document.querySelector(
+          'input[name="payment"]:checked',
+        );
         if (!paymentMethod) {
           alert("Please select a payment method");
           return;
@@ -686,20 +802,21 @@
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}`
+              Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify({
               items: cart,
               totalAmount: totalAmount,
               paymentMethod: paymentMethod.id,
               status: "completed",
-              paymentDetails: { method: paymentMethod.id }
-            })
+              paymentDetails: { method: paymentMethod.id },
+            }),
           });
 
           const data = await response.json();
           if (data.orderId) {
-            document.getElementById("orderIdDisplay").textContent = data.orderId;
+            document.getElementById("orderIdDisplay").textContent =
+              data.orderId;
             document.getElementById("successModal").classList.add("active");
             localStorage.removeItem("dineInCart");
           }
