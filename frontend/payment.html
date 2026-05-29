@@ -613,34 +613,41 @@
 .qr-box p{
     color:#6b7280;
 }
+/* =========================
+   ORDER TYPE TOGGLE
+========================= */
+
+.order-type-box{
+    background:white;
+    padding:1.5rem;
+    border-radius:20px;
+    margin-bottom:2rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.order-toggle{
+    display:flex;
+    gap:1rem;
+    margin-top:1rem;
+}
+
+.order-type-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#f3f4f6;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.order-type-btn.active{
+    background:#06b6d4;
+    color:white;
+}
     </style>
   </head>
-<!-- PAYMENT PROCESSING MODAL -->
- <div id="processingModal" class="processing-modal">
-  
-  <div class="processing-box">
-
-    <div class="loader-ring"></div>
-
-    <h2>Processing Your Payment</h2>
-
-    <p>Please wait while we securely process your transaction...</p>
-
-    <div class="processing-steps">
-      <div class="step active">✔ Connecting to Bank</div>
-      <div class="step active">✔ Verifying Payment</div>
-
-      <div class="step loading">
-        <span class="dot-loader"></span>
-        Generating Order ID
-      </div>
-
-    </div>
-
-  </div>
-
-</div>
-
   <body>
     <header>
       <div class="container nav">
@@ -766,7 +773,36 @@
             "
           ></div>
         </div>
+<!-- ORDER TYPE -->
 
+<div class="order-type-box">
+
+  <h3>Select Order Type</h3>
+
+  <div class="order-toggle">
+
+    <button
+  type="button"
+  class="order-type-btn active"
+  id="dineInBtn"
+  onclick="selectOrderType('dine-in')">
+      🍽️ Dine-In
+
+    </button>
+
+    <button
+      type="button"
+      class="order-type-btn"
+      id="deliveryBtn"
+      onclick="selectOrderType('takeaway')">
+
+      🛵 Takeaway
+
+    </button>
+
+  </div>
+
+</div>
         <!-- Payment Methods -->
         <div class="payment-methods">
           <h3>Payment Method</h3>
@@ -840,6 +876,7 @@
     <script>
       let cart = [];
       let totalAmount = 0;
+      let selectedOrderType = "dine-in";
 
       const token = localStorage.getItem("token");
       if (!token) {
@@ -932,6 +969,33 @@
           `₹${totalAmount.toFixed(2)}`;
       }
 
+
+
+      function selectOrderType(type){
+
+  selectedOrderType = type;
+
+  document
+    .querySelectorAll(".order-type-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if(type === "dine-in"){
+
+    document
+      .getElementById("dineInBtn")
+      .classList.add("active");
+
+  }
+  else{
+
+    document
+      .getElementById("deliveryBtn")
+      .classList.add("active");
+
+  }
+
+}
+
       function selectPayment(element, method) {
 
   document
@@ -1004,17 +1068,6 @@
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
       
       function applyPromo() {
         const code = document.getElementById("promoInput").value.toUpperCase();
@@ -1105,15 +1158,18 @@
 
         paymentMethod: paymentMethod.id,
 
-        status: "completed",
+        status: "preparing",
 
         paymentDetails: {
           method: paymentMethod.id
         },
 
-        orderType: "dine-in",
+        orderType: selectedOrderType,
 
-        tableNumber: 1
+        tableNumber:
+  selectedOrderType === "dine-in"
+    ? 1
+    : null
 
       })
 
@@ -1165,5 +1221,30 @@
 
       window.addEventListener("load", loadCart);
     </script>
+    <!-- PAYMENT PROCESSING MODAL -->
+ <div id="processingModal" class="processing-modal">
+  
+  <div class="processing-box">
+
+    <div class="loader-ring"></div>
+
+    <h2>Processing Your Payment</h2>
+
+    <p>Please wait while we securely process your transaction...</p>
+
+    <div class="processing-steps">
+      <div class="step active">✔ Connecting to Bank</div>
+      <div class="step active">✔ Verifying Payment</div>
+
+      <div class="step loading">
+        <span class="dot-loader"></span>
+        Generating Order ID
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
   </body>
 </html>
