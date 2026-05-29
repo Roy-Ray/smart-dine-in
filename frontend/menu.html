@@ -499,6 +499,39 @@
         window.location.href = "/login.html";
       }
 
+      const cartStorageKey = () =>
+        `cart_${localStorage.getItem("userName") || "guest"}`;
+      const lastCartOwnerKey = "lastCartOwner";
+
+      function saveCart() {
+        localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
+        localStorage.setItem(
+          lastCartOwnerKey,
+          localStorage.getItem("userName") || "",
+        );
+      }
+
+      function loadCart() {
+        const saved = localStorage.getItem(cartStorageKey());
+        if (saved) {
+          cart = JSON.parse(saved);
+          updateCartBadge();
+          return;
+        }
+
+        const legacy = localStorage.getItem("dineInCart");
+        const lastOwner = localStorage.getItem(lastCartOwnerKey);
+        const currentUser = localStorage.getItem("userName");
+
+        if (legacy && lastOwner && currentUser && lastOwner === currentUser) {
+          cart = JSON.parse(legacy);
+          saveCart();
+          localStorage.removeItem("dineInCart");
+        }
+
+        updateCartBadge();
+      }
+
       // Display user name
       document.getElementById("userNameDisplay").textContent =
         localStorage.getItem("userName") || "Profile";
@@ -572,7 +605,7 @@
           });
         }
 
-        localStorage.setItem("dineInCart", JSON.stringify(cart));
+        saveCart();
         updateCartBadge();
         showNotification(`${item.name} added to cart!`);
       }
@@ -581,14 +614,6 @@
         const badge = document.getElementById("cartBadge");
         const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
         badge.textContent = totalItems;
-      }
-
-      function loadCart() {
-        const saved = localStorage.getItem("dineInCart");
-        if (saved) {
-          cart = JSON.parse(saved);
-          updateCartBadge();
-        }
       }
 
       function showNotification(message) {
@@ -653,8 +678,11 @@
 
       // Logout
       document.getElementById("logoutBtn").addEventListener("click", () => {
+        saveCart();
         localStorage.removeItem("token");
         localStorage.removeItem("userName");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("dineInCart");
         window.location.href = "/login.html";
       });
 

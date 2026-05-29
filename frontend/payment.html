@@ -462,190 +462,196 @@
    PAYMENT PROCESSING MODAL
 ========================= */
 
-.processing-modal{
-    position: fixed;
-    inset: 0;
-    background: rgba(15,23,42,0.75);
-    backdrop-filter: blur(8px);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 99999;
-}
+      .processing-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(8px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+      }
 
-.processing-box{
-    width: 90%;
-    max-width: 420px;
-    background: white;
-    border-radius: 24px;
-    padding: 3rem 2rem;
-    text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    animation: popup 0.4s ease;
-}
+      .processing-box {
+        width: 90%;
+        max-width: 420px;
+        background: white;
+        border-radius: 24px;
+        padding: 3rem 2rem;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        animation: popup 0.4s ease;
+      }
 
-@keyframes popup{
-    from{
-        transform: scale(0.9);
-        opacity:0;
-    }
-    to{
-        transform: scale(1);
-        opacity:1;
-    }
-}
+      @keyframes popup {
+        from {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
 
-.loader-ring{
-    width: 70px;
-    height: 70px;
-    border: 6px solid #e5e7eb;
-    border-top: 6px solid #06b6d4;
-    border-radius: 50%;
-    margin: auto;
-    animation: spin 1s linear infinite;
-}
+      .loader-ring {
+        width: 70px;
+        height: 70px;
+        border: 6px solid #e5e7eb;
+        border-top: 6px solid #06b6d4;
+        border-radius: 50%;
+        margin: auto;
+        animation: spin 1s linear infinite;
+      }
 
-@keyframes spin{
-    100%{
-        transform: rotate(360deg);
-    }
-}
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-.processing-box h2{
-    margin-top: 1.5rem;
-    color: #111827;
-}
+      .processing-box h2 {
+        margin-top: 1.5rem;
+        color: #111827;
+      }
 
-.processing-box p{
-    color: #6b7280;
-    margin-top: 0.5rem;
-}
+      .processing-box p {
+        color: #6b7280;
+        margin-top: 0.5rem;
+      }
 
-.processing-steps{
-    margin-top: 2rem;
-    text-align: left;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-}
+      .processing-steps {
+        margin-top: 2rem;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
 
-.step{
-    background:#f8fafc;
-    padding:12px 16px;
-    border-radius:12px;
-    font-weight:500;
-    color:#374151;
-}
+      .step {
+        background: #f8fafc;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-weight: 500;
+        color: #374151;
+      }
 
-.step.loading{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
+      .step.loading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-.dot-loader{
-    width:14px;
-    height:14px;
-    border-radius:50%;
-    background:#06b6d4;
-    animation:pulse 1s infinite;
-}
+      .dot-loader {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #06b6d4;
+        animation: pulse 1s infinite;
+      }
 
-@keyframes pulse{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.5);}
-    100%{transform:scale(1);}
-}
-/* =========================
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      /* =========================
    FAKE PAYMENT UI
 ========================= */
 
-.fake-razorpay{
-    background:white;
-    padding:2rem;
-    border-radius:20px;
-    margin-top:1.5rem;
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
-}
+      .fake-razorpay {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-top: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
 
-.fake-razorpay input{
-    width:100%;
-    margin-top:1rem;
-    padding:14px;
-    border-radius:10px;
-    border:1px solid #d1d5db;
-    color:#111827;
-    font-weight:500;
-}
+      .fake-razorpay input {
+        width: 100%;
+        margin-top: 1rem;
+        padding: 14px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        color: #111827;
+        font-weight: 500;
+      }
 
-.rz-header{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:#111827;
-    font-weight:700;
-    font-size:1.1rem;
-}
+      .rz-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #111827;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
 
-.card-row{
-    display:flex;
-    gap:12px;
-}
+      .card-row {
+        display: flex;
+        gap: 12px;
+      }
 
-.qr-box{
-    background:white;
-    padding:2rem;
-    border-radius:20px;
-    text-align:center;
-    margin-top:1.5rem;
-    box-shadow:0 10px 30px rgba(0,0,0,0.08);
-}
+      .qr-box {
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        text-align: center;
+        margin-top: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      }
 
-.qr-box img{
-    width:220px;
-    margin-bottom:1rem;
-}
+      .qr-box img {
+        width: 220px;
+        margin-bottom: 1rem;
+      }
 
-.qr-box h3{
-    color:#111827;
-}
+      .qr-box h3 {
+        color: #111827;
+      }
 
-.qr-box p{
-    color:#6b7280;
-}
-/* =========================
+      .qr-box p {
+        color: #6b7280;
+      }
+      /* =========================
    ORDER TYPE TOGGLE
 ========================= */
 
-.order-type-box{
-    background:white;
-    padding:1.5rem;
-    border-radius:20px;
-    margin-bottom:2rem;
-    box-shadow:0 10px 30px rgba(0,0,0,0.06);
-}
+      .order-type-box {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      }
 
-.order-toggle{
-    display:flex;
-    gap:1rem;
-    margin-top:1rem;
-}
+      .order-toggle {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
 
-.order-type-btn{
-    flex:1;
-    padding:14px;
-    border:none;
-    border-radius:12px;
-    background:#f3f4f6;
-    cursor:pointer;
-    font-weight:600;
-    transition:0.3s;
-}
+      .order-type-btn {
+        flex: 1;
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: #f3f4f6;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+      }
 
-.order-type-btn.active{
-    background:#06b6d4;
-    color:white;
-}
+      .order-type-btn.active {
+        background: #06b6d4;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -735,7 +741,7 @@
           <span>Tax (18% GST)</span>
           <span class="amount" id="taxDisplay">₹0.00</span>
         </div>
-        <div class="billing-row">
+        <div class="billing-row" id="deliveryRow">
           <span>Delivery</span>
           <span class="amount" id="deliveryDisplay">₹0.00</span>
         </div>
@@ -772,37 +778,43 @@
               color: var(--accent1);
             "
           ></div>
+          <div
+            id="promoOffers"
+            style="
+              margin-top: 1rem;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.75rem;
+              color: #e2e8f0;
+              font-size: 0.9rem;
+            "
+          ></div>
         </div>
-<!-- ORDER TYPE -->
+        <!-- ORDER TYPE -->
 
-<div class="order-type-box">
+        <div class="order-type-box">
+          <h3>Select Order Type</h3>
 
-  <h3>Select Order Type</h3>
+          <div class="order-toggle">
+            <button
+              type="button"
+              class="order-type-btn active"
+              id="dineInBtn"
+              onclick="selectOrderType('dine-in')"
+            >
+              🍽️ Dine-In
+            </button>
 
-  <div class="order-toggle">
-
-    <button
-  type="button"
-  class="order-type-btn active"
-  id="dineInBtn"
-  onclick="selectOrderType('dine-in')">
-      🍽️ Dine-In
-
-    </button>
-
-    <button
-      type="button"
-      class="order-type-btn"
-      id="deliveryBtn"
-      onclick="selectOrderType('takeaway')">
-
-      🛵 Takeaway
-
-    </button>
-
-  </div>
-
-</div>
+            <button
+              type="button"
+              class="order-type-btn"
+              id="deliveryBtn"
+              onclick="selectOrderType('takeaway')"
+            >
+              🛵 Takeaway
+            </button>
+          </div>
+        </div>
         <!-- Payment Methods -->
         <div class="payment-methods">
           <h3>Payment Method</h3>
@@ -812,14 +824,12 @@
               <label for="upi"><i class="fas fa-mobile-alt"></i> UPI</label>
             </div>
             <div class="payment-option" onclick="selectPayment(this, 'qr')">
-
               <input type="radio" name="payment" id="qr" />
 
               <label for="qr">
                 <i class="fas fa-qrcode"></i>
                 QR Payment
               </label>
-
             </div>
             <div class="payment-option" onclick="selectPayment(this, 'card')">
               <input type="radio" name="payment" id="card" />
@@ -844,7 +854,7 @@
             </div>
           </div>
         </div>
-        <div id="paymentUI" style="margin-top:2rem;"></div>
+        <div id="paymentUI" style="margin-top: 2rem"></div>
 
         <button class="checkout-btn" onclick="proceedToPayment()">
           <i class="fas fa-lock"></i> Proceed to Payment
@@ -883,9 +893,32 @@
         window.location.href = "/login.html";
       }
 
+      const cartStorageKey = () =>
+        `cart_${localStorage.getItem("userName") || "guest"}`;
+      const lastCartOwnerKey = "lastCartOwner";
+
+      function saveCart() {
+        localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
+        localStorage.setItem(
+          lastCartOwnerKey,
+          localStorage.getItem("userName") || "",
+        );
+      }
+
       function loadCart() {
-        const saved = localStorage.getItem("dineInCart");
-        cart = saved ? JSON.parse(saved) : [];
+        const saved = localStorage.getItem(cartStorageKey());
+        if (saved) {
+          cart = JSON.parse(saved);
+        } else {
+          const legacy = localStorage.getItem("dineInCart");
+          const lastOwner = localStorage.getItem(lastCartOwnerKey);
+          const currentUser = localStorage.getItem("userName");
+          if (legacy && lastOwner && currentUser && lastOwner === currentUser) {
+            cart = JSON.parse(legacy);
+            saveCart();
+            localStorage.removeItem("dineInCart");
+          }
+        }
         displayCart();
         updateBilling();
       }
@@ -936,7 +969,7 @@
           if (item.quantity <= 0) {
             removeItem(itemId);
           } else {
-            localStorage.setItem("dineInCart", JSON.stringify(cart));
+            saveCart();
             displayCart();
             updateBilling();
           }
@@ -945,9 +978,15 @@
 
       function removeItem(itemId) {
         cart = cart.filter((c) => c.id !== itemId);
-        localStorage.setItem("dineInCart", JSON.stringify(cart));
+        saveCart();
         displayCart();
         updateBilling();
+      }
+
+      function getDiscountAmount() {
+        const discountText =
+          document.getElementById("discountDisplay").textContent || "-₹0.00";
+        return Math.abs(parseFloat(discountText.replace(/[^0-9.-]+/g, ""))) || 0;
       }
 
       function updateBilling() {
@@ -956,61 +995,54 @@
           0,
         );
         const tax = subtotal * 0.18;
-        const delivery = subtotal > 500 ? 0 : 40;
-        totalAmount = subtotal + tax + delivery;
+        const delivery =
+          selectedOrderType === "takeaway" ? (subtotal > 500 ? 0 : 40) : 0;
+        const discount = getDiscountAmount();
+        totalAmount = subtotal + tax + delivery - discount;
 
         document.getElementById("subtotalDisplay").textContent =
           `₹${subtotal.toFixed(2)}`;
         document.getElementById("taxDisplay").textContent =
           `₹${tax.toFixed(2)}`;
         document.getElementById("deliveryDisplay").textContent =
-          delivery > 0 ? `₹${delivery.toFixed(2)}` : "Free";
+          delivery > 0 ? `₹${delivery.toFixed(2)}` : "₹0.00";
+        document.getElementById("deliveryRow").style.display =
+          selectedOrderType === "takeaway" ? "flex" : "none";
         document.getElementById("totalDisplay").textContent =
           `₹${totalAmount.toFixed(2)}`;
+        renderPromoOffers();
       }
 
+      function selectOrderType(type) {
+        selectedOrderType = type;
 
+        document
+          .querySelectorAll(".order-type-btn")
+          .forEach((btn) => btn.classList.remove("active"));
 
-      function selectOrderType(type){
+        if (type === "dine-in") {
+          document.getElementById("dineInBtn").classList.add("active");
+        } else {
+          document.getElementById("deliveryBtn").classList.add("active");
+        }
 
-  selectedOrderType = type;
-
-  document
-    .querySelectorAll(".order-type-btn")
-    .forEach(btn => btn.classList.remove("active"));
-
-  if(type === "dine-in"){
-
-    document
-      .getElementById("dineInBtn")
-      .classList.add("active");
-
-  }
-  else{
-
-    document
-      .getElementById("deliveryBtn")
-      .classList.add("active");
-
-  }
-
-}
+        updateBilling();
+        renderPromoOffers();
+      }
 
       function selectPayment(element, method) {
+        document
+          .querySelectorAll(".payment-option")
+          .forEach((el) => el.classList.remove("selected"));
 
-  document
-    .querySelectorAll(".payment-option")
-    .forEach((el) => el.classList.remove("selected"));
+        element.classList.add("selected");
 
-  element.classList.add("selected");
+        document.getElementById(method).checked = true;
 
-  document.getElementById(method).checked = true;
+        const paymentUI = document.getElementById("paymentUI");
 
-  const paymentUI = document.getElementById("paymentUI");
-
-  if(method === "card"){
-
-    paymentUI.innerHTML = `
+        if (method === "card") {
+          paymentUI.innerHTML = `
 
       <div class="fake-razorpay">
 
@@ -1038,12 +1070,8 @@
       </div>
 
     `;
-
-  }
-
-  else if(method === "qr"){
-
-    paymentUI.innerHTML = `
+        } else if (method === "qr") {
+          paymentUI.innerHTML = `
 
       <div class="qr-box">
 
@@ -1058,153 +1086,188 @@
       </div>
 
     `;
-
-  }
-
-  else{
-
-    paymentUI.innerHTML = "";
-
-  }
-
-}
-      
-      function applyPromo() {
-        const code = document.getElementById("promoInput").value.toUpperCase();
-        const subtotalForDiscount = cart.reduce(
-          (sum, item) => sum + parseFloat(item.price) * item.quantity,
-          0,
-        );
-        const promoCodes = {
-          WELCOME50: 50,
-          DINE100: 100,
-          LUCKY20: subtotalForDiscount * 0.2,
-          FLAT30: 30,
-        };
-
-        if (promoCodes[code]) {
-          const discount = promoCodes[code];
-          const subtotal = cart.reduce(
-            (sum, item) => sum + parseFloat(item.price) * item.quantity,
-            0,
-          );
-          const tax = subtotal * 0.18;
-          const delivery = subtotal > 500 ? 0 : 40;
-          totalAmount = subtotal + tax + delivery - discount;
-
-          document.getElementById("discountLabel").style.display = "block";
-          document.getElementById("discountDisplay").style.display = "block";
-          document.getElementById("discountDisplay").textContent =
-            `-₹${discount.toFixed(2)}`;
-          document.getElementById("totalDisplay").textContent =
-            `₹${totalAmount.toFixed(2)}`;
-
-          document.getElementById("promoMessage").textContent =
-            "✓ Promo code applied successfully!";
-          document.getElementById("promoMessage").style.color = "#22c55e";
         } else {
-          document.getElementById("promoMessage").textContent =
-            "✗ Invalid promo code";
-          document.getElementById("promoMessage").style.color = "#ff6b6b";
+          paymentUI.innerHTML = "";
         }
       }
 
+      function getAvailablePromos() {
+        const subtotal = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
+
+        return {
+          WELCOME50: {
+            label: "Flat ₹50 off on orders above ₹200",
+            min: 200,
+            discount: 50,
+          },
+          FLAT30: {
+            label: "Flat ₹30 off on orders above ₹150",
+            min: 150,
+            discount: 30,
+          },
+          DINE100: {
+            label: "Flat ₹100 off on orders above ₹400",
+            min: 400,
+            discount: 100,
+          },
+          LUCKY20: {
+            label: "20% off on orders above ₹300",
+            min: 300,
+            discount: subtotal * 0.2,
+          },
+        };
+      }
+
+      function renderPromoOffers() {
+        const offers = getAvailablePromos();
+        const subtotal = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
+        const offersContainer = document.getElementById("promoOffers");
+        offersContainer.innerHTML = "";
+
+        if (subtotal === 0) {
+          offersContainer.innerHTML =
+            "<span style='color: rgba(226,232,240,0.7);'>Add items to see promo offers.</span>";
+          return;
+        }
+
+        const eligible = Object.entries(offers).filter(
+          ([, promo]) => subtotal >= promo.min,
+        );
+
+        if (eligible.length === 0) {
+          offersContainer.innerHTML =
+            "<span style='color: rgba(226,232,240,0.7);'>No promo available for the current amount.</span>";
+          return;
+        }
+
+        eligible.forEach(([code, promo]) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.textContent = `${code}: ${promo.label}`;
+          button.style.cssText =
+            "padding: 0.7rem 1rem; border-radius: 10px; border: 1px solid rgba(6, 182, 212, 0.24); background: rgba(6, 182, 212, 0.08); color: #e2e8f0; cursor: pointer; font-size: 0.85rem;";
+          button.onclick = () => {
+            document.getElementById("promoInput").value = code;
+            applyPromo();
+          };
+          offersContainer.appendChild(button);
+        });
+      }
+
+      function applyPromo() {
+        const code = document.getElementById("promoInput").value.toUpperCase();
+        const subtotal = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
+        const promos = getAvailablePromos();
+        const selected = promos[code];
+
+        if (!selected) {
+          document.getElementById("promoMessage").textContent =
+            "✗ Invalid promo code";
+          document.getElementById("promoMessage").style.color = "#ff6b6b";
+          return;
+        }
+
+        if (subtotal < selected.min) {
+          document.getElementById("promoMessage").textContent =
+            `✗ ${code} requires a minimum order of ₹${selected.min}`;
+          document.getElementById("promoMessage").style.color = "#ff6b6b";
+          return;
+        }
+
+        const discount = selected.discount;
+        document.getElementById("discountLabel").style.display = "block";
+        document.getElementById("discountDisplay").style.display = "block";
+        document.getElementById("discountDisplay").textContent =
+          `-₹${discount.toFixed(2)}`;
+        document.getElementById("promoMessage").textContent =
+          "✓ Promo code applied successfully!";
+        document.getElementById("promoMessage").style.color = "#22c55e";
+        updateBilling();
+      }
+
       async function proceedToPayment() {
+        if (cart.length === 0) {
+          alert("Your cart is empty");
+          return;
+        }
 
-  if(cart.length === 0){
-    alert("Your cart is empty");
-    return;
-  }
+        const paymentMethod = document.querySelector(
+          'input[name="payment"]:checked',
+        );
 
-  const paymentMethod = document.querySelector(
-    'input[name="payment"]:checked'
-  );
+        if (!paymentMethod) {
+          alert("Select payment method");
+          return;
+        }
 
-  if(!paymentMethod){
-    alert("Select payment method");
-    return;
-  }
+        // SHOW PROCESSING MODAL
+        document.getElementById("processingModal").style.display = "flex";
 
-  // SHOW PROCESSING MODAL
-  document.getElementById("processingModal")
-    .style.display = "flex";
+        // FAKE PROCESSING DELAY
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  // FAKE PROCESSING DELAY
-  await new Promise(resolve =>
-    setTimeout(resolve, 2000)
-  );
+        // GENERATE ORDER ID
+        const orderId = "ORD-" + Math.floor(Math.random() * 999999);
 
-  // GENERATE ORDER ID
-  const orderId =
-    "ORD-" + Math.floor(Math.random() * 999999);
+        try {
+          // SEND ORDER TO BACKEND
+          const response = await fetch("/api/orders", {
+            method: "POST",
 
-  try {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
 
-    // SEND ORDER TO BACKEND
-    const response = await fetch("/api/orders", {
+            body: JSON.stringify({
+              items: cart,
 
-      method: "POST",
+              totalAmount: totalAmount,
 
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      },
+              paymentMethod: paymentMethod.id,
 
-      body: JSON.stringify({
+              status: "preparing",
 
-        items: cart,
+              paymentDetails: {
+                method: paymentMethod.id,
+              },
 
-        totalAmount: totalAmount,
+              orderType: selectedOrderType,
 
-        paymentMethod: paymentMethod.id,
+              tableNumber: selectedOrderType === "dine-in" ? 1 : null,
+            }),
+          });
 
-        status: "preparing",
+          const data = await response.json();
 
-        paymentDetails: {
-          method: paymentMethod.id
-        },
+          // HIDE PROCESSING
+          document.getElementById("processingModal").style.display = "none";
 
-        orderType: selectedOrderType,
+          // SHOW SUCCESS
+          document.getElementById("orderIdDisplay").textContent =
+            data.orderId || orderId;
 
-        tableNumber:
-  selectedOrderType === "dine-in"
-    ? 1
-    : null
+          document.getElementById("successModal").classList.add("active");
 
-      })
+          // CLEAR CART
+          localStorage.removeItem(cartStorageKey());
+        } catch (error) {
+          console.error(error);
 
-    });
+          document.getElementById("processingModal").style.display = "none";
 
-    const data = await response.json();
-
-    // HIDE PROCESSING
-    document.getElementById("processingModal")
-      .style.display = "none";
-
-    // SHOW SUCCESS
-    document.getElementById("orderIdDisplay")
-      .textContent = data.orderId || orderId;
-
-    document.getElementById("successModal")
-      .classList.add("active");
-
-    // CLEAR CART
-    localStorage.removeItem("dineInCart");
-
-  }
-  catch(error){
-
-    console.error(error);
-
-    document.getElementById("processingModal")
-      .style.display = "none";
-
-    alert("Failed to place order");
-
-  }
-
-}
-
+          alert("Failed to place order");
+        }
+      }
 
       function completeOrder() {
         window.location.href = "/order-tracking.html";
@@ -1215,36 +1278,35 @@
       }
 
       document.getElementById("logoutBtn").addEventListener("click", () => {
+        saveCart();
         localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("dineInCart");
         window.location.href = "/login.html";
       });
 
       window.addEventListener("load", loadCart);
     </script>
     <!-- PAYMENT PROCESSING MODAL -->
- <div id="processingModal" class="processing-modal">
-  
-  <div class="processing-box">
+    <div id="processingModal" class="processing-modal">
+      <div class="processing-box">
+        <div class="loader-ring"></div>
 
-    <div class="loader-ring"></div>
+        <h2>Processing Your Payment</h2>
 
-    <h2>Processing Your Payment</h2>
+        <p>Please wait while we securely process your transaction...</p>
 
-    <p>Please wait while we securely process your transaction...</p>
+        <div class="processing-steps">
+          <div class="step active">✔ Connecting to Bank</div>
+          <div class="step active">✔ Verifying Payment</div>
 
-    <div class="processing-steps">
-      <div class="step active">✔ Connecting to Bank</div>
-      <div class="step active">✔ Verifying Payment</div>
-
-      <div class="step loading">
-        <span class="dot-loader"></span>
-        Generating Order ID
+          <div class="step loading">
+            <span class="dot-loader"></span>
+            Generating Order ID
+          </div>
+        </div>
       </div>
-
     </div>
-
-  </div>
-
-</div>
   </body>
 </html>

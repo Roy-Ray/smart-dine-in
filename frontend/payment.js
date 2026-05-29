@@ -5,6 +5,10 @@ let selectedOrderType = "dine-in";
 let selectedTable = null;
 let currentOrderId = null; // Variable to store generated order ID
 
+const cartStorageKey = () =>
+  `cart_${localStorage.getItem("userName") || "guest"}`;
+const lastCartOwnerKey = "lastCartOwner";
+
 // Initialize
 document.addEventListener("DOMContentLoaded", async () => {
   checkAuth();
@@ -34,6 +38,14 @@ async function loadMenuItems() {
   }
 }
 
+function saveCart() {
+  localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
+  localStorage.setItem(
+    lastCartOwnerKey,
+    localStorage.getItem("userName") || "",
+  );
+}
+
 // Load cart from sessionStorage or localStorage
 function loadCart() {
   let cartData = sessionStorage.getItem("checkoutItem");
@@ -56,16 +68,27 @@ function loadCart() {
     sessionStorage.removeItem("checkoutItem");
   }
 
-  // Check localStorage for existing cart
-  const savedCart = localStorage.getItem("dineInCart");
+  const savedCart = localStorage.getItem(cartStorageKey());
   if (savedCart) {
     cart = JSON.parse(savedCart);
-    // Ensure prices are numbers
     cart = cart.map((item) => ({
       ...item,
       price: parseFloat(item.price),
       quantity: parseInt(item.quantity),
     }));
+  } else {
+    const legacy = localStorage.getItem("dineInCart");
+    const lastOwner = localStorage.getItem(lastCartOwnerKey);
+    const currentUser = localStorage.getItem("userName");
+    if (legacy && lastOwner && currentUser && lastOwner === currentUser) {
+      cart = JSON.parse(legacy).map((item) => ({
+        ...item,
+        price: parseFloat(item.price),
+        quantity: parseInt(item.quantity),
+      }));
+      saveCart();
+      localStorage.removeItem("dineInCart");
+    }
   }
 
   console.log("Cart loaded:", cart);
@@ -142,7 +165,11 @@ function removeFromCart(itemId) {
 
 // Save cart to localStorage
 function saveCart() {
-  localStorage.setItem("dineInCart", JSON.stringify(cart));
+  localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
+  localStorage.setItem(
+    lastCartOwnerKey,
+    localStorage.getItem("userName") || "",
+  );
 }
 
 // Update billing total
@@ -152,7 +179,8 @@ function updateBillingTotal() {
     0,
   );
   const tax = subtotal * 0.18;
-  const delivery = subtotal > 500 ? 0 : 40;
+  const delivery =
+    selectedOrderType === "takeaway" ? (subtotal > 500 ? 0 : 40) : 0;
   const discount =
     parseFloat(
       document.getElementById("discount").textContent.replace("₹", ""),
@@ -223,29 +251,18 @@ function generateTableNumbers() {
 }
 
 // Select order type
-function selectOrderType(type){
-
+function selectOrderType(type) {
   selectedOrderType = type;
 
   document
     .querySelectorAll(".order-type-btn")
-    .forEach(btn => btn.classList.remove("active"));
+    .forEach((btn) => btn.classList.remove("active"));
 
-  if(type === "dine-in"){
-
-    document
-      .getElementById("dineInBtn")
-      .classList.add("active");
-
+  if (type === "dine-in") {
+    document.getElementById("dineInBtn").classList.add("active");
+  } else {
+    document.getElementById("deliveryBtn").classList.add("active");
   }
-  else{
-
-    document
-      .getElementById("deliveryBtn")
-      .classList.add("active");
-
-  }
-
 }
 // Select table number
 function selectTable(tableNum, element) {
@@ -259,7 +276,10 @@ function selectTable(tableNum, element) {
 }
 
 function logout() {
+  saveCart();
   localStorage.removeItem("token");
+  localStorage.removeItem("userName");
+  localStorage.removeItem("userRole");
   localStorage.removeItem("dineInCart");
   window.location.href = "/login.html";
 }
@@ -379,7 +399,6 @@ function validatePaymentDetails() {
 
 // Process payment (MODIFIED FOR SHOWCASE SIMULATION)
 async function processPayment() {
-
   if (cart.length === 0) {
     showError("Your cart is empty.");
     return;
@@ -398,18 +417,16 @@ async function processPayment() {
   document.getElementById("processingModal").style.display = "flex";
 
   try {
-
     const method = document.querySelector(
-      'input[name="paymentMethod"]:checked'
+      'input[name="paymentMethod"]:checked',
     ).value;
 
     const totalAmount = parseFloat(
-      document.getElementById("totalAmount")
-      .textContent.replace("₹", "")
+      document.getElementById("totalAmount").textContent.replace("₹", ""),
     );
 
     // SIMULATE PAYMENT GATEWAY DELAY
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // GENERATE ORDER ID
     const orderId = generateOrderId();
@@ -421,12 +438,9 @@ async function processPayment() {
       totalAmount,
       paymentMethod: method,
       orderType: selectedOrderType,
-      tableNumber:
-        selectedOrderType === "dine-in"
-        ? selectedTable
-        : null,
+      tableNumber: selectedOrderType === "dine-in" ? selectedTable : null,
 
-        status: "preparing",
+      status: "preparing",
       timestamp: new Date().toISOString(),
     };
 
@@ -444,33 +458,23 @@ async function processPayment() {
 
     // CLEAR CART
     cart = [];
-    localStorage.removeItem("dineInCart");
+    localStorage.removeItem(cartStorageKey());
 
     // HIDE PROCESSING
-    document.getElementById("processingModal")
-      .style.display = "none";
+    document.getElementById("processingModal").style.display = "none";
 
     // SHOW SUCCESS
     showSuccessModal(orderId, totalAmount, method);
-
-  }
-  catch(err){
-
+  } catch (err) {
     console.error(err);
 
-    document.getElementById("processingModal")
-      .style.display = "none";
+    document.getElementById("processingModal").style.display = "none";
 
     showError("Payment Failed.");
-
-  }
-  finally{
-
+  } finally {
     paymentBtn.disabled = false;
     paymentBtn.innerText = "Pay Now";
-
   }
-
 }
 
 // Get payment details based on method
@@ -583,27 +587,16 @@ document.addEventListener("keydown", function (event) {
     document.getElementById("pendingModal").style.display = "none";
   }
 });
-function selectOrderType(type){
-
+function selectOrderType(type) {
   selectedOrderType = type;
 
   document
     .querySelectorAll(".order-type-btn")
-    .forEach(btn => btn.classList.remove("active"));
+    .forEach((btn) => btn.classList.remove("active"));
 
-  if(type === "dine-in"){
-
-    document
-      .getElementById("dineInBtn")
-      .classList.add("active");
-
+  if (type === "dine-in") {
+    document.getElementById("dineInBtn").classList.add("active");
+  } else {
+    document.getElementById("deliveryBtn").classList.add("active");
   }
-  else{
-
-    document
-      .getElementById("deliveryBtn")
-      .classList.add("active");
-
-  }
-
 }

@@ -1,18 +1,39 @@
 let allItems = [];
 let cart = [];
 
+const cartStorageKey = () =>
+  `cart_${localStorage.getItem("userName") || "guest"}`;
+const lastCartOwnerKey = "lastCartOwner";
+
 // Load cart from localStorage
 function loadCartFromStorage() {
-  const saved = localStorage.getItem("dineInCart");
+  const saved = localStorage.getItem(cartStorageKey());
   if (saved) {
     cart = JSON.parse(saved);
     updateCartBadge();
+    return;
   }
+
+  const legacy = localStorage.getItem("dineInCart");
+  const lastOwner = localStorage.getItem(lastCartOwnerKey);
+  const currentUser = localStorage.getItem("userName");
+
+  if (legacy && lastOwner && currentUser && lastOwner === currentUser) {
+    cart = JSON.parse(legacy);
+    saveCartToStorage();
+    localStorage.removeItem("dineInCart");
+  }
+
+  updateCartBadge();
 }
 
 // Save cart to localStorage
 function saveCartToStorage() {
-  localStorage.setItem("dineInCart", JSON.stringify(cart));
+  localStorage.setItem(cartStorageKey(), JSON.stringify(cart));
+  localStorage.setItem(
+    lastCartOwnerKey,
+    localStorage.getItem("userName") || "",
+  );
   updateCartBadge();
 }
 
