@@ -3,117 +3,663 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Dine-In Menu</title>
+    <title>Our Menu - Smart Dine-In Café</title>
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Font Awesome Icons -->
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
 
-    <link rel="stylesheet" href="/styles.css" />
     <style>
-      .cart-icon {
+      /* Enhanced Menu Page Styles */
+      .menu-header {
+        background: linear-gradient(135deg, #06b6d4 0%, #fbbf24 100%);
+        color: #fff;
+        padding: 4rem 1.5rem 3rem;
+        text-align: center;
         position: relative;
-        font-size: 1.3rem;
-        cursor: pointer;
-        transition: transform 0.2s;
+        overflow: hidden;
       }
 
-      .cart-icon:hover {
-        transform: scale(1.1);
-      }
-
-      #cartBadge {
+      .menu-header::before {
+        content: "";
         position: absolute;
-        top: -8px;
-        right: -8px;
-        background: #ff8ab3;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          ellipse at 50% 50%,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        pointer-events: none;
+      }
+
+      .menu-header h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-header p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: rgba(255, 255, 255, 0.95);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Search & Filter Section */
+      .menu-controls {
+        background: #0f172a;
+        padding: 2.5rem;
+        margin: 0;
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.06);
+        border-bottom: 1px solid rgba(6, 182, 212, 0.08);
+      }
+
+      .menu-controls label {
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.95rem;
+      }
+
+      .menu-controls input,
+      .menu-controls select {
+        padding: 0.85rem 1rem;
+        border: 2px solid rgba(6, 182, 212, 0.12);
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.3s ease;
+        min-width: 200px;
+        background: #0b1220;
+        color: #f1f5f9;
+      }
+
+      .menu-controls input:focus,
+      .menu-controls select:focus {
+        outline: none;
+        border-color: var(--accent1);
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.12);
+        background: linear-gradient(
+          rgba(6, 182, 212, 0.02),
+          rgba(251, 191, 36, 0.02)
+        );
+      }
+
+      .menu-controls input::placeholder {
+        color: var(--muted);
+      }
+
+      /* Menu Grid Container */
+      .menu-section {
+        padding: 4rem 1.5rem;
+        background: linear-gradient(180deg, #1a1f2e 0%, #0f172a 100%);
+      }
+
+      .menu-section h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 3rem;
+        color: var(--muted);
+        font-size: 1.1rem;
+      }
+
+      /* Enhanced Card Styles */
+      .menu-card {
+        background: #0f172a;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.45);
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid rgba(6, 182, 212, 0.06);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+      }
+
+      .menu-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(155, 109, 255, 0.05),
+          rgba(255, 138, 179, 0.05)
+        );
+        opacity: 0;
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+        border-radius: 16px;
+      }
+
+      .menu-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 15px 40px rgba(6, 182, 212, 0.12);
+        border-color: rgba(6, 182, 212, 0.12);
+      }
+
+      .menu-card:hover::before {
+        opacity: 1;
+      }
+
+      .card-image {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f5f5f5, #fafafa);
+      }
+
+      .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: all 0.35s ease;
+      }
+
+      .menu-card:hover .card-image img {
+        transform: scale(1.12) rotate(1deg);
+        filter: brightness(1.1);
+      }
+
+      .card-badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
+        color: #fff;
+        padding: 0.5rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        z-index: 2;
+        box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+      }
+
+      .card-content {
+        padding: 1.5rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .card-header {
+        margin-bottom: 1rem;
+      }
+
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 0.3rem;
+      }
+
+      .card-category {
+        font-size: 0.8rem;
+        color: var(--accent1);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .card-description {
+        font-size: 0.9rem;
+        color: var(--muted);
+        line-height: 1.6;
+        margin-bottom: 1.2rem;
+        flex-grow: 1;
+      }
+
+      .card-footer {
         display: flex;
         align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
+        justify-content: space-between;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(6, 182, 212, 0.15);
+      }
+
+      .card-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .card-button {
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
+        color: #fff;
+        border: none;
+        padding: 0.7rem 1.3rem;
+        border-radius: 10px;
         font-weight: 600;
-        display: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(155, 109, 255, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .card-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(155, 109, 255, 0.4);
+      }
+
+      /* Loading State */
+      .loading {
+        text-align: center;
+        padding: 4rem;
+        color: var(--muted);
+      }
+
+      .loading::after {
+        content: "";
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(6, 182, 212, 0.2);
+        border-top-color: var(--accent1);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .menu-header h1 {
+          font-size: 2rem;
+        }
+
+        .menu-controls {
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        .menu-controls input,
+        .menu-controls select {
+          width: 100%;
+          min-width: auto;
+        }
+
+        .menu-grid {
+          grid-template-columns: 1fr !important;
+        }
       }
     </style>
   </head>
 
   <body>
-    <!-- HEADER -->
     <header>
       <div class="container nav">
         <h1 class="logo">Smart Dine-In</h1>
-
-        <!-- Optional navigation -->
         <nav>
           <ul>
-            <li><a href="/">Home</a></li>
-            <li style="position: relative; display: flex; align-items: center;">
-              <a href="#" onclick="goToCart(); return false;" class="cart-icon">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cartBadge">0</span>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/menu.html">Menu</a></li>
+            <li><a href="/order-tracking.html">Orders</a></li>
+            <li style="margin-left: 80px"></li>
+            <li>
+              <a
+                href="#"
+                id="profileBtn"
+                style="display: flex; align-items: center; gap: 6px"
+              >
+                <i class="fas fa-user-circle"></i>
+                <span id="userNameDisplay">Profile</span>
               </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                id="cartIcon"
+                style="position: relative; display: flex; align-items: center"
+              >
+                <i class="fas fa-shopping-cart"></i>
+                <span
+                  id="cartBadge"
+                  style="
+                    position: absolute;
+                    top: -8px;
+                    right: -10px;
+                    background: linear-gradient(
+                      135deg,
+                      var(--accent1),
+                      var(--accent2)
+                    );
+                    color: #fff;
+                    border-radius: 50%;
+                    width: 22px;
+                    height: 22px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                  "
+                  >0</span
+                >
+              </a>
+            </li>
+            <li>
+              <button
+                id="logoutBtn"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    var(--accent1),
+                    var(--accent2)
+                  );
+                  color: #fff;
+                  border: none;
+                  padding: 0.6rem 1.2rem;
+                  border-radius: 20px;
+                  cursor: pointer;
+                  font-weight: 600;
+                  transition: all 0.3s ease;
+                "
+                onmouseover="
+                  this.style.transform = 'translateY(-2px)';
+                  this.style.boxShadow = '0 6px 20px rgba(14, 165, 233, 0.3)';
+                "
+                onmouseout="
+                  this.style.transform = 'translateY(0)';
+                  this.style.boxShadow = '0 4px 15px rgba(14, 165, 233, 0.2)';
+                "
+              >
+                Logout
+              </button>
             </li>
           </ul>
         </nav>
+        <button id="menu-btn" class="menu-btn">☰</button>
       </div>
     </header>
 
-    <!-- MENU SECTION -->
-    <section class="container">
-      <h2 style="text-align: center; margin: 20px 0">Explore Full Menu</h2>
+    <section class="menu-header">
+      <h1>✨ Our Delicious Menu ✨</h1>
+      <p>
+        Explore our premium selection of fresh drinks, pastries, and gourmet
+        meals
+      </p>
+    </section>
 
-      <!-- SEARCH -->
-      <input
-        id="searchBar"
-        placeholder="Search food..."
-        style="
-          width: 100%;
-          padding: 12px;
-          margin-bottom: 15px;
-          border-radius: 8px;
-          border: 1px solid #ccc;
-        "
-      />
+    <section class="menu-controls">
+      <div style="display: flex; align-items: center; gap: 0.8rem">
+        <label for="search"><i class="fas fa-search"></i></label>
+        <input type="text" id="search" placeholder="Search menu items..." />
+      </div>
 
-      <!-- FILTERS -->
-      <div
-        style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap"
-      >
-        <select id="sortPrice">
-          <option value="">Sort by Price</option>
-          <option value="low">Low to High</option>
-          <option value="high">High to Low</option>
-        </select>
-
-        <select id="categoryFilter">
+      <div style="display: flex; align-items: center; gap: 0.8rem">
+        <label for="category"><i class="fas fa-filter"></i></label>
+        <select id="category">
           <option value="">All Categories</option>
           <option value="coffee">Coffee</option>
-          <option value="dessert">Dessert</option>
-          <option value="meal">Meal</option>
+          <option value="beverages">Beverages</option>
+          <option value="pastries">Pastries</option>
+          <option value="food">Food</option>
+          <option value="desserts">Desserts</option>
         </select>
       </div>
 
-      <!-- MENU ITEMS -->
-      <div class="menu-grid" id="menuContainer"></div>
+      <div style="display: flex; align-items: center; gap: 0.8rem">
+        <label for="sort"><i class="fas fa-sort"></i></label>
+        <select id="sort">
+          <option value="">Sort By</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="name">Name: A to Z</option>
+        </select>
+      </div>
     </section>
 
-    <!-- BACK BUTTON -->
-    <div style="text-align: center; margin: 30px">
-      <a href="/" class="btn">← Back to Home</a>
-    </div>
+    <section class="menu-section">
+      <h2 id="sectionTitle">All Items</h2>
+      <div
+        class="menu-grid"
+        id="menuGrid"
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 2rem;
+        "
+      >
+        <div class="loading"></div>
+      </div>
+      <div class="no-results" id="noResults" style="display: none">
+        <i
+          class="fas fa-search"
+          style="font-size: 3rem; color: var(--accent1); margin-bottom: 1rem"
+        ></i>
+        <p>No items found. Try adjusting your filters!</p>
+      </div>
+    </section>
 
-    <script src="/menu.js"></script>
+    <footer id="contact" style="margin-top: 0">
+      <div class="container">
+        <h2>📞 Contact Us</h2>
+        <p>Email: trisharay2004@gmail.com | Phone: +91-6299070028</p>
+        <section class="newsletter-section">
+          <h3>Subscribe to Our Newsletter</h3>
+          <p>Get updates on new menu items and special offers!</p>
+          <form class="newsletter" style="margin: 0">
+            <input type="email" placeholder="Enter your email" required />
+            <button class="btn" type="submit">Subscribe</button>
+          </form>
+        </section>
+        <p style="margin-top: 2rem">
+          © 2025 Smart Dine-In | All Rights Reserved
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      let allMenuItems = [];
+      let cart = [];
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        window.location.href = "/login.html";
+      }
+
+      // Display user name
+      document.getElementById("userNameDisplay").textContent =
+        localStorage.getItem("userName") || "Profile";
+
+      // Load menu items
+      async function loadMenuItems() {
+        try {
+          const response = await fetch("/api/menu");
+          allMenuItems = await response.json();
+          loadCart();
+          displayMenu(allMenuItems);
+        } catch (error) {
+          console.error("Error loading menu:", error);
+          document.getElementById("menuGrid").innerHTML =
+            '<p style="color: var(--muted);">Error loading menu. Please try again.</p>';
+        }
+      }
+
+      function displayMenu(items) {
+        const menuGrid = document.getElementById("menuGrid");
+        const noResults = document.getElementById("noResults");
+
+        if (items.length === 0) {
+          menuGrid.style.display = "none";
+          noResults.style.display = "block";
+          return;
+        }
+
+        menuGrid.style.display = "grid";
+        noResults.style.display = "none";
+        menuGrid.innerHTML = items
+          .map(
+            (item) => `
+          <div class="menu-card">
+            <div class="card-image">
+              <img src="${item.image}" alt="${item.name}" />
+              <span class="card-badge">⭐ Premium</span>
+            </div>
+            <div class="card-content">
+              <div class="card-header">
+                <div class="card-category">Menu Item</div>
+                <div class="card-title">${item.name}</div>
+              </div>
+              <p class="card-description">${item.description || "Freshly prepared with premium ingredients"}</p>
+              <div class="card-footer">
+                <span class="card-price">₹${parseFloat(item.price).toFixed(2)}</span>
+                <button class="card-button" onclick="addToCart(${item.id})">
+                  <i class="fas fa-plus"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function addToCart(itemId) {
+        const item = allMenuItems.find((m) => m.id === itemId);
+        const existingItem = cart.find((c) => c.id === itemId);
+
+        if (existingItem) {
+          existingItem.quantity++;
+        } else {
+          cart.push({
+            id: item.id,
+            name: item.name,
+            price: parseFloat(item.price),
+            quantity: 1,
+            image: item.image,
+          });
+        }
+
+        localStorage.setItem("dineInCart", JSON.stringify(cart));
+        updateCartBadge();
+        showNotification(`${item.name} added to cart!`);
+      }
+
+      function updateCartBadge() {
+        const badge = document.getElementById("cartBadge");
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        badge.textContent = totalItems;
+      }
+
+      function loadCart() {
+        const saved = localStorage.getItem("dineInCart");
+        if (saved) {
+          cart = JSON.parse(saved);
+          updateCartBadge();
+        }
+      }
+
+      function showNotification(message) {
+        const notif = document.createElement("div");
+        notif.style.cssText = `
+          position: fixed;
+          top: 80px;
+          right: 20px;
+          background: linear-gradient(135deg, var(--accent1), var(--accent2));
+          color: #fff;
+          padding: 1rem 1.5rem;
+          border-radius: 10px;
+          box-shadow: 0 8px 25px rgba(155, 109, 255, 0.3);
+          z-index: 1000;
+          animation: slideIn 0.3s ease;
+          font-weight: 600;
+        `;
+        notif.textContent = message;
+        document.body.appendChild(notif);
+        setTimeout(() => notif.remove(), 2500);
+      }
+
+      // Search functionality
+      document.getElementById("search").addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const filtered = allMenuItems.filter(
+          (item) =>
+            item.name.toLowerCase().includes(query) ||
+            (item.description &&
+              item.description.toLowerCase().includes(query)),
+        );
+        displayMenu(filtered);
+      });
+
+      // Category filter
+      document.getElementById("category").addEventListener("change", (e) => {
+        const category = e.target.value;
+        const filtered = category
+          ? allMenuItems.filter((item) => item.category === category)
+          : allMenuItems;
+        displayMenu(filtered);
+      });
+
+      // Sort functionality
+      document.getElementById("sort").addEventListener("change", (e) => {
+        const sort = e.target.value;
+        let sorted = [...allMenuItems];
+        if (sort === "price-low")
+          sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+        else if (sort === "price-high")
+          sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+        else if (sort === "name")
+          sorted.sort((a, b) => a.name.localeCompare(b.name));
+        displayMenu(sorted);
+      });
+
+      // Cart redirect
+      document.getElementById("cartIcon").addEventListener("click", (e) => {
+        e.preventDefault();
+        window.location.href = "/payment.html";
+      });
+
+      // Logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userName");
+        window.location.href = "/login.html";
+      });
+
+      // Load menu on page load
+      window.addEventListener("load", loadMenuItems);
+    </script>
   </body>
 </html>
