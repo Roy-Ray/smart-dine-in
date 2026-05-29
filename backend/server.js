@@ -190,11 +190,20 @@ app.get("/api/orders", verifyToken, (req, res) => {
 
     // Parse JSON fields
     const orders = results.map((order) => ({
-      ...order,
-      items: JSON.parse(order.items),
-      paymentDetails: JSON.parse(order.paymentDetails),
-    }));
 
+  ...order,
+
+  items:
+    typeof order.items === "string"
+      ? JSON.parse(order.items)
+      : order.items,
+
+  paymentDetails:
+    typeof order.paymentDetails === "string"
+      ? JSON.parse(order.paymentDetails)
+      : order.paymentDetails,
+
+}));
     res.json(orders);
   });
 });
@@ -386,10 +395,20 @@ app.get("/api/admin/orders", verifyAdminToken, (req, res) => {
     }
 
     const orders = results.map((order) => ({
-      ...order,
-      items: JSON.parse(order.items),
-      paymentDetails: JSON.parse(order.paymentDetails),
-    }));
+
+  ...order,
+
+  items:
+    typeof order.items === "string"
+      ? JSON.parse(order.items)
+      : order.items,
+
+  paymentDetails:
+    typeof order.paymentDetails === "string"
+      ? JSON.parse(order.paymentDetails)
+      : order.paymentDetails,
+
+}));
 
     res.json(orders);
   });
@@ -409,10 +428,20 @@ app.get("/api/admin/tables/:tableNumber", verifyAdminToken, (req, res) => {
     }
 
     const orders = results.map((order) => ({
-      ...order,
-      items: JSON.parse(order.items),
-      paymentDetails: JSON.parse(order.paymentDetails),
-    }));
+
+  ...order,
+
+  items:
+    typeof order.items === "string"
+      ? JSON.parse(order.items)
+      : order.items,
+
+  paymentDetails:
+    typeof order.paymentDetails === "string"
+      ? JSON.parse(order.paymentDetails)
+      : order.paymentDetails,
+
+}));
 
     res.json(orders);
   });

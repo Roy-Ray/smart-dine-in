@@ -47,7 +47,7 @@ function loadCart() {
         {
           id: menuItem.id,
           name: menuItem.name,
-          price: menuItem.price,
+          price: parseFloat(menuItem.price),
           quantity: 1,
           image: menuItem.image,
         },
@@ -60,8 +60,15 @@ function loadCart() {
   const savedCart = localStorage.getItem("dineInCart");
   if (savedCart) {
     cart = JSON.parse(savedCart);
+    // Ensure prices are numbers
+    cart = cart.map((item) => ({
+      ...item,
+      price: parseFloat(item.price),
+      quantity: parseInt(item.quantity),
+    }));
   }
 
+  console.log("Cart loaded:", cart);
   displayCart();
   updateBillingTotal();
 }
@@ -85,12 +92,13 @@ function displayCart() {
 
   let html = "";
   cart.forEach((item) => {
-    const itemTotal = (item.price * item.quantity).toFixed(2);
+    const price = parseFloat(item.price);
+    const itemTotal = (price * item.quantity).toFixed(2);
     html += `
       <div class="cart-item" id="item-${item.id}">
         <div class="cart-item-details">
           <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-price">₹${item.price.toFixed(2)}</div>
+          <div class="cart-item-price">₹${price.toFixed(2)}</div>
         </div>
         <div class="cart-item-controls">
           <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
@@ -139,15 +147,22 @@ function saveCart() {
 
 // Update billing total
 function updateBillingTotal() {
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cart.reduce(
+    (sum, item) => sum + parseFloat(item.price) * item.quantity,
+    0,
+  );
   const tax = subtotal * 0.18;
   const delivery = subtotal > 500 ? 0 : 40;
-  const discount = parseFloat(document.getElementById("discount").textContent.replace("₹", "")) || 0;
+  const discount =
+    parseFloat(
+      document.getElementById("discount").textContent.replace("₹", ""),
+    ) || 0;
   const total = subtotal + tax + delivery - discount;
 
   document.getElementById("subtotal").textContent = `₹${subtotal.toFixed(2)}`;
   document.getElementById("tax").textContent = `₹${tax.toFixed(2)}`;
-  document.getElementById("delivery").textContent = delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`;
+  document.getElementById("delivery").textContent =
+    delivery === 0 ? "FREE" : `₹${delivery.toFixed(2)}`;
   document.getElementById("totalAmount").textContent = `₹${total.toFixed(2)}`;
   document.getElementById("payAmount").textContent = total.toFixed(2);
 }
@@ -173,7 +188,7 @@ function showPaymentForm(method) {
 
   // Add selected class to current option
   const selectedOption = document.querySelector(
-    `input[value="${method}"]`
+    `input[value="${method}"]`,
   ).parentElement;
   selectedOption.classList.add("selected");
 
@@ -193,7 +208,7 @@ function setupEventListeners() {
 function generateTableNumbers() {
   const tableGrid = document.getElementById("tableGrid");
   tableGrid.innerHTML = "";
-  
+
   for (let i = 1; i <= 12; i++) {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -202,37 +217,44 @@ function generateTableNumbers() {
     btn.onclick = () => selectTable(i, btn);
     tableGrid.appendChild(btn);
   }
-  
+
   // Select first table by default
   selectTable(1, tableGrid.firstChild);
 }
 
 // Select order type
-function selectOrderType(type, element) {
-  selectedOrderType = type;
-  
-  // Update UI
-  document.querySelectorAll(".type-option").forEach(opt => opt.classList.remove("active"));
-  element.classList.add("active");
-  
-  // Show/hide table selection
-  const tableSelection = document.getElementById("tableSelection");
-  if (type === "dine-in") {
-    tableSelection.classList.add("active");
-    selectedTable = 1; // Reset to table 1
-    generateTableNumbers(); // Regenerate table selection
-  } else {
-    tableSelection.classList.remove("active");
-    selectedTable = null;
-  }
-}
+function selectOrderType(type){
 
+  selectedOrderType = type;
+
+  document
+    .querySelectorAll(".order-type-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if(type === "dine-in"){
+
+    document
+      .getElementById("dineInBtn")
+      .classList.add("active");
+
+  }
+  else{
+
+    document
+      .getElementById("deliveryBtn")
+      .classList.add("active");
+
+  }
+
+}
 // Select table number
 function selectTable(tableNum, element) {
   selectedTable = tableNum;
-  
+
   // Update UI
-  document.querySelectorAll(".table-btn").forEach(btn => btn.classList.remove("selected"));
+  document
+    .querySelectorAll(".table-btn")
+    .forEach((btn) => btn.classList.remove("selected"));
   element.classList.add("selected");
 }
 
@@ -251,7 +273,7 @@ function goBackToMenu() {
 function applyPromo() {
   const code = document.getElementById("promoCode").value.toUpperCase();
   const subtotal = parseFloat(
-    document.getElementById("subtotal").textContent.replace("₹", "")
+    document.getElementById("subtotal").textContent.replace("₹", ""),
   );
 
   const promoCodes = {
@@ -288,9 +310,12 @@ function hideError() {
 function showMessage(msg, type) {
   const errorDiv = document.getElementById("errorMsg");
   errorDiv.textContent = msg;
-  errorDiv.style.background = type === "success" ? "#e8f5e9" : "#ffebee";
-  errorDiv.style.borderColor = type === "success" ? "#4caf50" : "#ff6b6b";
-  errorDiv.style.color = type === "success" ? "#2e7d32" : "#c92a2a";
+  errorDiv.style.background =
+    type === "success"
+      ? "rgba(16, 185, 129, 0.12)"
+      : "rgba(248, 113, 113, 0.12)";
+  errorDiv.style.borderColor = type === "success" ? "#10b981" : "#f87171";
+  errorDiv.style.color = type === "success" ? "#d1fae5" : "#fee2e2";
   errorDiv.classList.add("show");
 
   setTimeout(() => errorDiv.classList.remove("show"), 3000);
@@ -354,8 +379,9 @@ function validatePaymentDetails() {
 
 // Process payment (MODIFIED FOR SHOWCASE SIMULATION)
 async function processPayment() {
+
   if (cart.length === 0) {
-    showError("Your cart is empty. Please add items first.");
+    showError("Your cart is empty.");
     return;
   }
 
@@ -364,38 +390,50 @@ async function processPayment() {
   }
 
   const paymentBtn = document.getElementById("paymentBtn");
-  const loading = document.getElementById("loading");
 
-  // 1. UI updates to show payment is processing
   paymentBtn.disabled = true;
-  paymentBtn.innerText = "Processing Payment...";
-  if(loading) loading.classList.add("show");
+  paymentBtn.innerText = "Processing...";
+
+  // SHOW PROCESSING MODAL
+  document.getElementById("processingModal").style.display = "flex";
 
   try {
-    const method = document.querySelector('input[name="paymentMethod"]:checked').value;
-    const totalAmount = parseFloat(document.getElementById("totalAmount").textContent.replace("₹", ""));
 
-    // Prepare order data
+    const method = document.querySelector(
+      'input[name="paymentMethod"]:checked'
+    ).value;
+
+    const totalAmount = parseFloat(
+      document.getElementById("totalAmount")
+      .textContent.replace("₹", "")
+    );
+
+    // SIMULATE PAYMENT GATEWAY DELAY
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // GENERATE ORDER ID
+    const orderId = generateOrderId();
+
+    // PREPARE ORDER
     const orderData = {
+      orderId,
       items: cart,
       totalAmount,
       paymentMethod: method,
       orderType: selectedOrderType,
-      tableNumber: selectedOrderType === "dine-in" ? selectedTable : null,
-      status: method === "cod" ? "pending" : "completed",
+      tableNumber:
+        selectedOrderType === "dine-in"
+        ? selectedTable
+        : null,
+
+        status: "preparing",
       timestamp: new Date().toISOString(),
     };
 
-    // Get payment details based on method
-    const paymentDetails = getPaymentDetails(method);
-    orderData.paymentDetails = paymentDetails;
-
-    // 2. FAKE DELAY: Wait 2 seconds to simulate a real payment gateway
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // 3. Send to backend to confirm and save order
+    // SAVE TO BACKEND
     const token = localStorage.getItem("token");
-    const response = await fetch("/api/orders", {
+
+    await fetch("/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -404,33 +442,35 @@ async function processPayment() {
       body: JSON.stringify(orderData),
     });
 
-    if (!response.ok) {
-      throw new Error("Failed to create order");
-    }
-
-    const result = await response.json();
-    const orderId = result.orderId || generateOrderId();
-
-    // Clear cart
+    // CLEAR CART
     cart = [];
     localStorage.removeItem("dineInCart");
-    document.getElementById("discount").textContent = "₹0.00";
 
-    // Show appropriate modal
-    if (method === "cod") {
-      showPendingModal(orderId, totalAmount, method);
-    } else {
-      showSuccessModal(orderId, totalAmount, method);
-    }
-  } catch (err) {
-    console.error("Payment error:", err);
-    showError("Error processing payment. Please try again.");
-  } finally {
-    // Restore button state
+    // HIDE PROCESSING
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    // SHOW SUCCESS
+    showSuccessModal(orderId, totalAmount, method);
+
+  }
+  catch(err){
+
+    console.error(err);
+
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    showError("Payment Failed.");
+
+  }
+  finally{
+
     paymentBtn.disabled = false;
     paymentBtn.innerText = "Pay Now";
-    if(loading) loading.classList.remove("show");
+
   }
+
 }
 
 // Get payment details based on method
@@ -442,12 +482,16 @@ function getPaymentDetails(method) {
       };
     case "card":
       return {
-        cardNumber: "**** **** **** " + document.getElementById("cardNumber").value.slice(-4),
+        cardNumber:
+          "**** **** **** " +
+          document.getElementById("cardNumber").value.slice(-4),
         cardName: document.getElementById("cardName").value,
       };
     case "netbanking":
       return {
-        bank: document.getElementById("bankSelect").options[document.getElementById("bankSelect").selectedIndex].text,
+        bank: document.getElementById("bankSelect").options[
+          document.getElementById("bankSelect").selectedIndex
+        ].text,
       };
     case "qr":
       return {
@@ -471,8 +515,10 @@ function generateOrderId() {
 function showSuccessModal(orderId, totalAmount, method) {
   currentOrderId = orderId; // Save the order ID for tracking
   document.getElementById("orderId").textContent = orderId;
-  document.getElementById("modalTotal").textContent = `₹${totalAmount.toFixed(2)}`;
-  document.getElementById("modalPaymentMethod").textContent = capitalizeMethod(method);
+  document.getElementById("modalTotal").textContent =
+    `₹${totalAmount.toFixed(2)}`;
+  document.getElementById("modalPaymentMethod").textContent =
+    capitalizeMethod(method);
   document.getElementById("successModal").style.display = "block";
 }
 
@@ -480,7 +526,8 @@ function showSuccessModal(orderId, totalAmount, method) {
 function showPendingModal(orderId, totalAmount, method) {
   currentOrderId = orderId; // Save the order ID for tracking
   document.getElementById("pendingOrderId").textContent = orderId;
-  document.getElementById("pendingTotal").textContent = `₹${totalAmount.toFixed(2)}`;
+  document.getElementById("pendingTotal").textContent =
+    `₹${totalAmount.toFixed(2)}`;
   document.getElementById("pendingModal").style.display = "block";
 }
 
@@ -536,3 +583,27 @@ document.addEventListener("keydown", function (event) {
     document.getElementById("pendingModal").style.display = "none";
   }
 });
+function selectOrderType(type){
+
+  selectedOrderType = type;
+
+  document
+    .querySelectorAll(".order-type-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if(type === "dine-in"){
+
+    document
+      .getElementById("dineInBtn")
+      .classList.add("active");
+
+  }
+  else{
+
+    document
+      .getElementById("deliveryBtn")
+      .classList.add("active");
+
+  }
+
+}

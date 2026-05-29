@@ -3,87 +3,102 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Dine-In - Billing & Checkout</title>
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-
+    <title>Checkout - Smart Dine-In</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-
-    <link rel="stylesheet" href="/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
     <style>
-      /* Payment Page Specific Styles */
-      .payment-container {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+      /* Enhanced Checkout Styles */
+      body {
+        background: linear-gradient(180deg, #1a1f2e 0%, #0f172a 100%);
       }
 
-      @media (max-width: 768px) {
-        .payment-container {
-          grid-template-columns: 1fr;
-        }
+      .checkout-container {
+        max-width: 1300px;
+        margin: 2rem auto;
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 3rem;
+        padding: 0 1.5rem;
       }
 
       /* Cart Section */
       .cart-section {
-        background: #fff;
-        padding: 2rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
+        background: #1e293b;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+        border: 1px solid rgba(6, 182, 212, 0.1);
       }
 
-      .cart-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 1rem;
-      }
-
-      .cart-header h2 {
-        font-size: 1.5rem;
+      .cart-section h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
         color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .empty-cart {
         text-align: center;
-        padding: 2rem;
+        padding: 3rem;
         color: var(--muted);
       }
 
       .empty-cart i {
         font-size: 3rem;
-        color: var(--accent2);
+        color: var(--accent1);
         margin-bottom: 1rem;
+        opacity: 0.3;
+      }
+
+      .empty-cart h3 {
+        font-size: 1.3rem;
+        margin: 1rem 0 0.5rem;
+      }
+
+      /* Cart Items */
+      .cart-items-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
       }
 
       .cart-item {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 0;
-        border-bottom: 1px solid #f0f0f0;
-        animation: slideIn 0.3s ease-out;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          rgba(6, 182, 212, 0.08),
+          rgba(251, 191, 36, 0.06)
+        );
+        border-radius: 15px;
+        border: 1px solid rgba(6, 182, 212, 0.08);
+        transition: all 0.3s ease;
+        align-items: flex-start;
       }
 
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      .cart-item:hover {
+        border-color: rgba(6, 182, 212, 0.22);
+        box-shadow: 0 6px 20px rgba(6, 182, 212, 0.12);
+      }
+
+      .cart-item-image {
+        width: 90px;
+        height: 90px;
+        border-radius: 12px;
+        overflow: hidden;
+        object-fit: cover;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
       .cart-item-details {
@@ -91,898 +106,1145 @@
       }
 
       .cart-item-name {
-        font-weight: 600;
-        font-size: 0.95rem;
-        margin-bottom: 0.3rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text);
+        margin-bottom: 0.5rem;
       }
 
       .cart-item-price {
-        color: var(--muted);
-        font-size: 0.85rem;
+        color: var(--accent1);
+        font-weight: 600;
+        font-size: 1rem;
       }
 
       .cart-item-controls {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.8rem;
+        margin-top: 1rem;
       }
 
       .qty-btn {
-        width: 30px;
-        height: 30px;
-        border: 1px solid var(--accent1);
-        background: #fff;
-        color: var(--accent1);
-        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        border: 2px solid rgba(6, 182, 212, 0.2);
+        background: #0f172a;
+        border-radius: 8px;
         cursor: pointer;
-        font-weight: 600;
-        font-size: 0.8rem;
+        font-weight: 700;
+        color: #06b6d4;
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .qty-btn:hover {
-        background: var(--accent1);
+        background: linear-gradient(135deg, #06b6d4, #fbbf24);
         color: #fff;
+        border-color: #06b6d4;
+        transform: scale(1.08);
       }
 
       .qty-display {
         min-width: 30px;
         text-align: center;
-        font-weight: 600;
-      }
-
-      .item-total {
-        min-width: 70px;
-        text-align: right;
-        font-weight: 600;
-        color: var(--accent1);
+        font-weight: 700;
+        color: var(--text);
       }
 
       .remove-btn {
-        background: none;
+        background: transparent;
         border: none;
         color: #ff6b6b;
         cursor: pointer;
-        font-size: 1rem;
-        transition: transform 0.2s;
-        margin-left: 0.5rem;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        padding: 0.5rem;
       }
 
       .remove-btn:hover {
         transform: scale(1.2);
+        color: #ff4444;
       }
 
-      /* Continue Shopping Button */
-      .continue-shopping {
-        background: none;
-        border: 2px solid var(--accent1);
-        color: var(--accent1);
-        padding: 0.7rem 1.4rem;
-        border-radius: var(--radius);
-        font-weight: 500;
-        cursor: pointer;
-        width: 100%;
-        margin: 1.5rem 0;
-        transition: all 0.3s ease;
-      }
-
-      .continue-shopping:hover {
-        background: var(--accent1);
-        color: #fff;
-      }
-
-      /* Billing Summary */
-      .billing-summary {
-        background: #fff;
-        padding: 2rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        height: fit-content;
+      /* Billing Section */
+      .billing-section {
         position: sticky;
         top: 100px;
+        background: #0f172a;
+        border-radius: 20px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(6, 182, 212, 0.06);
+        border: 1px solid rgba(6, 182, 212, 0.06);
+        height: fit-content;
       }
 
-      .billing-summary h3 {
-        font-size: 1.3rem;
-        margin-bottom: 1.5rem;
-        text-align: center;
-      }
-
-      .summary-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.8rem 0;
-        border-bottom: 1px solid #f0f0f0;
-        font-size: 0.95rem;
-      }
-
-      .summary-row.total {
-        font-size: 1.2rem;
+      .billing-section h3 {
+        font-size: 1.4rem;
         font-weight: 700;
-        color: var(--accent1);
-        border: none;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 2px solid var(--accent1);
-      }
-
-      /* Payment Methods */
-      .payment-methods {
-        margin-top: 2rem;
-        padding-top: 1.5rem;
-        border-top: 2px solid #f0f0f0;
-      }
-
-      .payment-methods h4 {
-        font-size: 1rem;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
         color: var(--text);
       }
 
-      .method-option {
+      .billing-row {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        padding: 0.8rem;
-        margin-bottom: 0.8rem;
-        border: 2px solid #e0e0e0;
-        border-radius: var(--radius);
-        cursor: pointer;
-        transition: all 0.3s ease;
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(6, 182, 212, 0.08);
+        font-size: 0.95rem;
       }
 
-      .method-option:hover {
-        border-color: var(--accent1);
-        background: rgba(155, 109, 255, 0.05);
-      }
-
-      .method-option input[type="radio"] {
-        margin-right: 0.8rem;
-        cursor: pointer;
-        width: 18px;
-        height: 18px;
-      }
-
-      .method-option.selected {
-        border-color: var(--accent1);
-        background: rgba(155, 109, 255, 0.1);
-      }
-
-      .method-label {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-weight: 500;
-        cursor: pointer;
-        flex: 1;
-      }
-
-      .method-icon {
-        font-size: 1.2rem;
-        width: 25px;
-        text-align: center;
-      }
-
-      /* Payment Form (dynamic) */
-      .payment-form {
-        display: none;
+      .billing-row.total {
+        border: none;
+        font-weight: 700;
+        font-size: 1.3rem;
+        color: var(--text);
         margin-top: 1rem;
-        padding: 1rem;
-        background: rgba(155, 109, 255, 0.05);
-        border-radius: var(--radius);
-        animation: slideIn 0.3s ease-out;
+        padding-top: 1rem;
+        border-top: 2px solid rgba(6, 182, 212, 0.18);
       }
 
-      .payment-form.active {
-        display: block;
+      .billing-row .amount {
+        color: var(--accent1);
+        font-weight: 700;
       }
 
-      .payment-form input,
-      .payment-form select {
-        width: 100%;
-        padding: 0.7rem;
+      .billing-row.total .amount {
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.4rem;
+      }
+
+      .promo-section {
+        margin: 2rem 0;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(6, 182, 212, 0.1);
+      }
+
+      .promo-label {
+        font-weight: 600;
         margin-bottom: 0.8rem;
-        border: 1px solid #ddd;
-        border-radius: var(--radius);
-        font-family: "Poppins", sans-serif;
-        font-size: 0.9rem;
+        color: #f1f5f9;
+        font-size: 0.95rem;
       }
 
-      .payment-form input:focus,
-      .payment-form select:focus {
-        outline: none;
-        border-color: var(--accent1);
-        box-shadow: 0 0 0 3px rgba(155, 109, 255, 0.1);
-      }
-
-      .card-inputs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+      .promo-input-group {
+        display: flex;
         gap: 0.8rem;
       }
 
-      .card-inputs.full {
-        grid-template-columns: 1fr;
+      .promo-input-group input {
+        flex: 1;
+        padding: 0.8rem;
+        border: 2px solid rgba(14, 165, 233, 0.2);
+        border-radius: 10px;
+        font-family: "Poppins", sans-serif;
+        transition: all 0.3s ease;
       }
 
-      .qr-display {
-        text-align: center;
-        padding: 1rem;
-        background: #fff;
-        border-radius: var(--radius);
-        margin-bottom: 1rem;
+      .promo-input-group input:focus {
+        outline: none;
+        border-color: var(--accent1);
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.12);
       }
 
-      .qr-display i {
-        font-size: 3rem;
-        color: var(--accent1);
-        margin-bottom: 0.5rem;
-      }
-
-      .qr-display p {
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
-
-      /* Buttons */
-      .btn-primary {
-        width: 100%;
-        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      .promo-input-group button {
+        padding: 0.8rem 1.5rem;
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
         color: #fff;
-        padding: 1rem;
         border: none;
-        border-radius: var(--radius);
-        font-weight: 600;
-        font-size: 1rem;
+        border-radius: 10px;
         cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        margin-top: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
       }
 
-      .btn-primary:hover:not(:disabled) {
+      .promo-input-group button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(155, 109, 255, 0.3);
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
       }
 
-      .btn-primary:disabled {
+      /* Payment Method Selection */
+      .payment-methods {
+        margin: 2.5rem 0;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(6, 182, 212, 0.08);
+      }
+
+      .payment-methods h3 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: var(--text);
+      }
+
+      .payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .payment-option {
+        display: flex;
+        align-items: center;
+        padding: 1.2rem;
+        border: 2px solid rgba(6, 182, 212, 0.08);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #0f172a;
+      }
+
+      .payment-option:hover {
+        border-color: rgba(6, 182, 212, 0.22);
+        background: rgba(6, 182, 212, 0.02);
+      }
+
+      .payment-option input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        margin-right: 1rem;
+        cursor: pointer;
+        accent-color: var(--accent1);
+      }
+
+      .payment-option label {
+        flex: 1;
+        cursor: pointer;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .payment-option input[type="radio"]:checked ~ label {
+        color: var(--accent1);
+      }
+
+      .payment-option.selected {
+        border-color: var(--accent1);
+        background: linear-gradient(
+          135deg,
+          rgba(6, 182, 212, 0.04),
+          rgba(251, 191, 36, 0.04)
+        );
+      }
+
+      /* Checkout Button */
+      .checkout-btn {
+        width: 100%;
+        padding: 1.2rem;
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 2rem;
+        box-shadow: 0 8px 25px rgba(6, 182, 212, 0.18);
+        letter-spacing: 0.5px;
+      }
+
+      .checkout-btn:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
+        filter: brightness(1.08);
+      }
+
+      .checkout-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
       }
 
-      /* Modal */
+      /* Success Modal */
       .modal {
-        display: none;
         position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        animation: fadeIn 0.3s ease;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        backdrop-filter: blur(3px);
       }
 
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
+      .modal.active {
+        display: flex;
       }
 
       .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto;
-        padding: 2rem;
-        border-radius: var(--radius);
-        max-width: 500px;
+        background: #0f172a;
+        padding: 3rem;
+        border-radius: 20px;
         text-align: center;
-        animation: slideUp 0.3s ease-out;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        max-width: 500px;
+        animation: slideUp 0.3s ease;
+        border: 1px solid rgba(6, 182, 212, 0.06);
+      }
+
+      .modal-content h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #f1f5f9;
+      }
+
+      .modal-content .order-id {
+        background: linear-gradient(
+          135deg,
+          rgba(6, 182, 212, 0.06),
+          rgba(251, 191, 36, 0.06)
+        );
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1.5rem 0;
+        font-family: monospace;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--accent1);
+        letter-spacing: 1px;
+      }
+
+      .modal-content .modal-button {
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        color: #fff;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .modal-content .modal-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(155, 109, 255, 0.3);
       }
 
       @keyframes slideUp {
         from {
-          transform: translateY(50px);
           opacity: 0;
+          transform: translateY(20px);
         }
         to {
-          transform: translateY(0);
           opacity: 1;
+          transform: translateY(0);
         }
       }
 
-      .modal-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-      }
-
-      .modal-icon.success {
-        color: #4caf50;
-      }
-
-      .modal-icon.pending {
-        color: var(--accent1);
-      }
-
-      .modal h2 {
-        margin-bottom: 0.5rem;
-      }
-
-      .modal p {
-        color: var(--muted);
-        margin-bottom: 1.5rem;
-      }
-
-      .order-details {
-        background: #f9f9f9;
-        padding: 1rem;
-        border-radius: var(--radius);
-        margin: 1rem 0;
-        text-align: left;
-      }
-
-      .order-details p {
-        margin: 0.5rem 0;
-        font-size: 0.9rem;
-      }
-
-      .order-id {
-        font-weight: 600;
-        color: var(--accent1);
-      }
-
-      /* Promo Code */
-      .promo-section {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-      }
-
-      .promo-section input {
-        flex: 1;
-        padding: 0.6rem;
-        border: 1px solid #ddd;
-        border-radius: var(--radius);
-        font-size: 0.9rem;
-      }
-
-      .promo-section button {
-        padding: 0.6rem 1rem;
-        background: var(--accent1);
-        color: #fff;
-        border: none;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-weight: 500;
-        transition: all 0.3s;
-      }
-
-      .promo-section button:hover {
-        transform: translateY(-2px);
-      }
-
-      /* Error Message */
-      .error-msg {
-        background: #ffebee;
-        border: 1px solid #ff6b6b;
-        color: #c92a2a;
-        padding: 0.8rem;
-        border-radius: var(--radius);
-        margin-bottom: 1rem;
-        display: none;
-      }
-
-      .error-msg.show {
-        display: block;
-      }
-
-      /* Loading */
-      .loading {
-        display: none;
-        text-align: center;
-        color: var(--muted);
-        margin: 1rem 0;
-      }
-
-      .loading.show {
-        display: block;
-      }
-
-      .spinner {
-        border: 3px solid rgba(155, 109, 255, 0.1);
-        border-top: 3px solid var(--accent1);
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 0.5rem auto;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
+      /* Responsive */
+      @media (max-width: 768px) {
+        .checkout-container {
+          grid-template-columns: 1fr;
+          gap: 2rem;
         }
-        100% {
-          transform: rotate(360deg);
+
+        .billing-section {
+          position: static;
+        }
+
+        .promo-input-group {
+          flex-direction: column;
         }
       }
 
-      /* Order Type Selection */
-      .order-type-section {
-        background: #fff;
-        padding: 2rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        margin-bottom: 2rem;
-      }
+      /* =========================
+   PAYMENT PROCESSING MODAL
+========================= */
 
-      .order-type-section h3 {
-        margin-bottom: 1.5rem;
-        font-size: 1.2rem;
-      }
+.processing-modal{
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,0.75);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
 
-      .order-type-options {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
+.processing-box{
+    width: 90%;
+    max-width: 420px;
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    animation: popup 0.4s ease;
+}
 
-      .type-option {
-        padding: 1.5rem;
-        border: 2px solid #e0e0e0;
-        border-radius: var(--radius);
-        cursor: pointer;
-        text-align: center;
-        transition: all 0.3s ease;
-      }
+@keyframes popup{
+    from{
+        transform: scale(0.9);
+        opacity:0;
+    }
+    to{
+        transform: scale(1);
+        opacity:1;
+    }
+}
 
-      .type-option:hover {
-        border-color: var(--accent1);
-        background: rgba(155, 109, 255, 0.05);
-      }
+.loader-ring{
+    width: 70px;
+    height: 70px;
+    border: 6px solid #e5e7eb;
+    border-top: 6px solid #06b6d4;
+    border-radius: 50%;
+    margin: auto;
+    animation: spin 1s linear infinite;
+}
 
-      .type-option.active {
-        border-color: var(--accent1);
-        background: rgba(155, 109, 255, 0.1);
-      }
+@keyframes spin{
+    100%{
+        transform: rotate(360deg);
+    }
+}
 
-      .type-option input[type="radio"] {
-        display: none;
-      }
+.processing-box h2{
+    margin-top: 1.5rem;
+    color: #111827;
+}
 
-      .type-option i {
-        font-size: 2rem;
-        color: var(--accent1);
-        display: block;
-        margin-bottom: 0.5rem;
-      }
+.processing-box p{
+    color: #6b7280;
+    margin-top: 0.5rem;
+}
 
-      .type-option span {
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
+.processing-steps{
+    margin-top: 2rem;
+    text-align: left;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
 
-      /* Table Selection */
-      .table-selection {
-        background: #fff;
-        padding: 2rem;
-        border-radius: var(--radius);
-        box-shadow: var(--shadow);
-        margin-bottom: 2rem;
-        display: none;
-      }
+.step{
+    background:#f8fafc;
+    padding:12px 16px;
+    border-radius:12px;
+    font-weight:500;
+    color:#374151;
+}
 
-      .table-selection.active {
-        display: block;
-      }
+.step.loading{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
 
-      .table-selection h4 {
-        margin-bottom: 1rem;
-        font-size: 1rem;
-      }
+.dot-loader{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#06b6d4;
+    animation:pulse 1s infinite;
+}
 
-      .table-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 0.8rem;
-      }
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.5);}
+    100%{transform:scale(1);}
+}
+/* =========================
+   FAKE PAYMENT UI
+========================= */
 
-      .table-btn {
-        padding: 1rem;
-        border: 2px solid #ddd;
-        background: #fff;
-        border-radius: var(--radius);
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.3s ease;
-      }
+.fake-razorpay{
+    background:white;
+    padding:2rem;
+    border-radius:20px;
+    margin-top:1.5rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
 
-      .table-btn:hover {
-        border-color: var(--accent1);
-      }
+.fake-razorpay input{
+    width:100%;
+    margin-top:1rem;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    color:#111827;
+    font-weight:500;
+}
 
-      .table-btn.selected {
-        background: var(--accent1);
-        color: #fff;
-        border-color: var(--accent1);
-      }
+.rz-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#111827;
+    font-weight:700;
+    font-size:1.1rem;
+}
 
-      /* Status Badge */
-      .status-badge {
-        display: inline-block;
-        padding: 0.4rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-      }
+.card-row{
+    display:flex;
+    gap:12px;
+}
 
-      .status-badge.preparing {
-        background: #fff3cd;
-        color: #856404;
-      }
+.qr-box{
+    background:white;
+    padding:2rem;
+    border-radius:20px;
+    text-align:center;
+    margin-top:1.5rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
 
-      .status-badge.ready {
-        background: #d4edda;
-        color: #155724;
-      }
+.qr-box img{
+    width:220px;
+    margin-bottom:1rem;
+}
 
-      .status-badge.served {
-        background: #d1ecf1;
-        color: #0c5460;
-      }
+.qr-box h3{
+    color:#111827;
+}
 
-      .status-badge.out-for-delivery {
-        background: #cfe2ff;
-        color: #084298;
-      }
+.qr-box p{
+    color:#6b7280;
+}
+/* =========================
+   ORDER TYPE TOGGLE
+========================= */
 
-      .status-badge.delivered {
-        background: #d4edda;
-        color: #155724;
-      }
+.order-type-box{
+    background:white;
+    padding:1.5rem;
+    border-radius:20px;
+    margin-bottom:2rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.06);
+}
+
+.order-toggle{
+    display:flex;
+    gap:1rem;
+    margin-top:1rem;
+}
+
+.order-type-btn{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#f3f4f6;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.order-type-btn.active{
+    background:#06b6d4;
+    color:white;
+}
     </style>
   </head>
-
   <body>
     <header>
       <div class="container nav">
         <h1 class="logo">Smart Dine-In</h1>
         <nav>
           <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/index.html">Home</a></li>
             <li><a href="/menu.html">Menu</a></li>
-            <li><a id="logoutBtn" href="#" style="cursor: pointer">Logout</a></li>
+            <li><a href="/order-tracking.html">Orders</a></li>
+            <li style="margin-left: auto"></li>
+            <li>
+              <button
+                id="logoutBtn"
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    var(--accent1),
+                    var(--accent2)
+                  );
+                  color: #fff;
+                  border: none;
+                  padding: 0.6rem 1.2rem;
+                  border-radius: 20px;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+              >
+                Logout
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
 
-    <div class="container">
-      <h2 style="text-align: center; margin: 2rem 0">Billing & Checkout</h2>
+    <div
+      style="
+        background: linear-gradient(135deg, #0ea5e9, #f59e0b);
+        color: #fff;
+        padding: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+      "
+    >
+      <h1 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem">
+        🛒 Complete Your Order
+      </h1>
+      <p>Review your items and proceed to payment</p>
+    </div>
 
-      <div class="order-type-section">
-        <h3>
-          <i class="fas fa-store"></i> Select Order Type
-        </h3>
-        <div class="order-type-options">
-          <label class="type-option active" onclick="selectOrderType('dine-in', this)">
-            <input type="radio" name="orderType" value="dine-in" checked />
-            <i class="fas fa-utensils"></i>
-            <span>Dine-In</span>
-          </label>
-          <label class="type-option" onclick="selectOrderType('takeaway', this)">
-            <input type="radio" name="orderType" value="takeaway" />
-            <i class="fas fa-bag-shopping"></i>
-            <span>Take Away</span>
-          </label>
-        </div>
+    <div class="checkout-container">
+      <!-- Cart Section -->
+      <div class="cart-section">
+        <h2><i class="fas fa-shopping-bag"></i> Your Order</h2>
+        <div id="cartItems" class="cart-items-list"></div>
+        <button
+          onclick="goBackToMenu()"
+          style="
+            width: 100%;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(6, 182, 212, 0.08);
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            border-radius: 10px;
+            color: var(--accent1);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          "
+        >
+          <i class="fas fa-plus"></i> Add More Items
+        </button>
       </div>
 
-      <div class="table-selection active" id="tableSelection">
-        <h4>
-          <i class="fas fa-chair"></i> Select Table Number
-        </h4>
-        <div class="table-grid" id="tableGrid"></div>
-      </div>
+      <!-- Billing & Payment Section -->
+      <div class="billing-section">
+        <h3>💳 Billing Details</h3>
 
-      <div class="payment-container">
-        <div class="cart-section">
-          <div class="cart-header">
-            <h2>
-              <i class="fas fa-shopping-cart"></i> Your Cart
-            </h2>
-            <span id="cartCount" style="background: var(--accent2); color: #fff; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: 600;">0</span>
-          </div>
-
-          <div id="cartItems"></div>
-
-          <button class="continue-shopping" onclick="goBackToMenu()">
-            <i class="fas fa-plus"></i> Add More Items
-          </button>
+        <!-- Billing Summary -->
+        <div class="billing-row">
+          <span>Subtotal</span>
+          <span class="amount" id="subtotalDisplay">₹0.00</span>
+        </div>
+        <div class="billing-row">
+          <span>Tax (18% GST)</span>
+          <span class="amount" id="taxDisplay">₹0.00</span>
+        </div>
+        <div class="billing-row">
+          <span>Delivery</span>
+          <span class="amount" id="deliveryDisplay">₹0.00</span>
+        </div>
+        <div class="billing-row">
+          <span id="discountLabel" style="display: none">Discount</span>
+          <span
+            class="amount"
+            id="discountDisplay"
+            style="display: none; color: #ff6b6b"
+            >-₹0.00</span
+          >
+        </div>
+        <div class="billing-row total">
+          <span>Total Amount</span>
+          <span class="amount" id="totalDisplay">₹0.00</span>
         </div>
 
-        <div>
-          <div class="billing-summary">
-            <h3>
-              <i class="fas fa-receipt"></i> Billing Summary
-            </h3>
+        <!-- Promo Code -->
+        <div class="promo-section">
+          <div class="promo-label">Apply Promo Code</div>
+          <div class="promo-input-group">
+            <input
+              type="text"
+              id="promoInput"
+              placeholder="Enter code (e.g., WELCOME50)"
+            />
+            <button onclick="applyPromo()">Apply</button>
+          </div>
+          <div
+            id="promoMessage"
+            style="
+              font-size: 0.85rem;
+              margin-top: 0.5rem;
+              color: var(--accent1);
+            "
+          ></div>
+        </div>
+<!-- ORDER TYPE -->
 
-            <div class="summary-row">
-              <span>Subtotal:</span>
-              <span id="subtotal">₹0.00</span>
+<div class="order-type-box">
+
+  <h3>Select Order Type</h3>
+
+  <div class="order-toggle">
+
+    <button
+  type="button"
+  class="order-type-btn active"
+  id="dineInBtn"
+  onclick="selectOrderType('dine-in')">
+      🍽️ Dine-In
+
+    </button>
+
+    <button
+      type="button"
+      class="order-type-btn"
+      id="deliveryBtn"
+      onclick="selectOrderType('takeaway')">
+
+      🛵 Takeaway
+
+    </button>
+
+  </div>
+
+</div>
+        <!-- Payment Methods -->
+        <div class="payment-methods">
+          <h3>Payment Method</h3>
+          <div class="payment-options">
+            <div class="payment-option" onclick="selectPayment(this, 'upi')">
+              <input type="radio" name="payment" id="upi" />
+              <label for="upi"><i class="fas fa-mobile-alt"></i> UPI</label>
             </div>
+            <div class="payment-option" onclick="selectPayment(this, 'qr')">
 
-            <div class="summary-row">
-              <span>Tax (18%):</span>
-              <span id="tax">₹0.00</span>
-            </div>
+              <input type="radio" name="payment" id="qr" />
 
-            <div class="summary-row">
-              <span>Delivery Charges:</span>
-              <span id="delivery">₹0.00</span>
-            </div>
-
-            <div class="summary-row">
-              <span>Discount:</span>
-              <span id="discount" style="color: #4caf50;">₹0.00</span>
-            </div>
-
-            <div class="summary-row total">
-              <span>Total Amount:</span>
-              <span id="totalAmount">₹0.00</span>
-            </div>
-
-            <div class="promo-section">
-              <input
-                type="text"
-                id="promoCode"
-                placeholder="Enter promo code"
-                maxlength="10"
-              />
-              <button onclick="applyPromo()">Apply</button>
-            </div>
-
-            <div class="payment-methods">
-              <h4>
-                <i class="fas fa-credit-card"></i> Select Payment Method
-              </h4>
-
-              <div class="error-msg" id="errorMsg"></div>
-
-              <label class="method-option">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="upi"
-                  onchange="showPaymentForm('upi')"
-                />
-                <span class="method-label">
-                  <span class="method-icon"><i class="fas fa-mobile-alt"></i></span>
-                  UPI
-                </span>
+              <label for="qr">
+                <i class="fas fa-qrcode"></i>
+                QR Payment
               </label>
 
-              <div id="upi-form" class="payment-form">
-                <input
-                  type="text"
-                  id="upiId"
-                  placeholder="Enter UPI ID (e.g., yourname@upi)"
-                  required
-                />
-                <small style="color: var(--muted)">
-                  You'll receive a payment request on your UPI app
-                </small>
-              </div>
-
-              <label class="method-option">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="qr"
-                  onchange="showPaymentForm('qr')"
-                />
-                <span class="method-label">
-                  <span class="method-icon"><i class="fas fa-qrcode"></i></span>
-                  QR Code
-                </span>
-              </label>
-
-              <div id="qr-form" class="payment-form">
-                <div class="qr-display">
-                  <div style="font-size: 3rem; color: var(--accent1);">
-                    ▓▓▓▓▓
-                    <br />
-                    ▓ ▓▓ ▓
-                    <br />
-                    ▓▓▓▓▓
-                  </div>
-                  <p>Scan this QR code with any UPI app to make payment</p>
-                </div>
-                <input
-                  type="text"
-                  id="qrReference"
-                  placeholder="Enter transaction reference (optional)"
-                />
-              </div>
-
-              <label class="method-option">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="card"
-                  onchange="showPaymentForm('card')"
-                />
-                <span class="method-label">
-                  <span class="method-icon"><i class="fas fa-credit-card"></i></span>
-                  Debit/Credit Card
-                </span>
-              </label>
-
-              <div id="card-form" class="payment-form">
-                <input
-                  type="text"
-                  id="cardNumber"
-                  placeholder="Card Number (16 digits)"
-                  maxlength="16"
-                />
-                <div class="card-inputs">
-                  <input
-                    type="text"
-                    id="cardExpiry"
-                    placeholder="MM/YY"
-                    maxlength="5"
-                  />
-                  <input
-                    type="text"
-                    id="cardCVV"
-                    placeholder="CVV"
-                    maxlength="3"
-                  />
-                </div>
-                <input
-                  type="text"
-                  id="cardName"
-                  placeholder="Cardholder Name"
-                />
-              </div>
-
-              <label class="method-option">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="netbanking"
-                  onchange="showPaymentForm('netbanking')"
-                />
-                <span class="method-label">
-                  <span class="method-icon"><i class="fas fa-bank"></i></span>
-                  Net Banking
-                </span>
-              </label>
-
-              <div id="netbanking-form" class="payment-form">
-                <select id="bankSelect" required>
-                  <option value="">Select Your Bank</option>
-                  <option value="sbi">State Bank of India</option>
-                  <option value="hdfc">HDFC Bank</option>
-                  <option value="icici">ICICI Bank</option>
-                  <option value="axis">Axis Bank</option>
-                  <option value="bob">Bank of Baroda</option>
-                  <option value="pnb">Punjab National Bank</option>
-                  <option value="kotak">Kotak Mahindra Bank</option>
-                  <option value="yes">YES Bank</option>
-                  <option value="uco">UCO Bank</option>
-                  <option value="canara">Canara Bank</option>
-                </select>
-                <small style="color: var(--muted)">
-                  You'll be redirected to your bank's website
-                </small>
-              </div>
-
-              <label class="method-option">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="cod"
-                  onchange="showPaymentForm('cod')"
-                />
-                <span class="method-label">
-                  <span class="method-icon"><i class="fas fa-money-bill-wave"></i></span>
-                  Cash on Delivery
-                </span>
-              </label>
-
-              <div id="cod-form" class="payment-form">
-                <div
-                  style="
-                    background: #e8f5e9;
-                    padding: 1rem;
-                    border-radius: var(--radius);
-                    color: #2e7d32;
-                    font-size: 0.9rem;
-                    text-align: center;
-                  "
-                >
-                  <i class="fas fa-check-circle"></i> Pay when your order
-                  arrives. No extra charges.
-                </div>
-              </div>
             </div>
-
-            <div class="loading" id="loading">
-              <div class="spinner"></div>
-              <p>Processing payment...</p>
+            <div class="payment-option" onclick="selectPayment(this, 'card')">
+              <input type="radio" name="payment" id="card" />
+              <label for="card"
+                ><i class="fas fa-credit-card"></i> Credit/Debit Card</label
+              >
             </div>
-
-            <button class="btn-primary" onclick="processPayment()" id="paymentBtn">
-              <i class="fas fa-lock"></i> Pay ₹<span id="payAmount">0</span>
-            </button>
+            <div
+              class="payment-option"
+              onclick="selectPayment(this, 'netbanking')"
+            >
+              <input type="radio" name="payment" id="netbanking" />
+              <label for="netbanking"
+                ><i class="fas fa-university"></i> Net Banking</label
+              >
+            </div>
+            <div class="payment-option" onclick="selectPayment(this, 'cod')">
+              <input type="radio" name="payment" id="cod" />
+              <label for="cod"
+                ><i class="fas fa-money-bill"></i> Cash on Delivery</label
+              >
+            </div>
           </div>
         </div>
+        <div id="paymentUI" style="margin-top:2rem;"></div>
+
+        <button class="checkout-btn" onclick="proceedToPayment()">
+          <i class="fas fa-lock"></i> Proceed to Payment
+        </button>
       </div>
     </div>
 
+    <!-- Success Modal -->
     <div id="successModal" class="modal">
       <div class="modal-content">
-        <div class="modal-icon success">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <h2>Order Placed Successfully!</h2>
-        <p>Your order has been confirmed and will be prepared.</p>
-        <div class="order-details">
-          <p>
-            <strong>Order ID:</strong> <span class="order-id" id="orderId">#ORD-000000</span>
-          </p>
-          <p>
-            <strong>Total Amount:</strong> <span id="modalTotal">₹0.00</span>
-          </p>
-          <p>
-            <strong>Payment Method:</strong>
-            <span id="modalPaymentMethod">-</span>
-          </p>
-          <p style="color: var(--accent1)">
-            <strong>Estimated Time:</strong> 20-30 minutes
-          </p>
-        </div>
-        <div style="display: flex; gap: 10px; margin-top: 1.5rem">
-          <button class="btn-primary" onclick="trackOrder()" style="margin-top: 0;">
-            <i class="fas fa-map-location-dot"></i> Track Order
-          </button>
-          <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 0; background: #666;">
-            Home
-          </button>
-        </div>
+        <i
+          class="fas fa-check-circle"
+          style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem"
+        ></i>
+        <h2>Order Confirmed! ✨</h2>
+        <p style="color: var(--muted); margin-bottom: 1rem">
+          Your order has been placed successfully
+        </p>
+        <div class="order-id" id="orderIdDisplay">ORD-2025...</div>
+        <p style="color: var(--muted); font-size: 0.9rem">
+          Estimated delivery: 20-30 minutes
+        </p>
+        <button class="modal-button" onclick="completeOrder()">
+          Track Order
+        </button>
       </div>
     </div>
 
-    <div id="pendingModal" class="modal">
-      <div class="modal-content">
-        <div class="modal-icon pending">
-          <i class="fas fa-hourglass-end"></i>
+    <script>
+      let cart = [];
+      let totalAmount = 0;
+      let selectedOrderType = "dine-in";
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "/login.html";
+      }
+
+      function loadCart() {
+        const saved = localStorage.getItem("dineInCart");
+        cart = saved ? JSON.parse(saved) : [];
+        displayCart();
+        updateBilling();
+      }
+
+      function displayCart() {
+        const container = document.getElementById("cartItems");
+        if (cart.length === 0) {
+          container.innerHTML = `
+            <div class="empty-cart">
+              <i class="fas fa-shopping-cart"></i>
+              <h3>Your cart is empty</h3>
+              <p>Add items from the menu to get started</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = cart
+          .map(
+            (item) => `
+          <div class="cart-item">
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image" />
+            <div class="cart-item-details">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-price">₹${parseFloat(item.price).toFixed(2)}</div>
+              <div class="cart-item-controls">
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                <span class="qty-display">${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                <button class="remove-btn" onclick="removeItem(${item.id})">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 700; color: var(--accent1);">₹${(parseFloat(item.price) * item.quantity).toFixed(2)}</div>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      function updateQuantity(itemId, change) {
+        const item = cart.find((c) => c.id === itemId);
+        if (item) {
+          item.quantity += change;
+          if (item.quantity <= 0) {
+            removeItem(itemId);
+          } else {
+            localStorage.setItem("dineInCart", JSON.stringify(cart));
+            displayCart();
+            updateBilling();
+          }
+        }
+      }
+
+      function removeItem(itemId) {
+        cart = cart.filter((c) => c.id !== itemId);
+        localStorage.setItem("dineInCart", JSON.stringify(cart));
+        displayCart();
+        updateBilling();
+      }
+
+      function updateBilling() {
+        const subtotal = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
+        const tax = subtotal * 0.18;
+        const delivery = subtotal > 500 ? 0 : 40;
+        totalAmount = subtotal + tax + delivery;
+
+        document.getElementById("subtotalDisplay").textContent =
+          `₹${subtotal.toFixed(2)}`;
+        document.getElementById("taxDisplay").textContent =
+          `₹${tax.toFixed(2)}`;
+        document.getElementById("deliveryDisplay").textContent =
+          delivery > 0 ? `₹${delivery.toFixed(2)}` : "Free";
+        document.getElementById("totalDisplay").textContent =
+          `₹${totalAmount.toFixed(2)}`;
+      }
+
+
+
+      function selectOrderType(type){
+
+  selectedOrderType = type;
+
+  document
+    .querySelectorAll(".order-type-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if(type === "dine-in"){
+
+    document
+      .getElementById("dineInBtn")
+      .classList.add("active");
+
+  }
+  else{
+
+    document
+      .getElementById("deliveryBtn")
+      .classList.add("active");
+
+  }
+
+}
+
+      function selectPayment(element, method) {
+
+  document
+    .querySelectorAll(".payment-option")
+    .forEach((el) => el.classList.remove("selected"));
+
+  element.classList.add("selected");
+
+  document.getElementById(method).checked = true;
+
+  const paymentUI = document.getElementById("paymentUI");
+
+  if(method === "card"){
+
+    paymentUI.innerHTML = `
+
+      <div class="fake-razorpay">
+
+        <div class="rz-header">
+          <i class="fas fa-shield-alt"></i>
+          <span>Secure Razorpay Payment</span>
         </div>
-        <h2>Order Pending</h2>
-        <p>Your order is pending payment confirmation.</p>
-        <div class="order-details">
-          <p>
-            <strong>Order ID:</strong> <span class="order-id" id="pendingOrderId">#ORD-000000</span>
-          </p>
-          <p>
-            <strong>Total Amount:</strong> <span id="pendingTotal">₹0.00</span>
-          </p>
-          <p style="color: #ff9800">
-            <strong>Status:</strong> Awaiting Payment on Delivery
-          </p>
+
+        <input type="text"
+          placeholder="Card Number">
+
+        <div class="card-row">
+
+          <input type="text"
+            placeholder="MM/YY">
+
+          <input type="text"
+            placeholder="CVV">
+
         </div>
-        <div style="display: flex; gap: 10px; margin-top: 1.5rem">
-          <button class="btn-primary" onclick="trackOrder()" style="margin-top: 0;">
-            <i class="fas fa-map-location-dot"></i> Track Order
-          </button>
-          <button class="btn-primary" onclick="goBackToMenu()" style="margin-top: 0; background: #666;">
-            Home
-          </button>
-        </div>
+
+        <input type="text"
+          placeholder="Card Holder Name">
+
       </div>
+
+    `;
+
+  }
+
+  else if(method === "qr"){
+
+    paymentUI.innerHTML = `
+
+      <div class="qr-box">
+
+        <img
+          src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=SmartDineInDemoPayment"
+        >
+
+        <h3>Scan & Pay</h3>
+
+        <p>Use PhonePe, GPay or Paytm</p>
+
+      </div>
+
+    `;
+
+  }
+
+  else{
+
+    paymentUI.innerHTML = "";
+
+  }
+
+}
+      
+      function applyPromo() {
+        const code = document.getElementById("promoInput").value.toUpperCase();
+        const subtotalForDiscount = cart.reduce(
+          (sum, item) => sum + parseFloat(item.price) * item.quantity,
+          0,
+        );
+        const promoCodes = {
+          WELCOME50: 50,
+          DINE100: 100,
+          LUCKY20: subtotalForDiscount * 0.2,
+          FLAT30: 30,
+        };
+
+        if (promoCodes[code]) {
+          const discount = promoCodes[code];
+          const subtotal = cart.reduce(
+            (sum, item) => sum + parseFloat(item.price) * item.quantity,
+            0,
+          );
+          const tax = subtotal * 0.18;
+          const delivery = subtotal > 500 ? 0 : 40;
+          totalAmount = subtotal + tax + delivery - discount;
+
+          document.getElementById("discountLabel").style.display = "block";
+          document.getElementById("discountDisplay").style.display = "block";
+          document.getElementById("discountDisplay").textContent =
+            `-₹${discount.toFixed(2)}`;
+          document.getElementById("totalDisplay").textContent =
+            `₹${totalAmount.toFixed(2)}`;
+
+          document.getElementById("promoMessage").textContent =
+            "✓ Promo code applied successfully!";
+          document.getElementById("promoMessage").style.color = "#22c55e";
+        } else {
+          document.getElementById("promoMessage").textContent =
+            "✗ Invalid promo code";
+          document.getElementById("promoMessage").style.color = "#ff6b6b";
+        }
+      }
+
+      async function proceedToPayment() {
+
+  if(cart.length === 0){
+    alert("Your cart is empty");
+    return;
+  }
+
+  const paymentMethod = document.querySelector(
+    'input[name="payment"]:checked'
+  );
+
+  if(!paymentMethod){
+    alert("Select payment method");
+    return;
+  }
+
+  // SHOW PROCESSING MODAL
+  document.getElementById("processingModal")
+    .style.display = "flex";
+
+  // FAKE PROCESSING DELAY
+  await new Promise(resolve =>
+    setTimeout(resolve, 2000)
+  );
+
+  // GENERATE ORDER ID
+  const orderId =
+    "ORD-" + Math.floor(Math.random() * 999999);
+
+  try {
+
+    // SEND ORDER TO BACKEND
+    const response = await fetch("/api/orders", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+
+      body: JSON.stringify({
+
+        items: cart,
+
+        totalAmount: totalAmount,
+
+        paymentMethod: paymentMethod.id,
+
+        status: "preparing",
+
+        paymentDetails: {
+          method: paymentMethod.id
+        },
+
+        orderType: selectedOrderType,
+
+        tableNumber:
+  selectedOrderType === "dine-in"
+    ? 1
+    : null
+
+      })
+
+    });
+
+    const data = await response.json();
+
+    // HIDE PROCESSING
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    // SHOW SUCCESS
+    document.getElementById("orderIdDisplay")
+      .textContent = data.orderId || orderId;
+
+    document.getElementById("successModal")
+      .classList.add("active");
+
+    // CLEAR CART
+    localStorage.removeItem("dineInCart");
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    document.getElementById("processingModal")
+      .style.display = "none";
+
+    alert("Failed to place order");
+
+  }
+
+}
+
+
+      function completeOrder() {
+        window.location.href = "/order-tracking.html";
+      }
+
+      function goBackToMenu() {
+        window.location.href = "/menu.html";
+      }
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.href = "/login.html";
+      });
+
+      window.addEventListener("load", loadCart);
+    </script>
+    <!-- PAYMENT PROCESSING MODAL -->
+ <div id="processingModal" class="processing-modal">
+  
+  <div class="processing-box">
+
+    <div class="loader-ring"></div>
+
+    <h2>Processing Your Payment</h2>
+
+    <p>Please wait while we securely process your transaction...</p>
+
+    <div class="processing-steps">
+      <div class="step active">✔ Connecting to Bank</div>
+      <div class="step active">✔ Verifying Payment</div>
+
+      <div class="step loading">
+        <span class="dot-loader"></span>
+        Generating Order ID
+      </div>
+
     </div>
 
-    <script src="/payment.js"></script>
+  </div>
+
+</div>
   </body>
 </html>
