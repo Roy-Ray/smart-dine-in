@@ -223,27 +223,30 @@ function generateTableNumbers() {
 }
 
 // Select order type
-function selectOrderType(type, element) {
+function selectOrderType(type){
+
   selectedOrderType = type;
 
-  // Update UI
   document
-    .querySelectorAll(".type-option")
-    .forEach((opt) => opt.classList.remove("active"));
-  element.classList.add("active");
+    .querySelectorAll(".order-type-btn")
+    .forEach(btn => btn.classList.remove("active"));
 
-  // Show/hide table selection
-  const tableSelection = document.getElementById("tableSelection");
-  if (type === "dine-in") {
-    tableSelection.classList.add("active");
-    selectedTable = 1; // Reset to table 1
-    generateTableNumbers(); // Regenerate table selection
-  } else {
-    tableSelection.classList.remove("active");
-    selectedTable = null;
+  if(type === "dine-in"){
+
+    document
+      .getElementById("dineInBtn")
+      .classList.add("active");
+
   }
-}
+  else{
 
+    document
+      .getElementById("deliveryBtn")
+      .classList.add("active");
+
+  }
+
+}
 // Select table number
 function selectTable(tableNum, element) {
   selectedTable = tableNum;
@@ -423,8 +426,7 @@ async function processPayment() {
         ? selectedTable
         : null,
 
-      status: "completed",
-
+        status: "preparing",
       timestamp: new Date().toISOString(),
     };
 
@@ -581,3 +583,27 @@ document.addEventListener("keydown", function (event) {
     document.getElementById("pendingModal").style.display = "none";
   }
 });
+function selectOrderType(type){
+
+  selectedOrderType = type;
+
+  document
+    .querySelectorAll(".order-type-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+  if(type === "dine-in"){
+
+    document
+      .getElementById("dineInBtn")
+      .classList.add("active");
+
+  }
+  else{
+
+    document
+      .getElementById("deliveryBtn")
+      .classList.add("active");
+
+  }
+
+}
